@@ -1,0 +1,119 @@
+{
+    "name": "vscode-extension-boilerplate",
+    "displayName": "VSCode extension boilerplate",
+    "version": "0.0.1",
+    "preview": false,
+    "description": "An awesome boilerplate for VSCode extension development",
+    "publisher": "YuTengjing",
+    "author": {
+        "name": "YuTengjing",
+        "url": "https://github.com/tjx666",
+        "email": "ytj2713151713@gmail.com"
+    },
+    "icon": "images/logo.png",
+    "license": "SEE LICENSE IN LICENSE",
+    "badges": [
+        {
+            "url": "https://img.shields.io/badge/License-MIT-brightgreen.svg",
+            "description": "License: MIT",
+            "href": "https://github.com/tjx666/vscode-extension-boilerplate/blob/master/LICENSE"
+        },
+        {
+            "url": "https://img.shields.io/badge/PRs-welcome-brightgreen.svg",
+            "description": "PRs Welcome",
+            "href": "https://github.com/tjx666/vscode-extension-boilerplate"
+        }
+    ],
+    "homepage": "https://github.com/tjx666/vscode-extension-boilerplate/blob/master/README.md",
+    "bugs": {
+        "url": "https://github.com/tjx666/vscode-extension-boilerplate/issues",
+        "email": "ytj2713151713@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tjx666/vscode-extension-boilerplate"
+    },
+    "engines": {
+        "vscode": "^1.40.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "vscode",
+        "vscode-extension",
+        "vscode-extension-boilerplate",
+        "boilerplate"
+    ],
+    "activationEvents": [
+        "onCommand:VSCodeExtensionBoilerplate.helloVSCode"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "VSCodeExtensionBoilerplate.helloVSCode",
+                "title": "Hello Visual Studio Code!"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "yarn run build",
+        "compile": "cross-env NODE_ENV=development ts-node --files -P ./tsconfig.webpack.json ./scripts/pack.ts",
+        "watch": "yarn run compile -- --watch",
+        "test-compile": "rimraf -rf ./out && tsc -p ./tsconfig.test.json",
+        "build": "cross-env NODE_ENV=production ts-node --files -P ./tsconfig.webpack.json ./scripts/pack.ts",
+        "lint": "eslint -c .eslintrc --ext .ts ./{src,test}/**/*.ts",
+        "test": "node ./out/test/runTests.js",
+        "test-all": "yarn run lint && yarn run test-compile && yarn run test"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "eslint -c .eslintrc"
+        ],
+        "*.{js,jsx,ts,tsx,json,md}": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@types/glob": "^7.1.1",
+        "@types/mocha": "^5.2.7",
+        "@types/node": "^12.11.7",
+        "@types/terser-webpack-plugin": "^2.2.0",
+        "@types/vscode": "^1.40.0",
+        "@types/webpack": "^4.41.0",
+        "@types/webpack-merge": "^4.1.5",
+        "@types/yargs": "^13.0.3",
+        "@typescript-eslint/eslint-plugin": "^2.10.0",
+        "@typescript-eslint/parser": "^2.10.0",
+        "clean-webpack-plugin": "^3.0.0",
+        "cross-env": "^6.0.3",
+        "eslint": "^6.7.2",
+        "eslint-config-airbnb-base": "^14.0.0",
+        "eslint-config-prettier": "^6.7.0",
+        "eslint-plugin-import": "2.18.2",
+        "eslint-plugin-prettier": "^3.1.1",
+        "glob": "^7.1.5",
+        "husky": "^3.1.0",
+        "lint-staged": "^9.5.0",
+        "mocha": "^6.2.2",
+        "prettier": "^1.19.1",
+        "progress-bar-webpack-plugin": "^1.12.1",
+        "rimraf": "^3.0.0",
+        "terser-webpack-plugin": "^2.2.1",
+        "ts-loader": "^6.2.1",
+        "ts-node": "^8.5.4",
+        "typescript": "^3.6.4",
+        "vscode-test": "^1.2.2",
+        "webpack": "^4.41.2",
+        "webpack-merge": "^4.2.2",
+        "yargs": "^15.0.2"
+    }
+}

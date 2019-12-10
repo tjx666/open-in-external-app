@@ -1,0 +1,32 @@
+// A launch configuration that compiles the extension and then opens it inside a new window
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Launch Extension",
+            "type": "extensionHost",
+            "request": "launch",
+            "runtimeExecutable": "${execPath}",
+            "args": ["--disable-extensions", "--extensionDevelopmentPath=${workspaceRoot}"],
+            "stopOnEntry": false,
+            "sourceMaps": true,
+            "outFiles": ["${workspaceRoot}/out/**/*.js"],
+            "preLaunchTask": "npm: compile"
+        },
+        {
+            "name": "Launch Tests",
+            "type": "extensionHost",
+            "request": "launch",
+            "runtimeExecutable": "${execPath}",
+            "args": [
+                "--disable-extensions",
+                "--extensionDevelopmentPath=${workspaceRoot}",
+                "--extensionTestsPath=${workspaceFolder}/out/test/index"
+            ],
+            "stopOnEntry": false,
+            "sourceMaps": true,
+            "outFiles": ["${workspaceRoot}/out/test/**/*.js"],
+            "preLaunchTask": "npm: test-compile"
+        }
+    ]
+}

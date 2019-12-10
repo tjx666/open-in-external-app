@@ -1,0 +1,54 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true,
+        "mocha": true
+    },
+    "extends": ["airbnb-base", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": ["@typescript-eslint"],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".json", ".ts", ".tsx"]
+            }
+        }
+    },
+    "rules": {
+        "prettier/prettier": "off",
+
+        "no-console": "off",
+        "no-param-reassign": "off",
+        "func-names": "off",
+
+        "import/no-unresolved": ["warn", { "ignore": ["vscode"] }],
+
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-explicit-any": "off"
+    },
+    "overrides": [
+        {
+            "files": ["test/**/*.ts"],
+            "rules": {
+                "import/prefer-default-export": "off",
+                "consistent-return": "off"
+            }
+        },
+        {
+            "files": ["scripts/**/*.ts", "configs/**/*.ts"],
+            "rules": {
+                "import/no-extraneous-dependencies": "off"
+            }
+        }
+    ]
+}
