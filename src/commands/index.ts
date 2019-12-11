@@ -1,8 +1,8 @@
-import helloVSCode from './helloVSCode';
+import open from './open';
 
-const commands: CommandModule[] = [helloVSCode];
+const commands: CommandModule[] = [open];
 commands.forEach(command => {
-    command.identifier = `VSCodeExtensionBoilerplate.${command.identifier}`;
+    command.identifier = `openInExternalApp.${command.identifier}`;
 });
 
 export default commands;

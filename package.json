@@ -1,9 +1,9 @@
 {
-    "name": "vscode-extension-boilerplate",
-    "displayName": "VSCode extension boilerplate",
+    "name": "open-in-external-app",
+    "displayName": "Open in External App",
     "version": "0.0.1",
-    "preview": false,
-    "description": "An awesome boilerplate for VSCode extension development",
+    "preview": true,
+    "description": "Open file with external application in VSCode",
     "publisher": "YuTengjing",
     "author": {
         "name": "YuTengjing",
@@ -16,22 +16,22 @@
         {
             "url": "https://img.shields.io/badge/License-MIT-brightgreen.svg",
             "description": "License: MIT",
-            "href": "https://github.com/tjx666/vscode-extension-boilerplate/blob/master/LICENSE"
+            "href": "https://github.com/tjx666/open-in-external-app/blob/master/LICENSE"
         },
         {
             "url": "https://img.shields.io/badge/PRs-welcome-brightgreen.svg",
             "description": "PRs Welcome",
-            "href": "https://github.com/tjx666/vscode-extension-boilerplate"
+            "href": "https://github.com/tjx666/open-in-external-app"
         }
     ],
-    "homepage": "https://github.com/tjx666/vscode-extension-boilerplate/blob/master/README.md",
+    "homepage": "https://github.com/tjx666/open-in-external-app/blob/master/README.md",
     "bugs": {
-        "url": "https://github.com/tjx666/vscode-extension-boilerplate/issues",
+        "url": "https://github.com/tjx666/open-in-external-app/issues",
         "email": "ytj2713151713@gmail.com"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/tjx666/vscode-extension-boilerplate"
+        "url": "https://github.com/tjx666/open-in-external-app"
     },
     "engines": {
         "vscode": "^1.40.0"
@@ -40,22 +40,54 @@
         "Other"
     ],
     "keywords": [
-        "vscode",
-        "vscode-extension",
-        "vscode-extension-boilerplate",
-        "boilerplate"
+        "open",
+        "opn",
+        "view",
+        "app",
+        "application",
+        "external",
+        "other",
+        "system",
+        "system default",
+        "open in",
+        "open file",
+        "IDE",
+        "editor",
+        "typora",
+        "mark text",
+        "electron"
     ],
     "activationEvents": [
-        "onCommand:VSCodeExtensionBoilerplate.helloVSCode"
+        "onCommand:openInExternalApp.open"
     ],
     "main": "./out/extension.js",
     "contributes": {
         "commands": [
             {
-                "command": "VSCodeExtensionBoilerplate.helloVSCode",
-                "title": "Hello Visual Studio Code!"
+                "command": "openInExternalApp.open",
+                "title": "Open in External App"
             }
-        ]
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "when": "!explorerResourceIsFolder",
+                    "command": "openInExternalApp.open",
+                    "group": "navigation"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "Open in External App",
+            "type": "Object",
+            "properties": {
+                "openInExternalApp.openMapper": {
+                    "type": "object",
+                    "description": "mapper between the file type and external application to open it",
+                    "default": {}
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "yarn run build",
@@ -81,9 +113,12 @@
             "git add"
         ]
     },
-    "dependencies": {},
+    "dependencies": {
+        "open": "^7.0.0"
+    },
     "devDependencies": {
         "@types/glob": "^7.1.1",
+        "@types/hard-source-webpack-plugin": "^1.0.1",
         "@types/mocha": "^5.2.7",
         "@types/node": "^12.11.7",
         "@types/terser-webpack-plugin": "^2.2.0",
@@ -101,6 +136,7 @@
         "eslint-plugin-import": "2.18.2",
         "eslint-plugin-prettier": "^3.1.1",
         "glob": "^7.1.5",
+        "hard-source-webpack-plugin": "^0.13.1",
         "husky": "^3.1.0",
         "lint-staged": "^9.5.0",
         "mocha": "^6.2.2",
