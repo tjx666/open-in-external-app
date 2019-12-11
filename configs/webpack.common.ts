@@ -2,6 +2,7 @@ import { resolve } from 'path';
 import { Configuration } from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
+import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
 
 const commonWebpackConfig: Configuration = {
     target: 'node',
@@ -28,7 +29,13 @@ const commonWebpackConfig: Configuration = {
             },
         ],
     },
-    plugins: [new ProgressBarPlugin(), new CleanWebpackPlugin()],
+    plugins: [
+        new ProgressBarPlugin(),
+        new CleanWebpackPlugin(),
+        new HardSourceWebpackPlugin({
+            info: { mode: 'none', level: 'warn' },
+        }),
+    ],
 };
 
 export default commonWebpackConfig;
