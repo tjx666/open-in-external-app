@@ -10,13 +10,13 @@ Open file with external application in VSCode.
 
 </div>
 
-## :bulb:Motivation
+## 💡 Motivation
 
 VSCode is a very excellent editor, but sometime I prefer to use external application to work with some files. For example, I like to use [typora](https://www.typora.io/) to edit the markdown files. Usually, I will right click to the file, and select `Reveal in Explorer` , then open the file using external application.
 
 But, with this extension, you can do it more simply. Just right click to the file, and select `Open in External App`, that file would be opened by system default application.
 
-## :wrench: Configuration
+## 🔧 Configuration
 
 Via custom configuration, you can make extensions more powerful. For example, to see the rendering differences, You can open one HTML in chrome and Firefox at the same time.
 
@@ -49,3 +49,7 @@ Example configuration:
 In VSCode, Right-clicking is different from right-clicking while holding `alt` key. If you just right click the file, you will see the command `Open in External App`, but if you right click file while holding `alt` key, you will see the command `Open in Multiple External Apps`.
 
 ![ussage](https://github.com/tjx666/open-in-external-app/blob/master/images/usage.gif?raw=true)
+
+## 🧡 Backers
+
+Thanks to `姜世祺`for designing the extension's logo.
