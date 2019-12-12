@@ -82,9 +82,9 @@
             "type": "Object",
             "properties": {
                 "openInExternalApp.openMapper": {
-                    "type": "object",
-                    "description": "mapper between the file type and external application to open it",
-                    "default": {}
+                    "type": "array",
+                    "description": "mapper between the file extensionName and application to open it",
+                    "default": []
                 }
             }
         }
@@ -114,11 +114,13 @@
         ]
     },
     "dependencies": {
-        "open": "^7.0.0"
+        "joi": "^14.3.1",
+        "open": "6.4.0"
     },
     "devDependencies": {
         "@types/glob": "^7.1.1",
         "@types/hard-source-webpack-plugin": "^1.0.1",
+        "@types/joi": "^14.3.4",
         "@types/mocha": "^5.2.7",
         "@types/node": "^12.11.7",
         "@types/terser-webpack-plugin": "^2.2.0",
