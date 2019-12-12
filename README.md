@@ -52,4 +52,4 @@ In VSCode, Right-clicking is different from right-clicking while holding `alt` k
 
 ## 🧡 Backers
 
-Thanks to `姜世祺`for designing the extension's logo.
+Thanks to `姜世祺` for designing the extension's logo.

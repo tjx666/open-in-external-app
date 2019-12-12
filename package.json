@@ -1,7 +1,7 @@
 {
     "name": "open-in-external-app",
     "displayName": "Open in External App",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "preview": true,
     "description": "Open file with external application in VSCode",
     "publisher": "YuTengjing",
@@ -55,7 +55,18 @@
         "editor",
         "typora",
         "mark text",
-        "electron"
+        "electron",
+        "photoshop",
+        "adobe",
+        "ps",
+        "IDEA",
+        "sublime",
+        "webstorm",
+        "pycharm",
+        "chrome",
+        "firefox",
+        "browser",
+        "client"
     ],
     "activationEvents": [
         "onCommand:openInExternalApp.open",
