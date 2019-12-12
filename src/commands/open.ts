@@ -1,6 +1,7 @@
 import { extname } from 'path';
 import * as vscode from 'vscode';
 import open from 'open';
+import { iSRepeat } from '../util';
 
 type Uri = vscode.Uri;
 
@@ -19,16 +20,18 @@ const handler = async (uri: Uri) => {
         if (typeof candidateApps === 'string') {
             openCommand = candidateApps;
         } else if (Array.isArray(candidateApps)) {
-            const pickerItems = candidateApps.map(app => ({
-                label: app.title,
-                detail: app.cmd,
-            }));
-            const selectedItem = await vscode.window.showQuickPick(pickerItems);
-            if (selectedItem) openCommand = selectedItem.detail;
+            if (iSRepeat(candidateApps, (a, b) => a.title === b.title)) {
+                vscode.window.showErrorMessage(
+                    `You can't set two application use the same title, check you configuration!`
+                );
+            }
+
+            const selectedTitle = await vscode.window.showQuickPick(candidateApps.map(app => app.title));
+            if (selectedTitle) openCommand = candidateApps.find(app => app.title === selectedTitle)!.cmd;
         }
 
         if (openCommand) {
-            open(filePath, { app: openCommand, url: true });
+            open(filePath, { app: openCommand });
         }
     }
 
