@@ -44,8 +44,8 @@ Example configuration:
   ]
 ```
 
-![open multiple](https://github.com/tjx666/open-in-external-app/blob/master/images/open-multiple?raw=true)
+![open multiple](https://github.com/tjx666/open-in-external-app/blob/master/images/open-multiple.png?raw=true)
 
 In VSCode, Right-clicking is different from right-clicking while holding `alt` key. If you just right click the file, you will see the command `Open in External App`, but if you right click file while holding `alt` key, you will see the command `Open in Multiple External Apps`.
 
-![ussage](https://github.com/tjx666/open-in-external-app/blob/master/images/usage?raw=true)
+![ussage](https://github.com/tjx666/open-in-external-app/blob/master/images/usage.gif?raw=true)
