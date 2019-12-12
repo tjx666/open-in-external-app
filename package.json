@@ -58,7 +58,8 @@
         "electron"
     ],
     "activationEvents": [
-        "onCommand:openInExternalApp.open"
+        "onCommand:openInExternalApp.open",
+        "onCommand:openInExternalApp.openInExternalApp.openMultiple"
     ],
     "main": "./out/extension.js",
     "contributes": {
@@ -66,6 +67,10 @@
             {
                 "command": "openInExternalApp.open",
                 "title": "Open in External App"
+            },
+            {
+                "command": "openInExternalApp.openMultiple",
+                "title": "Open in Multiple External Apps"
             }
         ],
         "menus": {
@@ -73,6 +78,7 @@
                 {
                     "when": "!explorerResourceIsFolder",
                     "command": "openInExternalApp.open",
+                    "alt": "openInExternalApp.openMultiple",
                     "group": "navigation"
                 }
             ]
