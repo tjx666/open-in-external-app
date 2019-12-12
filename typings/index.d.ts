@@ -5,9 +5,10 @@ interface CommandModule {
 
 interface ExternalApplication {
     title: string;
-    cmd: string;
+    openCommand: string;
 }
 
-interface ExtensionConfiguration {
-    [fileType: string]: ExternalApplication[] | string;
+interface ExtensionConfigItem {
+    extensionName: string;
+    apps: ExternalApplication[] | string;
 }
