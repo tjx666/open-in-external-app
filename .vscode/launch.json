@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "configurations": [
         {
-            "name": "Launch Extension",
+            "name": "dev",
             "type": "extensionHost",
             "request": "launch",
             "runtimeExecutable": "${execPath}",
@@ -14,7 +14,7 @@
             "preLaunchTask": "npm: compile"
         },
         {
-            "name": "Launch Tests",
+            "name": "test",
             "type": "extensionHost",
             "request": "launch",
             "runtimeExecutable": "${execPath}",
