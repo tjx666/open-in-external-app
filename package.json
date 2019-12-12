@@ -59,7 +59,7 @@
     ],
     "activationEvents": [
         "onCommand:openInExternalApp.open",
-        "onCommand:openInExternalApp.openInExternalApp.openMultiple"
+        "onCommand:openInExternalApp.openMultiple"
     ],
     "main": "./out/extension.js",
     "contributes": {
