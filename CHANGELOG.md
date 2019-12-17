@@ -1,3 +1,9 @@
+## [0.0.5] - 2019-12-17
+
+### Changed
+
+- add some file to .vscodeignore
+
 ## [0.0.4] - 2019-12-17
 
 ### Added
