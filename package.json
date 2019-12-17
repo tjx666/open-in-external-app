@@ -1,7 +1,7 @@
 {
     "name": "open-in-external-app",
     "displayName": "Open in External App",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "preview": true,
     "description": "Open file with external application in VSCode",
     "publisher": "YuTengjing",
@@ -101,7 +101,54 @@
                 "openInExternalApp.openMapper": {
                     "type": "array",
                     "description": "mapper between the file extensionName and application to open it",
-                    "default": []
+                    "default": [],
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "object",
+                                "required": [
+                                    "extensionName",
+                                    "apps"
+                                ],
+                                "properties": {
+                                    "extensionName": {
+                                        "type": "string",
+                                        "description": "represent file extension name"
+                                    },
+                                    "apps": {
+                                        "type": "array",
+                                        "description": "external applications to open the file which extension name is specified in extensionName field",
+                                        "items": {
+                                            "anyOf": [
+                                                {
+                                                    "type": "object",
+                                                    "description": "app info",
+                                                    "required": [
+                                                        "title",
+                                                        "openCommand"
+                                                    ],
+                                                    "properties": {
+                                                        "title": {
+                                                            "type": "string",
+                                                            "description": "title will be shown in the drop list if there are several apps"
+                                                        },
+                                                        "openCommand": {
+                                                            "type": "string",
+                                                            "description": "command you can access from shell or absolute path of executable program"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "type": "string",
+                                                    "description": "command you can access from shell or absolute path of executable program"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
                 }
             }
         }
