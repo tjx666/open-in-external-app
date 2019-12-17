@@ -1,3 +1,10 @@
+## [0.0.4] - 2019-12-17
+
+### Added
+
+- add configuration properties suggestion
+- support open current active editor document in external app using command panel
+
 ## [0.0.2] - 2019-12-12
 
 ### Added

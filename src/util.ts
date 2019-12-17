@@ -22,7 +22,10 @@ const isRepeat = <T>(arr: T[], isEqual?: (a: T, b: T) => boolean): boolean => {
     return false;
 };
 
-const openFile = async (filePath: string, isMultiple = false) => {
+const openFile = async (uri: vscode.Uri | undefined, isMultiple = false) => {
+    const filePath = uri?.fsPath || vscode.window.activeTextEditor?.document.uri.fsPath;
+    if (!filePath) return;
+
     const ext = extname(filePath);
     const extensionName = ext === '' || ext === '.' ? null : ext.slice(1);
 
