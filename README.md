@@ -25,7 +25,7 @@ Example configuration:
 ```javascript
 "openInExternalApp.openMapper": [
     {
-       // can't be ignore, represent file extension name
+       // represent file extension name
       "extensionName": "html",
         // the external applications to open the file which extension name is html
       "apps": [
@@ -52,4 +52,4 @@ In VSCode, Right-clicking is different from right-clicking while holding `alt` k
 
 ## 🧡 Backers
 
-Thanks to `姜世祺` for designing the extension's logo.
+Thanks to `JiangShiqi` for designing the extension's logo.
