@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { isRepeat } from '../src/util';
+import { isRepeat } from '../src/utils';
 
 describe('# test sample', () => {
     describe('#isRepeat', () => {

@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import joi from 'joi';
 
-export const validateConfiguration = (configuration: ExtensionConfigItem[]) => {
+export function validateConfiguration(configuration: ExtensionConfigItem[]) {
     const configScheme = joi.array().items(
         joi.object({
             extensionName: joi.string().required(),
@@ -21,7 +21,7 @@ export const validateConfiguration = (configuration: ExtensionConfigItem[]) => {
     );
 
     return configScheme.validate(configuration);
-};
+}
 
 export default function getExtensionConfig() {
     const configuration: ExtensionConfigItem[] | undefined = vscode.workspace

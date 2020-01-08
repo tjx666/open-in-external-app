@@ -1,28 +1,11 @@
 import { extname } from 'path';
 import * as vscode from 'vscode';
 import open from 'open';
+
 import getExtensionConfig from './config';
+import { isRepeat } from './utils';
 
-const isRepeat = <T>(arr: T[], isEqual?: (a: T, b: T) => boolean): boolean => {
-    const { length } = arr;
-    if (length <= 1) return false;
-
-    for (let i = 0; i <= length - 2; i++) {
-        for (let j = i + 1; j <= length - 1; j++) {
-            if (isEqual) {
-                if (isEqual(arr[i], arr[j])) {
-                    return true;
-                }
-            } else if (arr[i] === arr[j]) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-};
-
-const openFile = async (uri: vscode.Uri | undefined, isMultiple = false) => {
+export default async function openFile(uri: vscode.Uri | undefined, isMultiple = false) {
     const filePath = uri?.fsPath || vscode.window.activeTextEditor?.document.uri.fsPath;
     if (!filePath) return;
 
@@ -84,6 +67,4 @@ const openFile = async (uri: vscode.Uri | undefined, isMultiple = false) => {
     }
 
     vscode.env.openExternal(vscode.Uri.file(filePath));
-};
-
-export { isRepeat, openFile };
+}

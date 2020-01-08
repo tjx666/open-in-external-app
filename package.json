@@ -67,11 +67,21 @@
         "browser",
         "client"
     ],
+    "main": "./out/extension.js",
+    "scripts": {
+        "vscode:prepublish": "yarn run build",
+        "compile": "cross-env NODE_ENV=development ts-node --files -P ./build/tsconfig.json ./build",
+        "watch": "yarn run compile -- --watch",
+        "test-compile": "rimraf -rf ./out && tsc -p ./tsconfig.test.json",
+        "build": "cross-env NODE_ENV=production ts-node --files -P ./build/tsconfig.json ./build",
+        "lint": "eslint -c .eslintrc --ext .ts ./{src,test}/**/*.ts",
+        "test": "node ./out/test/runTests.js",
+        "test-all": "yarn run lint && yarn run test-compile && yarn run test"
+    },
     "activationEvents": [
         "onCommand:openInExternalApp.open",
         "onCommand:openInExternalApp.openMultiple"
     ],
-    "main": "./out/extension.js",
     "contributes": {
         "commands": [
             {
@@ -151,16 +161,6 @@
                 }
             }
         }
-    },
-    "scripts": {
-        "vscode:prepublish": "yarn run build",
-        "compile": "cross-env NODE_ENV=development ts-node --files -P ./build/tsconfig.json ./build",
-        "watch": "yarn run compile -- --watch",
-        "test-compile": "rimraf -rf ./out && tsc -p ./tsconfig.test.json",
-        "build": "cross-env NODE_ENV=production ts-node --files -P ./tsconfig.webpack.json ./scripts/pack.ts",
-        "lint": "eslint -c .eslintrc --ext .ts ./{src,test}/**/*.ts",
-        "test": "node ./out/test/runTests.js",
-        "test-all": "yarn run lint && yarn run test-compile && yarn run test"
     },
     "husky": {
         "hooks": {
