@@ -1,7 +1,7 @@
 import webpack, { Compiler } from 'webpack';
 import { argv } from 'yargs';
-import devWebpackConfig from '../configs/webpack.dev';
-import prodWebpackConfig from '../configs/webpack.prod';
+import devWebpackConfig from './configs/webpack.dev';
+import prodWebpackConfig from './configs/webpack.prod';
 
 const isProd = process.env.NODE_ENV !== 'development';
 const compiler = webpack(isProd ? prodWebpackConfig : devWebpackConfig);
@@ -25,5 +25,3 @@ if (argv.watch) {
 } else {
     compiler.run(compileHandler);
 }
-
-export default null;

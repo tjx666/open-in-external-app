@@ -26,12 +26,13 @@
     "rules": {
         "prettier/prettier": "off",
 
+        "func-names": "off",
         "no-console": "off",
         "no-param-reassign": "off",
-        "func-names": "off",
         "no-plusplus": "off",
 
         "import/no-unresolved": ["warn", { "ignore": ["vscode"] }],
+        "import/extensions": "off",
 
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
@@ -41,12 +42,12 @@
         {
             "files": ["test/**/*.ts"],
             "rules": {
-                "import/prefer-default-export": "off",
-                "consistent-return": "off"
+                "consistent-return": "off",
+                "import/prefer-default-export": "off"
             }
         },
         {
-            "files": ["scripts/**/*.ts", "configs/**/*.ts"],
+            "files": ["build/**/*.ts"],
             "rules": {
                 "import/no-extraneous-dependencies": "off"
             }

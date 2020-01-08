@@ -1,18 +1,14 @@
 language: node_js
 os:
-  - osx
-  - linux
-node_js: 8
-
+    - osx
+    - linux
 install:
-  - |
-    if [ $TRAVIS_OS_NAME == "linux" ]; then
-      export DISPLAY=':99.0'
-      /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-    fi
-  - yarn
-
+    - |
+        if [ $TRAVIS_OS_NAME == "linux" ]; then
+          export DISPLAY=':99.0'
+          /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        fi
+    - yarn
 script:
-  - yarn run test-all
-
+    - yarn run test-all
 cache: yarn

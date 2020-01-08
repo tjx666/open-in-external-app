@@ -19,8 +19,6 @@ configs/**
 scripts/**
 node_modules
 tsconfig.test.json
-tsconfig.dev.json
-tsconfig.webpack.json
 .nvmrc
 .eslintrc
 .eslintignore

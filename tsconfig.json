@@ -1,10 +1,8 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "ES2018",
+        "target": "ES2020",
         "outDir": "out",
-        "removeComments": true,
-        "lib": ["ES2018"],
         "sourceMap": true,
         "rootDir": ".",
         "isolatedModules": true,
@@ -26,5 +24,5 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },
-    "exclude": ["node_modules", ".vscode-test", "test-fixture"]
+    "include": ["src", "typings"]
 }

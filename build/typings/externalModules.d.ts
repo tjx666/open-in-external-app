@@ -1,5 +1,5 @@
 declare module 'speed-measure-webpack-plugin' {
-    import { Configuration } from 'webpack';
+    import { Configuration, Plugin } from 'webpack';
 
     interface SpeedMeasurePluginOptions {
         disable: boolean;
@@ -9,7 +9,7 @@ declare module 'speed-measure-webpack-plugin' {
         granularLoaderData: boolean;
     }
 
-    class SpeedMeasurePlugin {
+    class SpeedMeasurePlugin extends Plugin {
         constructor(options?: Partial<SpeedMeasurePluginOptions>);
         wrap(webpackConfig: Configuration): Configuration;
     }

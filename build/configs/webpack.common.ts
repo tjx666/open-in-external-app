@@ -4,12 +4,13 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
 
+const projectRoot = resolve(__dirname, '../../');
 const commonWebpackConfig: Configuration = {
     target: 'node',
-    entry: resolve(__dirname, '../src/extension.ts'),
+    entry: resolve(projectRoot, 'src/extension.ts'),
     output: {
         libraryTarget: 'commonjs2',
-        path: resolve(__dirname, '../out'),
+        path: resolve(projectRoot, 'out'),
         filename: 'extension.js',
         devtoolModuleFilenameTemplate: '../[resource-path]',
     },
@@ -24,7 +25,7 @@ const commonWebpackConfig: Configuration = {
                 exclude: /node_modules/,
                 loader: 'ts-loader',
                 options: {
-                    configFile: resolve(__dirname, '../tsconfig.dev.json'),
+                    configFile: resolve(projectRoot, 'tsconfig.json'),
                 },
             },
         ],
