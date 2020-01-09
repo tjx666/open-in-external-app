@@ -66,5 +66,6 @@ export default async function openFile(uri: vscode.Uri | undefined, isMultiple =
         }
     }
 
+    // FIXME: 支持有非 ascii 字符的路径 adcddd
     vscode.env.openExternal(vscode.Uri.file(filePath));
 }
