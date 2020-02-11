@@ -17,17 +17,16 @@ declare module 'speed-measure-webpack-plugin' {
     export = SpeedMeasurePlugin;
 }
 
-declare module 'progress-bar-webpack-plugin' {
+declare module 'size-plugin' {
     import { Plugin } from 'webpack';
 
-    interface ProgressBarPluginOptions {
-        format: string;
-        clear: boolean;
+    interface SizePluginOptions {
+        writeFile?: boolean;
     }
 
-    class ProgressBarPlugin extends Plugin {
-        constructor(options?: Partial<ProgressBarPluginOptions>);
+    class SizePlugin extends Plugin {
+        constructor(options?: SizePluginOptions);
     }
 
-    export = ProgressBarPlugin;
+    export = SizePlugin;
 }

@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { runTests } from 'vscode-test';
 
-async function go() {
+(async function go() {
     const projectPath = resolve(__dirname, '../../');
     const extensionDevelopmentPath = projectPath;
     const extensionTestsPath = resolve(projectPath, './out/test/index.js');
@@ -18,6 +18,4 @@ async function go() {
         console.error('Failed to run tests');
         process.exit(1);
     }
-}
-
-go();
+})();

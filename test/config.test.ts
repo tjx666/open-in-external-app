@@ -3,13 +3,13 @@ import { validateConfiguration } from '../src/config';
 
 describe('#config', () => {
     describe('#validateConfiguration', () => {
-        it(`#should error as config can't object`, () => {
-            assert(validateConfiguration({} as any).error !== null);
+        it(`should error as config can't object`, () => {
+            assert.notStrictEqual(validateConfiguration({} as any).error, null);
         });
 
-        it(`#should error as apps field can't be ignored`, () => {
+        it(`should error as apps field can't be ignored`, () => {
             const configuration: any = [{ extensionName: 'html' }];
-            assert(validateConfiguration(configuration).error !== null);
+            assert.notStrictEqual(validateConfiguration(configuration).error, null);
         });
 
         it(`should pass validation`, () => {
@@ -36,7 +36,7 @@ describe('#config', () => {
                     apps: 'sublime',
                 },
             ];
-            assert(validateConfiguration(configuration).error === null);
+            assert.strictEqual(validateConfiguration(configuration).error, null);
         });
     });
 });
