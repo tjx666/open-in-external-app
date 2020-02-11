@@ -98,7 +98,7 @@
                     "when": "!explorerResourceIsFolder",
                     "command": "openInExternalApp.open",
                     "alt": "openInExternalApp.openMultiple",
-                    "group": "navigation"
+                    "group": "navigation@10"
                 }
             ]
         },
@@ -181,13 +181,10 @@
     "devDependencies": {
         "@types/case-sensitive-paths-webpack-plugin": "^2.1.4",
         "@types/circular-dependency-plugin": "^5.0.0",
-        "@types/dot-prop": "^5.0.1",
         "@types/friendly-errors-webpack-plugin": "^0.1.2",
-        "@types/fs-extra": "^8.0.1",
         "@types/glob": "^7.1.1",
         "@types/hard-source-webpack-plugin": "^1.0.1",
         "@types/joi": "^14.3.4",
-        "@types/lodash": "^4.14.149",
         "@types/mocha": "^7.0.1",
         "@types/node": "^13.7.0",
         "@types/terser-webpack-plugin": "^2.2.0",
