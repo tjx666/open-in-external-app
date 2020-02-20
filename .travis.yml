@@ -10,5 +10,5 @@ install:
         fi
     - yarn
 script:
-    - yarn run test-all
+    - yarn run test
 cache: yarn
