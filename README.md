@@ -31,28 +31,34 @@ Example configuration:
 
 ```javascript
 "openInExternalApp.openMapper": [
-    {
-       // represent file extension name
-      "extensionName": "html",
-        // the external applications to open the file which extension name is html
-      "apps": [
-          // openCommand can be shell command or the complete executable application path
-          // title will be shown in the drop list if there are several apps
-        { "title": "chrome", "openCommand": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"},
-        { "title": "firefox", "openCommand": "C:\\Program Files\\Firefox Developer Edition\\firefox.exe"}
-      ]
-    },
-    {
-        "extensionName": "tsx",
-        // apps can be Object array or just is openCommand
-        // the code is command you can access from shell
-        "apps": "code"
-    },
-    {
-        "extensionName": "psd",
-        "apps": "/path/to/photoshop.exe"
-    }
-  ]
+  {
+    // represent file extension name
+    "extensionName": "html",
+    // the external applications to open the file which extension name is html
+    "apps": [
+      // openCommand can be shell command or the complete executable application path
+      // title will be shown in the drop list if there are several apps
+      {
+        "title": "chrome",
+        "openCommand": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+      },
+      {
+        "title": "firefox",
+        "openCommand": "C:\\Program Files\\Firefox Developer Edition\\firefox.exe"
+      }
+    ]
+  },
+  {
+    "extensionName": "tsx",
+    // apps can be Object array or just is openCommand
+    // the code is command you can access from shell
+    "apps": "code"
+  },
+  {
+    "extensionName": "psd",
+    "apps": "/path/to/photoshop.exe"
+  }
+]
 ```
 
 ![open multiple](https://github.com/tjx666/open-in-external-app/blob/master/images/open-multiple.png?raw=true)
