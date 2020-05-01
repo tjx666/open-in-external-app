@@ -69,11 +69,11 @@
     ],
     "main": "./out/extension.js",
     "scripts": {
-        "vscode:prepublish": "yarn run build",
+        "vscode:prepublish": "yarn build",
         "compile": "cross-env NODE_ENV=development ts-node --files -P ./build/tsconfig.json ./build",
         "test-compile": "tsc -p ./tsconfig.test.json",
         "build": "cross-env NODE_ENV=production ts-node --files -P ./build/tsconfig.json ./build",
-        "build-analyze": "cross-env NODE_ENV=production ts-node --files -P ./build/tsconfig.json ./build --analyze",
+        "build-analyze": "yarn build --analyze",
         "lint": "eslint -c .eslintrc --ext .ts ./{build,src,test}/**/*.ts",
         "test": "yarn run test-compile && node ./out/test/runTests.js"
     },
@@ -105,6 +105,7 @@
         "configuration": {
             "title": "Open in External App",
             "type": "Object",
+            "default": {},
             "properties": {
                 "openInExternalApp.openMapper": {
                     "type": "array",
@@ -129,6 +130,7 @@
                                         {
                                             "type": "object",
                                             "description": "app info",
+                                            "default": [],
                                             "required": [
                                                 "title",
                                                 "openCommand"
