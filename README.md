@@ -16,6 +16,13 @@ VSCode is a very excellent editor, but sometime I prefer to use external applica
 
 But, with this extension, you can do it more simply. Just right click to the file, and select `Open in External App`, that file would be opened by system default application. You can also use this way to open `.psd` files with photoshop, `.html` files with browser, and so on...
 
+## 🔌 Installation
+
+1. Execute `Extensions: Install Extensions` command from [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette).
+2. Type `YuTengjing.open-in-external-app` into the search form and install.
+
+Read the [extension installation guide](https://code.visualstudio.com/docs/editor/extension-gallery) for more details.
+
 ## 🔧 Configuration
 
 Via custom configuration, you can make extensions more powerful. For example, to see the rendering differences, You can open one HTML in chrome and Firefox at the same time.
