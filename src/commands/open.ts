@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
-import openFile from '../openFile';
+import openInExternalApp from '../openInExternalApp';
 
 type Uri = vscode.Uri;
 
 async function handler(uri: Uri | undefined) {
-    openFile(uri);
+    openInExternalApp(uri);
 }
 
 const command: CommandModule = {

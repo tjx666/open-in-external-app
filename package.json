@@ -1,7 +1,7 @@
 {
     "name": "open-in-external-app",
     "displayName": "Open in External App",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Open file with external application in VSCode",
     "publisher": "YuTengjing",
     "author": {
@@ -111,51 +111,60 @@
                     "description": "mapper between the file extensionName and application to open it",
                     "default": [],
                     "items": {
-                        "anyOf": [
-                            {
-                                "type": "object",
-                                "required": [
-                                    "extensionName",
-                                    "apps"
-                                ],
-                                "properties": {
-                                    "extensionName": {
-                                        "type": "string",
-                                        "description": "represent file extension name"
-                                    },
-                                    "apps": {
-                                        "type": "array",
-                                        "description": "external applications to open the file which extension name is specified in extensionName field",
-                                        "items": {
-                                            "anyOf": [
-                                                {
-                                                    "type": "object",
-                                                    "description": "app info",
-                                                    "required": [
-                                                        "title",
-                                                        "openCommand"
-                                                    ],
-                                                    "properties": {
-                                                        "title": {
-                                                            "type": "string",
-                                                            "description": "title will be shown in the drop list if there are several apps"
-                                                        },
-                                                        "openCommand": {
-                                                            "type": "string",
-                                                            "description": "command you can access from shell or absolute path of executable program"
-                                                        }
-                                                    }
+                        "type": "object",
+                        "required": [
+                            "extensionName",
+                            "apps"
+                        ],
+                        "properties": {
+                            "extensionName": {
+                                "type": "string",
+                                "description": "represent file extension name"
+                            },
+                            "apps": {
+                                "type": "array",
+                                "description": "external applications to open the file which extension name is specified in extensionName field",
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "description": "app info",
+                                            "required": [
+                                                "title",
+                                                "openCommand"
+                                            ],
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "description": "title will be shown in the drop list if there are several apps"
                                                 },
-                                                {
+                                                "openCommand": {
                                                     "type": "string",
                                                     "description": "command you can access from shell or absolute path of executable program"
+                                                },
+                                                "args": {
+                                                    "type": "array",
+                                                    "description": "arguments passed to openCommand",
+                                                    "default": [],
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "isElectronApp": {
+                                                    "type": "boolean",
+                                                    "description": "set to true when you config an electron app",
+                                                    "default": false
                                                 }
-                                            ]
+                                            }
+                                        },
+                                        {
+                                            "type": "string",
+                                            "description": "command you can access from shell or absolute path of executable program"
                                         }
-                                    }
+                                    ]
                                 }
                             }
-                        ]
+                        }
                     }
                 }
             }
@@ -176,52 +185,47 @@
     },
     "dependencies": {
         "joi": "^14.3.1",
-        "open": "6.4.0"
+        "open": "7.0.3"
     },
     "devDependencies": {
-        "@types/case-sensitive-paths-webpack-plugin": "^2.1.4",
-        "@types/circular-dependency-plugin": "^5.0.0",
         "@types/friendly-errors-webpack-plugin": "^0.1.2",
         "@types/glob": "^7.1.1",
         "@types/hard-source-webpack-plugin": "^1.0.1",
         "@types/joi": "^14.3.4",
-        "@types/mocha": "^7.0.1",
-        "@types/node": "^13.7.4",
+        "@types/mocha": "^7.0.2",
+        "@types/node": "^13.13.4",
         "@types/terser-webpack-plugin": "^2.2.0",
-        "@types/vscode": "^1.40.0",
-        "@types/webpack": "^4.41.6",
+        "@types/vscode": "1.40.0",
+        "@types/webpack": "^4.41.12",
         "@types/webpack-bundle-analyzer": "^2.13.3",
         "@types/webpack-merge": "^4.1.5",
-        "@types/webpackbar": "^2.6.0",
-        "@types/yargs": "^15.0.3",
-        "@typescript-eslint/eslint-plugin": "^2.20.0",
-        "@typescript-eslint/parser": "^2.20.0",
-        "case-sensitive-paths-webpack-plugin": "^2.3.0",
-        "circular-dependency-plugin": "^5.2.0",
+        "@types/webpackbar": "^4.0.0",
+        "@types/yargs": "^15.0.4",
+        "@typescript-eslint/eslint-plugin": "^2.30.0",
+        "@typescript-eslint/parser": "^2.30.0",
         "clean-webpack-plugin": "^3.0.0",
-        "cross-env": "^7.0.0",
+        "cross-env": "^7.0.2",
         "eslint": "^6.8.0",
-        "eslint-config-airbnb-base": "^14.0.0",
-        "eslint-plugin-import": "2.20.1",
-        "eslint-plugin-prettier": "^3.1.2",
+        "eslint-config-airbnb-base": "^14.1.0",
+        "eslint-plugin-import": "2.20.2",
+        "eslint-plugin-prettier": "^3.1.3",
         "friendly-errors-webpack-plugin": "^1.7.0",
         "glob": "^7.1.5",
         "hard-source-webpack-plugin": "^0.13.1",
-        "husky": "^4.2.3",
-        "lint-staged": "^10.0.7",
-        "mocha": "^7.0.1",
-        "prettier": "^1.19.1",
-        "size-plugin": "^2.0.1",
-        "speed-measure-webpack-plugin": "^1.3.1",
-        "terser-webpack-plugin": "^2.3.5",
-        "ts-loader": "^6.2.1",
-        "ts-node": "^8.6.2",
-        "typescript": "^3.7.5",
+        "husky": "^4.2.5",
+        "lint-staged": "^10.2.2",
+        "mocha": "^7.1.2",
+        "prettier": "^2.0.5",
+        "speed-measure-webpack-plugin": "^1.3.3",
+        "terser-webpack-plugin": "^2.3.6",
+        "ts-loader": "^7.0.2",
+        "ts-node": "^8.9.1",
+        "typescript": "^3.8.3",
         "vscode-test": "^1.3.0",
-        "webpack": "^4.41.6",
-        "webpack-bundle-analyzer": "^3.6.0",
+        "webpack": "^4.43.0",
+        "webpack-bundle-analyzer": "^3.7.0",
         "webpack-merge": "^4.2.2",
         "webpackbar": "^4.0.0",
-        "yargs": "^15.1.0"
+        "yargs": "^15.3.1"
     }
 }

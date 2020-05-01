@@ -3,12 +3,14 @@ interface CommandModule {
     handler: (...args: any[]) => any;
 }
 
-interface ExternalApplication {
+interface ExternalAppConfig {
     title: string;
     openCommand: string;
+    args?: string[];
+    isElectronApp?: boolean;
 }
 
 interface ExtensionConfigItem {
     extensionName: string;
-    apps: ExternalApplication[] | string;
+    apps: ExternalAppConfig[] | string;
 }

@@ -1,3 +1,9 @@
+## [0.0.7] - 2020-05-01
+
+### Added
+
+- support configure the openCommand arguments
+
 ## [0.0.6] - 2020-01-09
 
 ### Added

@@ -13,11 +13,13 @@ export function validateConfiguration(configuration: ExtensionConfigItem[]) {
                         joi.object({
                             title: joi.string().required(),
                             openCommand: joi.string().required(),
-                        })
+                            args: joi.array().items(joi.string().required()),
+                            isElectronApp: joi.boolean(),
+                        }),
                     ),
                 ])
                 .required(),
-        })
+        }),
     );
 
     return configScheme.validate(configuration);

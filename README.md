@@ -12,7 +12,7 @@ Open file with external application in VSCode.
 
 ## 💡 Motivation
 
-VSCode is a very excellent editor, but sometime I prefer to use external application to work with some files. For example, I like to use [typora](https://www.typora.io/) to edit the markdown files. Usually, I will right click to the file, and select `Reveal in Explorer` , then open the file using external application.
+VSCode is a very excellent editor, but sometime I prefer to use external application to work with some files. For example, I like to use [typora](https://www.typora.io/) to edit the markdown files. Usually, I will right click to the file, and select `Reveal in File Explorer` , then open the file using external application.
 
 But, with this extension, you can do it more simply. Just right click to the file, and select `Open in External App`, that file would be opened by system default application. You can also use this way to open `.psd` files with photoshop, `.html` files with browser, and so on...
 
@@ -23,48 +23,50 @@ Via custom configuration, you can make extensions more powerful. For example, to
 Example configuration:
 
 ```javascript
-"openInExternalApp.openMapper": [
-    {
-       // represent file extension name
-      "extensionName": "html",
-        // the external applications to open the file which extension name is html
-      "apps": [
-          // openCommand can be shell command or the complete executable application path
-          // title will be shown in the drop list if there are several apps
-        { "title": "chrome", "openCommand": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"},
-        { "title": "firefox", "openCommand": "C:\\Program Files\\Firefox Developer Edition\\firefox.exe"}
-      ]
-    },
-    {
-        "extensionName": "tsx",
-        // apps can be Object array or just is openCommand
-        // the code is command you can access from shell
-        "apps": "code"
-    },
-    {
-        "extensionName": "psd",
-        "apps": "/path/to/photoshop.exe"
-    }
-  ]
+{
+    "openInExternalApp.openMapper": [
+        {
+            // represent file extension name
+            "extensionName": "html",
+            // the external applications to open the file which extension name is html
+            "apps": [
+                // openCommand can be shell command or the complete executable application path
+                // title will be shown in the drop list if there are several apps
+                {
+                    "title": "chrome",
+                    "openCommand": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+                },
+                {
+                    "title": "firefox",
+                    "openCommand": "C:\\Program Files\\Firefox Developer Edition\\firefox.exe",
+                    // open in firefox under private mode
+                    "args": ["-private-window"]
+                }
+            ]
+        },
+        {
+            "extensionName": "tsx",
+            // apps can be Object array or just is openCommand
+            // the code is command you can access from shell
+            "apps": "code"
+        },
+        {
+            "extensionName": "psd",
+            "apps": "/path/to/photoshop.exe"
+        }
+    ]
+}
 ```
 
 ![open multiple](https://github.com/tjx666/open-in-external-app/blob/master/images/open-multiple.png?raw=true)
 
 In VSCode, Right-clicking is different from right-clicking while holding `alt` key. If you just right click the file, you will see the command `Open in External App`, but if you right click file while holding `alt` key, you will see the command `Open in Multiple External Apps`.
 
-![ussage](https://github.com/tjx666/open-in-external-app/blob/master/images/usage.gif?raw=true)
+![usage](https://github.com/tjx666/open-in-external-app/blob/master/images/usage.gif?raw=true)
 
-## :syringe: ​Known issues
+## :loudspeaker: Limits
 
-Now, the extension doesn't support open file that file path includes non-ascii chars.
-
-Related issues:
-
-1. [provide API vscode.env.openItem](https://github.com/microsoft/vscode/issues/88273)
-2. [shell.openExternal(path) does not work well if there are non-ascii chars in the path](https://github.com/electron/electron/issues/6302)
-3. [In some places, allow to use URL in addition to URI](https://github.com/microsoft/vscode/issues/85930)
-
-I will fix it as soon as VSCode provides a solution to deal with the issue.
+For now, if you want to open a file in the application which is developed by electron such as typora, you need to configure typora as the default application to open markdown file in your operation system. The configuration of this extension about typora is invalid.
 
 ## 🧡 Backers
 
