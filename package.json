@@ -1,7 +1,7 @@
 {
     "name": "open-in-external-app",
     "displayName": "Open in External App",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "Open file with external application in VSCode",
     "publisher": "YuTengjing",
     "author": {
@@ -96,6 +96,13 @@
             "explorer/context": [
                 {
                     "when": "!explorerResourceIsFolder",
+                    "command": "openInExternalApp.open",
+                    "alt": "openInExternalApp.openMultiple",
+                    "group": "navigation@10"
+                }
+            ],
+            "editor/title/context": [
+                {
                     "command": "openInExternalApp.open",
                     "alt": "openInExternalApp.openMultiple",
                     "group": "navigation@10"
@@ -195,7 +202,7 @@
         "@types/hard-source-webpack-plugin": "^1.0.1",
         "@types/joi": "^14.3.4",
         "@types/mocha": "^7.0.2",
-        "@types/node": "^13.13.4",
+        "@types/node": "^13.13.5",
         "@types/terser-webpack-plugin": "^2.2.0",
         "@types/vscode": "1.40.0",
         "@types/webpack": "^4.41.12",
@@ -203,8 +210,8 @@
         "@types/webpack-merge": "^4.1.5",
         "@types/webpackbar": "^4.0.0",
         "@types/yargs": "^15.0.4",
-        "@typescript-eslint/eslint-plugin": "^2.30.0",
-        "@typescript-eslint/parser": "^2.30.0",
+        "@typescript-eslint/eslint-plugin": "^2.31.0",
+        "@typescript-eslint/parser": "^2.31.0",
         "clean-webpack-plugin": "^3.0.0",
         "cross-env": "^7.0.2",
         "eslint": "^6.8.0",
@@ -219,9 +226,9 @@
         "mocha": "^7.1.2",
         "prettier": "^2.0.5",
         "speed-measure-webpack-plugin": "^1.3.3",
-        "terser-webpack-plugin": "^2.3.6",
+        "terser-webpack-plugin": "^3.0.0",
         "ts-loader": "^7.0.2",
-        "ts-node": "^8.9.1",
+        "ts-node": "^8.10.1",
         "typescript": "^3.8.3",
         "vscode-test": "^1.3.0",
         "webpack": "^4.43.0",

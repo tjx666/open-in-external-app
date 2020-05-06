@@ -1,3 +1,9 @@
+## [0.0.8] - 2020-05-06
+
+### Added
+
+- support open with editor title context menu
+
 ## [0.0.7] - 2020-05-01
 
 ### Added
