@@ -23,10 +23,8 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
 
     if (extensionName) {
         const configuration: ExtensionConfigItem[] | null = getExtensionConfig();
-
         if (configuration) {
             const configItem = configuration.find((item) => item.extensionName === extensionName);
-
             if (configItem) {
                 const candidateApps = configItem.apps;
                 if (typeof candidateApps === 'string') {

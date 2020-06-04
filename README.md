@@ -52,12 +52,14 @@ Example configuration:
             ]
         },
         {
+            "title": "Visual Studio Code",
             "extensionName": "tsx",
             // apps can be Object array or just is openCommand
             // the code is command you can access from shell
             "apps": "code"
         },
         {
+            "title": "photoshop",
             "extensionName": "psd",
             "apps": "/path/to/photoshop.exe"
         }
@@ -73,27 +75,50 @@ In VSCode, Right-clicking is different from right-clicking while holding `alt` k
 
 ## :loudspeaker: Limits
 
-This extension use two ways to open file in external application.
+This extension use two ways to open file in external applications.
 
-### 1. Node package [open](https://github.com/sindresorhus/open)
+### 1. Node package: [open](https://github.com/sindresorhus/open)
 
-This package has one limit that can't open a file which is also made by electron. For example, you can't open `md` file in `typora`using this package.
+This package has one limit that can't open a file which is also made by electron. For example, you can't open `md` file in `typora` using this package. The `openCommand`, `args` configuration item is also supported by this package.
 
-### 2. Extension API vscode.env.openExternal
+### 2. VSCode extension API: `vscode.env.openExternal(target: Uri)`
 
-This API has one limit that can't open file path which includes `Non-ascii` characters.
+This API has one limit that can't open file path which includes `Non-ascii` characters, but support open file in application which is made by electron. This API can only pass one argument `target`, so `openCommand` and `args` configuration item is not work.
 
 If you want to open file in application which is made by electron, you can choose two ways:
 
-```javascript
-// 1. don not config it in VSCode settings
+1. don not config it in VSCode settings, and set the default application of your operation system to open that file format.
 
-// 2. using isElectronApp option
-{
-    "extensionName": "md",
-    "isElectronApp": "/path/to/typora.exe"
-}
-```
+2. using `isElectronApp` option:
+
+   ```javascript
+   [
+     // one app
+     {
+       extensionName: 'md',
+       isElectronApp: true,
+     },
+     // many apps
+     {
+       extensionName: 'md',
+       apps: [
+         {
+           title: 'typora',
+           isElectronApp: true,
+           // following config is not work
+           // "openCommand": "/path/to/typora.exe",
+           // "args": ["--slient"]
+         },
+         {
+           title: 'idea',
+           extensionName: 'md',
+           openCommand: '/path/to/idea.exe',
+           args: ['--slient'],
+         },
+       ],
+     },
+   ];
+   ```
 
 ## 🧡 Backers
 

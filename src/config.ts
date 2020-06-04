@@ -12,7 +12,7 @@ export function validateConfiguration(configuration: ExtensionConfigItem[]) {
                     joi.array().items(
                         joi.object({
                             title: joi.string().required(),
-                            openCommand: joi.string().required(),
+                            openCommand: joi.string(),
                             args: joi.array().items(joi.string().required()),
                             isElectronApp: joi.boolean(),
                         }),

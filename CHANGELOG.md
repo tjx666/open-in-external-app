@@ -1,3 +1,9 @@
+## [0.0.9] - 2020-06-04
+
+### Fixed
+
+- [issue #6](https://github.com/tjx666/open-in-external-app/issues/6)
+
 ## [0.0.8] - 2020-05-06
 
 ### Added
