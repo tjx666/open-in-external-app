@@ -79,7 +79,7 @@ This extension use two ways to open file in external applications.
 
 ### 1. Node package: [open](https://github.com/sindresorhus/open)
 
-This package has one limit that can't open a file which is also made by electron. For example, you can't open `md` file in `typora` using this package. The `openCommand`, `args` configuration item is also supported by this package.
+This package has one limit that can't open a file which is also made by electron. For example, you can't open `md` file in `typora` using this package. The `openCommand`, `args` configuration item is also supported by this package. When ``isElectronApp: false`(by default), extension will use this way.
 
 ### 2. VSCode extension API: `vscode.env.openExternal(target: Uri)`
 
@@ -92,32 +92,33 @@ If you want to open file in application which is made by electron, you can choos
 2. using `isElectronApp` option:
 
    ```javascript
-   [
-     // one app
-     {
-       extensionName: 'md',
-       isElectronApp: true,
-     },
-     // many apps
-     {
-       extensionName: 'md',
-       apps: [
-         {
-           title: 'typora',
-           isElectronApp: true,
-           // following config is not work
-           // "openCommand": "/path/to/typora.exe",
-           // "args": ["--slient"]
-         },
-         {
-           title: 'idea',
-           extensionName: 'md',
-           openCommand: '/path/to/idea.exe',
-           args: ['--slient'],
-         },
-       ],
-     },
-   ];
+   {
+        "extensionName": "md",
+        "isElectronApp": true,
+   }
+   ```
+
+   multiple apps example:
+
+   ```javascript
+   {
+        "extensionName": "md",
+        "apps": [
+            {
+                "title": "typora",
+                "isElectronApp": true,
+                // following config item is not work
+                // "openCommand": "/path/to/typora.exe",
+                // "args": ["--slient"]
+            },
+            {
+                "title": "idea",
+                "extensionName": "md",
+                "openCommand": "/path/to/idea.exe",
+                "args": ["--slient"],
+            }
+        ]
+    }
    ```
 
 ## 🧡 Backers
