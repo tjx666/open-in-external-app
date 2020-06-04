@@ -1,20 +1,20 @@
 import { extname } from 'path';
-import * as vscode from 'vscode';
+import vscode, { Uri } from 'vscode';
 import _open from 'open';
 
 import getExtensionConfig from './config';
-import { isRepeat } from './utils';
+import { isRepeat, isAsciiString } from './utils';
 
 // FIXME: support none-ascii character path
 function open(filePath: string, appConfig: ExternalAppConfig) {
     if (appConfig.isElectronApp) {
-        vscode.env.openExternal(vscode.Uri.file(filePath));
-        return;
+        vscode.env.openExternal(Uri.file(filePath));
+    } else if (appConfig.openCommand) {
+        _open(filePath, { app: [appConfig.openCommand, ...(appConfig.args ?? [])] });
     }
-    _open(filePath, { app: [appConfig.openCommand, ...(appConfig.args ?? [])] });
 }
 
-export default async function openInExternalApp(uri: vscode.Uri | undefined, isMultiple = false) {
+export default async function openInExternalApp(uri: Uri | undefined, isMultiple = false) {
     const filePath = uri?.fsPath ?? vscode.window.activeTextEditor?.document.uri.fsPath;
     if (!filePath) return;
 
@@ -73,5 +73,9 @@ export default async function openInExternalApp(uri: vscode.Uri | undefined, isM
         }
     }
 
-    vscode.env.openExternal(vscode.Uri.file(filePath));
+    if (isAsciiString(filePath)) {
+        vscode.env.openExternal(Uri.file(filePath));
+    } else {
+        _open(filePath);
+    }
 }

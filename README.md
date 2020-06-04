@@ -73,7 +73,27 @@ In VSCode, Right-clicking is different from right-clicking while holding `alt` k
 
 ## :loudspeaker: Limits
 
-For now, if you want to open a file in the application which is developed by electron such as typora, you need to configure typora as the default application to open markdown file in your operation system. The configuration of this extension about typora is invalid.
+This extension use two ways to open file in external application.
+
+### 1. Node package [open](https://github.com/sindresorhus/open)
+
+This package has one limit that can't open a file which is also made by electron. For example, you can't open `md` file in `typora`using this package.
+
+### 2. Extension API vscode.env.openExternal
+
+This API has one limit that can't open file path which includes `Non-ascii` characters.
+
+If you want to open file in application which is made by electron, you can choose two ways:
+
+```javascript
+// 1. don not config it in VSCode settings
+
+// 2. using isElectronApp option
+{
+    "extensionName": "md",
+    "isElectronApp": "/path/to/typora.exe"
+}
+```
 
 ## 🧡 Backers
 

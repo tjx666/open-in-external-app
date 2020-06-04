@@ -5,7 +5,7 @@ interface CommandModule {
 
 interface ExternalAppConfig {
     title: string;
-    openCommand: string;
+    openCommand?: string;
     args?: string[];
     isElectronApp?: boolean;
 }
