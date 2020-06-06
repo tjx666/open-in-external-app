@@ -33,7 +33,10 @@ describe('#config', () => {
                 },
                 {
                     extensionName: 'md',
-                    apps: 'sublime',
+                    apps: {
+                        title: 'Typora',
+                        isElectronApp: true,
+                    },
                 },
             ];
             assert.strictEqual(validateConfiguration(configuration).error, null);

@@ -52,14 +52,12 @@ Example configuration:
             ]
         },
         {
-            "title": "Visual Studio Code",
             "extensionName": "tsx",
             // apps can be Object array or just is openCommand
             // the code is command you can access from shell
             "apps": "code"
         },
         {
-            "title": "photoshop",
             "extensionName": "psd",
             "apps": "/path/to/photoshop.exe"
         }
@@ -79,13 +77,13 @@ This extension use two ways to open file in external applications.
 
 ### 1. Node package: [open](https://github.com/sindresorhus/open)
 
-This package has one limit that can't open a file which is also made by electron. For example, you can't open `md` file in `typora` using this package. The `openCommand`, `args` configuration item is also supported by this package. When ``isElectronApp: false`(by default), extension will use this way.
+This package has one limit that can't open a file which is also made by electron. For example, you can't open `md` file in `typora` using this package. The `openCommand`, `args` configuration item is also supported by this package. When `isElectronApp: false`(by default), extension will use this way.
 
 ### 2. VSCode extension API: `vscode.env.openExternal(target: Uri)`
 
 This API has one limit that can't open file path which includes `Non-ascii` characters, but support open file in application which is made by electron. This API can only pass one argument `target`, so `openCommand` and `args` configuration item is not work.
 
-If you want to open file in application which is made by electron, you can choose two ways:
+If you want to open file in application which is made by electron, you can choose one of two ways:
 
 1. don not config it in VSCode settings, and set the default application of your operation system to open that file format.
 

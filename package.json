@@ -1,7 +1,7 @@
 {
     "name": "open-in-external-app",
     "displayName": "Open in External App",
-    "version": "0.0.8",
+    "version": "0.1.0",
     "description": "Open file with external application in VSCode",
     "publisher": "YuTengjing",
     "author": {
@@ -139,8 +139,7 @@
                                             "description": "app info",
                                             "default": [],
                                             "required": [
-                                                "title",
-                                                "openCommand"
+                                                "title"
                                             ],
                                             "properties": {
                                                 "title": {
@@ -198,11 +197,11 @@
     },
     "devDependencies": {
         "@types/friendly-errors-webpack-plugin": "^0.1.2",
-        "@types/glob": "^7.1.1",
+        "@types/glob": "^7.1.2",
         "@types/hard-source-webpack-plugin": "^1.0.1",
         "@types/joi": "^14.3.4",
         "@types/mocha": "^7.0.2",
-        "@types/node": "^14.0.10",
+        "@types/node": "^14.0.11",
         "@types/terser-webpack-plugin": "^3.0.0",
         "@types/vscode": "1.40.0",
         "@types/webpack": "^4.41.17",
@@ -214,7 +213,7 @@
         "@typescript-eslint/parser": "^3.1.0",
         "clean-webpack-plugin": "^3.0.0",
         "cross-env": "^7.0.2",
-        "eslint": "^7.1.0",
+        "eslint": "^7.2.0",
         "eslint-config-airbnb-base": "^14.1.0",
         "eslint-plugin-import": "2.20.2",
         "eslint-plugin-prettier": "^3.1.3",
@@ -229,7 +228,7 @@
         "terser-webpack-plugin": "^3.0.3",
         "ts-loader": "^7.0.5",
         "ts-node": "^8.10.2",
-        "typescript": "^3.9.3",
+        "typescript": "^3.9.5",
         "vscode-test": "^1.4.0",
         "webpack": "^4.43.0",
         "webpack-bundle-analyzer": "^3.8.0",
