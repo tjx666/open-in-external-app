@@ -1,7 +1,7 @@
 {
     "name": "open-in-external-app",
     "displayName": "Open in External App",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Open file with external application in VSCode",
     "publisher": "YuTengjing",
     "author": {
@@ -33,7 +33,7 @@
         "url": "https://github.com/tjx666/open-in-external-app"
     },
     "engines": {
-        "vscode": "^1.40.0"
+        "vscode": "^1.46.0"
     },
     "categories": [
         "Other"
@@ -126,8 +126,19 @@
                         ],
                         "properties": {
                             "extensionName": {
-                                "type": "string",
-                                "description": "represent file extension name"
+                                "anyOf": [
+                                    {
+                                        "type": "string",
+                                        "description": "matched extension name"
+                                    },
+                                    {
+                                        "type": "array",
+                                        "description": "matched extension name array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                ]
                             },
                             "apps": {
                                 "type": "array",
@@ -192,48 +203,48 @@
         ]
     },
     "dependencies": {
-        "joi": "^14.3.1",
+        "joi": "^17.1.1",
         "open": "7.0.4"
     },
     "devDependencies": {
         "@types/friendly-errors-webpack-plugin": "^0.1.2",
-        "@types/glob": "^7.1.2",
+        "@types/glob": "^7.1.3",
         "@types/hard-source-webpack-plugin": "^1.0.1",
         "@types/joi": "^14.3.4",
-        "@types/mocha": "^7.0.2",
-        "@types/node": "^14.0.11",
+        "@types/mocha": "^8.0.0",
+        "@types/node": "^14.0.23",
         "@types/terser-webpack-plugin": "^3.0.0",
-        "@types/vscode": "1.40.0",
-        "@types/webpack": "^4.41.17",
+        "@types/vscode": "1.46.0",
+        "@types/webpack": "^4.41.21",
         "@types/webpack-bundle-analyzer": "^3.8.0",
         "@types/webpack-merge": "^4.1.5",
         "@types/webpackbar": "^4.0.0",
         "@types/yargs": "^15.0.5",
-        "@typescript-eslint/eslint-plugin": "^3.1.0",
-        "@typescript-eslint/parser": "^3.1.0",
+        "@typescript-eslint/eslint-plugin": "^3.6.1",
+        "@typescript-eslint/parser": "^3.6.1",
         "clean-webpack-plugin": "^3.0.0",
         "cross-env": "^7.0.2",
-        "eslint": "^7.2.0",
-        "eslint-config-airbnb-base": "^14.1.0",
-        "eslint-plugin-import": "2.20.2",
-        "eslint-plugin-prettier": "^3.1.3",
+        "eslint": "^7.4.0",
+        "eslint-config-airbnb-base": "^14.2.0",
+        "eslint-plugin-import": "2.22.0",
+        "eslint-plugin-prettier": "^3.1.4",
         "friendly-errors-webpack-plugin": "^1.7.0",
         "glob": "^7.1.5",
         "hard-source-webpack-plugin": "^0.13.1",
         "husky": "^4.2.5",
-        "lint-staged": "^10.2.9",
-        "mocha": "^7.2.0",
+        "lint-staged": "^10.2.11",
+        "mocha": "^8.0.1",
         "prettier": "^2.0.5",
         "speed-measure-webpack-plugin": "^1.3.3",
-        "terser-webpack-plugin": "^3.0.3",
-        "ts-loader": "^7.0.5",
+        "terser-webpack-plugin": "^3.0.7",
+        "ts-loader": "^8.0.1",
         "ts-node": "^8.10.2",
-        "typescript": "^3.9.5",
+        "typescript": "^3.9.7",
         "vscode-test": "^1.4.0",
         "webpack": "^4.43.0",
         "webpack-bundle-analyzer": "^3.8.0",
-        "webpack-merge": "^4.2.2",
+        "webpack-merge": "^5.0.9",
         "webpackbar": "^4.0.0",
-        "yargs": "^15.3.1"
+        "yargs": "^15.4.1"
     }
 }

@@ -1,13 +1,13 @@
-import * as vscode from 'vscode';
+import vscode from 'vscode';
 import joi from 'joi';
 
 export function validateConfiguration(configuration: ExtensionConfigItem[]) {
     const configScheme = joi.array().items(
         joi.object({
-            extensionName: joi.string().required(),
+            extensionName: joi.alternatives().try(joi.string(), joi.array().items(joi.string())).required(),
             apps: joi
                 .alternatives()
-                .try([
+                .try(
                     joi.string(),
                     joi.array().items(
                         joi.object({
@@ -17,7 +17,7 @@ export function validateConfiguration(configuration: ExtensionConfigItem[]) {
                             isElectronApp: joi.boolean(),
                         }),
                     ),
-                ])
+                )
                 .required(),
         }),
     );

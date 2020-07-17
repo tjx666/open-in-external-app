@@ -1,3 +1,9 @@
+## [0.2.0] - 2020-07-18
+
+### Added
+
+- extensionName in configuration allows string array [issue #9](https://github.com/tjx666/open-in-external-app/issues/9)
+
 ## [0.1.0] - 2020-06-06
 
 ### Fixed

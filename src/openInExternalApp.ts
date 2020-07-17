@@ -3,7 +3,7 @@ import vscode, { Uri } from 'vscode';
 import _open from 'open';
 
 import getExtensionConfig from './config';
-import { isRepeat, isAsciiString } from './utils';
+import { isAsciiString } from './utils';
 
 // FIXME: support none-ascii character path
 function open(filePath: string, appConfig: ExternalAppConfig) {
@@ -24,7 +24,11 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
     if (extensionName) {
         const configuration: ExtensionConfigItem[] | null = getExtensionConfig();
         if (configuration) {
-            const configItem = configuration.find((item) => item.extensionName === extensionName);
+            const configItem = configuration.find((item) => {
+                return Array.isArray(item.extensionName)
+                    ? item.extensionName.some((name) => name === extensionName)
+                    : item.extensionName === extensionName;
+            });
             if (configItem) {
                 const candidateApps = configItem.apps;
                 if (typeof candidateApps === 'string') {
@@ -38,7 +42,17 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
                         return;
                     }
 
-                    if (isRepeat(candidateApps, (a, b) => a.title === b.title)) {
+                    let isRepeat = false;
+                    const traversedTitles = new Set();
+                    for (let i = 0, len = candidateApps.length; i < len; i++) {
+                        const { title } = candidateApps[i];
+                        if (traversedTitles.has(title)) {
+                            isRepeat = true;
+                            break;
+                        }
+                        traversedTitles.add(title);
+                    }
+                    if (isRepeat) {
                         vscode.window.showErrorMessage(
                             `You can't set two application using the same title, please correct your configuration first!`,
                         );
