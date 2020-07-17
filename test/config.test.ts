@@ -33,13 +33,15 @@ describe('#config', () => {
                 },
                 {
                     extensionName: 'md',
-                    apps: {
-                        title: 'Typora',
-                        isElectronApp: true,
-                    },
+                    apps: [
+                        {
+                            title: 'Typora',
+                            isElectronApp: true,
+                        },
+                    ],
                 },
             ];
-            assert.strictEqual(validateConfiguration(configuration).error, null);
+            assert.notStrictEqual(validateConfiguration(configuration).error, null);
         });
     });
 });
