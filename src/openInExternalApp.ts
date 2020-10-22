@@ -1,18 +1,8 @@
 import { extname } from 'path';
 import vscode, { Uri } from 'vscode';
-import _open from 'open';
 
 import getExtensionConfig from './config';
-import { isAsciiString } from './utils';
-
-// FIXME: support none-ascii character path
-function open(filePath: string, appConfig: ExternalAppConfig) {
-    if (appConfig.isElectronApp) {
-        vscode.env.openExternal(Uri.file(filePath));
-    } else if (appConfig.openCommand) {
-        _open(filePath, { app: [appConfig.openCommand, ...(appConfig.args ?? [])] });
-    }
-}
+import { open, isAsciiString } from './utils';
 
 export default async function openInExternalApp(uri: Uri | undefined, isMultiple = false) {
     const filePath = uri?.fsPath ?? vscode.window.activeTextEditor?.document.uri.fsPath;
@@ -21,6 +11,8 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
     const ext = extname(filePath);
     const extensionName = ext === '' || ext === '.' ? null : ext.slice(1);
 
+    // when there is configuration map to it's extension, use use [open](https://github.com/sindresorhus/open)
+    // except for configured appConfig.isElectronApp option
     if (extensionName) {
         const configuration: ExtensionConfigItem[] | null = getExtensionConfig();
         if (configuration) {
@@ -32,7 +24,7 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
             if (configItem) {
                 const candidateApps = configItem.apps;
                 if (typeof candidateApps === 'string') {
-                    _open(filePath, { app: candidateApps });
+                    open(filePath, candidateApps);
                     return;
                 }
 
@@ -85,9 +77,12 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
         }
     }
 
+    // use vscode builtin API when filePath combines with ascii characters
     if (isAsciiString(filePath)) {
         vscode.env.openExternal(Uri.file(filePath));
-    } else {
-        _open(filePath);
+    }
+    // otherwise use [open](https://github.com/sindresorhus/open) which support arguments
+    else {
+        open(filePath);
     }
 }

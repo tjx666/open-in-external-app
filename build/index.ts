@@ -7,18 +7,21 @@ const isProd = process.env.NODE_ENV !== 'development';
 const compiler = webpack(isProd ? prodWebpackConfig : devWebpackConfig);
 
 compiler.run((error, stats) => {
-    const compileError: Error & { details?: string } = error;
-
     if (error) {
         console.error(error);
-        compileError.details && console.error(compileError.details);
         return;
     }
 
-    const prodStatsOpts = {
+    const prodStats = {
         preset: 'normal',
         colors: true,
     };
 
-    console.log(stats.toString(isProd ? prodStatsOpts : 'minimal'));
+    console.log(stats?.toString(isProd ? prodStats : 'minimal'));
+});
+
+compiler.close((err) => {
+    if (err) {
+        console.error(err);
+    }
 });

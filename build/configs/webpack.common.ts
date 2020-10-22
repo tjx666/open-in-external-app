@@ -2,7 +2,6 @@ import { resolve } from 'path';
 import { Configuration } from 'webpack';
 import WebpackBar from 'webpackbar';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
 import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin';
 
 const projectRoot = resolve(__dirname, '../../');
@@ -38,9 +37,6 @@ const commonWebpackConfig: Configuration = {
         }),
         new FriendlyErrorsPlugin(),
         new CleanWebpackPlugin(),
-        new HardSourceWebpackPlugin({
-            info: { mode: 'none', level: 'warn' },
-        }),
     ],
 };
 
