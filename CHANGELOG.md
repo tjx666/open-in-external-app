@@ -1,3 +1,9 @@
+## [0.2.1] - 2020-10-23
+
+### Changed
+
+- upgrade deps to latest includes webpack5
+
 ## [0.2.0] - 2020-07-18
 
 ### Added
