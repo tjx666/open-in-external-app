@@ -141,11 +141,15 @@
                                 ]
                             },
                             "apps": {
-                                "type": "array",
                                 "description": "external applications to open the file which extension name is specified in extensionName field",
-                                "items": {
-                                    "anyOf": [
-                                        {
+                                "anyOf": [
+                                    {
+                                        "type": "string",
+                                        "description": "command you can access from shell or absolute path of executable program"
+                                    },
+                                    {
+                                        "type": "array",
+                                        "items": {
                                             "type": "object",
                                             "description": "app info",
                                             "default": [],
@@ -175,13 +179,9 @@
                                                     "default": false
                                                 }
                                             }
-                                        },
-                                        {
-                                            "type": "string",
-                                            "description": "command you can access from shell or absolute path of executable program"
                                         }
-                                    ]
-                                }
+                                    }
+                                ]
                             }
                         }
                     }
