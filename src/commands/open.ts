@@ -3,7 +3,7 @@ import openInExternalApp from '../openInExternalApp';
 
 type Uri = vscode.Uri;
 
-async function handler(uri: Uri | undefined) {
+async function handler(uri: Uri | undefined): Promise<void> {
     openInExternalApp(uri);
 }
 
