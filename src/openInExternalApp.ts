@@ -8,17 +8,33 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
     const filePath = uri?.fsPath ?? vscode.window.activeTextEditor?.document.uri.fsPath;
     if (!filePath) return;
 
+    const configuration: ExtensionConfigItem[] | null = getExtensionConfig();
+    const allFilesOpenWithConfig = configuration?.find((item) => item.extensionName === '*');
+    if (allFilesOpenWithConfig) {
+        const { apps } = allFilesOpenWithConfig;
+        if (typeof apps === 'string') {
+            open(filePath, apps);
+            return;
+        }
+
+        if (Array.isArray(apps) && apps.length === 1) {
+            open(filePath, apps[0]);
+            return;
+        }
+    }
+
     const ext = extname(filePath);
     const extensionName = ext === '' || ext === '.' ? null : ext.slice(1);
 
     // when there is configuration map to it's extension, use use [open](https://github.com/sindresorhus/open)
     // except for configured appConfig.isElectronApp option
     if (extensionName) {
-        const configuration: ExtensionConfigItem[] | null = getExtensionConfig();
         if (configuration) {
-            const configItem = configuration.find((item) => Array.isArray(item.extensionName)
+            const configItem = configuration.find((item) =>
+                Array.isArray(item.extensionName)
                     ? item.extensionName.some((name) => name === extensionName)
-                    : item.extensionName === extensionName);
+                    : item.extensionName === extensionName,
+            );
             if (configItem) {
                 const candidateApps = configItem.apps;
                 if (typeof candidateApps === 'string') {
