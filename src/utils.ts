@@ -2,7 +2,7 @@ import vscode, { Uri } from 'vscode';
 import _open from 'open';
 
 // FIXME: support none-ascii character path
-export function open(filePath: string, appConfig?: string | ExternalAppConfig) {
+export function open(filePath: string, appConfig?: string | ExternalAppConfig): void {
     if (typeof appConfig === 'string') {
         _open(filePath, { app: appConfig });
     } else if (appConfig !== null && typeof appConfig === 'object') {

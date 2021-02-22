@@ -4,7 +4,7 @@ import vscode, { Uri } from 'vscode';
 import getExtensionConfig from './config';
 import { open, isAsciiString } from './utils';
 
-export default async function openInExternalApp(uri: Uri | undefined, isMultiple = false) {
+export default async function openInExternalApp(uri: Uri | undefined, isMultiple = false): Promise<void> {
     const filePath = uri?.fsPath ?? vscode.window.activeTextEditor?.document.uri.fsPath;
     if (!filePath) return;
 
@@ -16,11 +16,9 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
     if (extensionName) {
         const configuration: ExtensionConfigItem[] | null = getExtensionConfig();
         if (configuration) {
-            const configItem = configuration.find((item) => {
-                return Array.isArray(item.extensionName)
+            const configItem = configuration.find((item) => Array.isArray(item.extensionName)
                     ? item.extensionName.some((name) => name === extensionName)
-                    : item.extensionName === extensionName;
-            });
+                    : item.extensionName === extensionName);
             if (configItem) {
                 const candidateApps = configItem.apps;
                 if (typeof candidateApps === 'string') {

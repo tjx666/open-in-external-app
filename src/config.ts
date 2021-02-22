@@ -1,7 +1,7 @@
 import vscode from 'vscode';
 import joi from 'joi';
 
-export function validateConfiguration(configuration: ExtensionConfigItem[]) {
+export function validateConfiguration(configuration: ExtensionConfigItem[]): joi.ValidationResult {
     const configScheme = joi.array().items(
         joi.object({
             extensionName: joi.alternatives().try(joi.string(), joi.array().items(joi.string())).required(),
@@ -25,7 +25,7 @@ export function validateConfiguration(configuration: ExtensionConfigItem[]) {
     return configScheme.validate(configuration);
 }
 
-export default function getExtensionConfig() {
+export default function getExtensionConfig(): ExtensionConfigItem[] | null {
     const configuration: ExtensionConfigItem[] | undefined = vscode.workspace
         .getConfiguration()
         .get('openInExternalApp.openMapper');
