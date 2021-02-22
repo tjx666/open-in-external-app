@@ -1,3 +1,13 @@
+## [0.3.0] - 2021-02-22
+
+### Fixed
+
+- configuration description
+
+### Added
+
+- `extensionName` config item support wildcard which support open all files in specified app
+
 ## [0.2.1] - 2020-10-23
 
 ### Changed
