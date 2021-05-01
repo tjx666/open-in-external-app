@@ -22,7 +22,7 @@ const mergedConfiguration: Configuration = merge(commonWebpackConfig, {
             new TerserPlugin({
                 parallel: true,
                 extractComments: false,
-            }) as any,
+            }),
         ],
     },
 });

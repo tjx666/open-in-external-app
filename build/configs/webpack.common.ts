@@ -2,7 +2,7 @@ import { resolve } from 'path';
 import { Configuration } from 'webpack';
 import WebpackBar from 'webpackbar';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin';
+import FriendlyErrorsPlugin from '@soda/friendly-errors-webpack-plugin';
 
 const projectRoot = resolve(__dirname, '../../');
 const commonWebpackConfig: Configuration = {
