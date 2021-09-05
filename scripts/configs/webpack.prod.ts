@@ -1,4 +1,4 @@
-import { argv } from 'yargs';
+import yargs from 'yargs';
 import { BannerPlugin, Configuration } from 'webpack';
 import { merge } from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
@@ -11,8 +11,7 @@ const mergedConfiguration: Configuration = merge(commonWebpackConfig, {
     mode: 'production',
     plugins: [
         new BannerPlugin({
-            banner:
-                '/** @preserve powered by vscode-extension-boilerplate(https://github.com/tjx666/vscode-extension-boilerplate) */',
+            banner: '/** @preserve powered by vscode-extension-boilerplate(https://github.com/tjx666/vscode-extension-boilerplate) */',
             raw: true,
         }),
     ],
@@ -29,6 +28,12 @@ const mergedConfiguration: Configuration = merge(commonWebpackConfig, {
 
 // eslint-disable-next-line import/no-mutable-exports
 let prodWebpackConfiguration = mergedConfiguration;
+const argv = yargs(process.argv.slice(2))
+    .options({
+        analyze: { type: 'boolean', default: false },
+    })
+    .parseSync();
+
 if (argv.analyze) {
     mergedConfiguration.plugins!.push(new BundleAnalyzerPlugin());
     const smp = new SpeedMeasurePlugin();

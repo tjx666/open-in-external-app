@@ -1,4 +1,3 @@
-/* eslint-disable import/no-duplicates */
 declare module 'speed-measure-webpack-plugin' {
     import { Configuration, Plugin } from 'webpack';
 
@@ -18,7 +17,7 @@ declare module 'speed-measure-webpack-plugin' {
     export = SpeedMeasurePlugin;
 }
 
-declare module '@soda/friendly-errors-webpack-plugin' {
+declare module '@nuxtjs/friendly-errors-webpack-plugin' {
     import { Plugin, Compiler } from 'webpack';
 
     declare class FriendlyErrorsWebpackPlugin extends Plugin {

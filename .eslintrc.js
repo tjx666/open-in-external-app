@@ -1,3 +1,4 @@
+const { resolve } = require;
 const OFF = 0;
 const WARN = 1;
 
@@ -22,7 +23,10 @@ module.exports = {
     settings: {
         'import/resolver': {
             node: {
-                extensions: ['.ts'],
+                extensions: ['.ts', '.tsx', '.js', '.json'],
+            },
+            typescript: {
+                project: [resolve('./tsconfig.json'), resolve('./scripts/tsconfig.json')],
             },
         },
     },
@@ -51,7 +55,7 @@ module.exports = {
             },
         },
         {
-            files: ['build/**/*.ts'],
+            files: ['scripts/**/*.ts'],
             rules: {
                 'import/no-extraneous-dependencies': OFF,
             },
