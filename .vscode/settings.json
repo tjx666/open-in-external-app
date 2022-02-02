@@ -3,7 +3,7 @@
     "search.exclude": {
         "**/node_modules": true,
         "out": true,
-        "test-fixture": true,
+        "test-workspace": true,
         ".vscode-test": true,
         "*.lock": true
     },
@@ -12,7 +12,7 @@
         "**/.git/subtree-cache/**": true,
         "**/node_modules/**": true,
         "**/out/**": true,
-        "**/test-fixture/**": true,
+        "**/test-workspace/**": true,
         "**/.vscode-test/**": true
     },
     "stylelint.enable": false,

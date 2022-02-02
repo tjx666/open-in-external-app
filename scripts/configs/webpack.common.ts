@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { Configuration } from 'webpack';
 import WebpackBar from 'webpackbar';
-import FriendlyErrorsPlugin from '@nuxtjs/friendly-errors-webpack-plugin';
+import FriendlyErrorsPlugin from '@nuxt/friendly-errors-webpack-plugin';
 
 const projectRoot = resolve(__dirname, '../../');
 const commonWebpackConfig: Configuration = {

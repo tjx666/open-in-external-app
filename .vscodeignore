@@ -11,7 +11,7 @@ src/
 .vscode-test/
 test/
 out/test/
-test-fixture/
+test-workspace/
 .nyc_output/
 coverage/
 build/

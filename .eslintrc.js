@@ -46,6 +46,7 @@ module.exports = {
         'no-param-reassign': OFF,
         'no-plusplus': OFF,
         'no-unused-expressions': OFF,
+        'no-restricted-syntax': OFF
     },
     overrides: [
         {

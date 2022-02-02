@@ -33,7 +33,7 @@
         "url": "https://github.com/tjx666/open-in-external-app"
     },
     "engines": {
-        "vscode": "^1.55.0"
+        "vscode": "^1.63.2"
     },
     "categories": [
         "Other"
@@ -69,13 +69,13 @@
     ],
     "main": "./out/extension.js",
     "scripts": {
-        "vscode:prepublish": "yarn build",
+        "vscode:prepublish": "npm run build",
         "compile": "cross-env NODE_ENV=development ts-node --files -P ./scripts/tsconfig.json ./scripts",
         "test-compile": "tsc -p ./tsconfig.test.json",
         "build": "cross-env NODE_ENV=production ts-node --files -P ./scripts/tsconfig.json ./scripts",
-        "build-analyze": "yarn build --analyze",
+        "build-analyze": "npm run build --analyze",
         "lint": "eslint -c .eslintrc.js --ext .ts ./{scripts,src,test}/**/*.ts",
-        "test": "yarn run test-compile && node ./out/test/runTests.js"
+        "test": "npm run test-compile && node ./out/test/runTests.js"
     },
     "activationEvents": [
         "onCommand:openInExternalApp.open",
@@ -203,46 +203,44 @@
         ]
     },
     "dependencies": {
-        "joi": "^17.4.2",
-        "open": "8.2.1"
+        "joi": "^17.6.0",
+        "open": "8.4.0"
     },
     "devDependencies": {
-        "@nuxtjs/friendly-errors-webpack-plugin": "^2.1.0",
-        "@types/glob": "^7.1.4",
-        "@types/mocha": "^9.0.0",
-        "@types/node": "^16.7.10",
-        "@types/terser-webpack-plugin": "^5.2.0",
-        "@types/vscode": "1.60.0",
+        "@nuxt/friendly-errors-webpack-plugin": "^2.1.0",
+        "@types/glob": "^7.2.0",
+        "@types/mocha": "^9.1.0",
+        "@types/node": "^17.0.14",
+        "@types/vscode": "1.63.2",
         "@types/webpack": "^5.28.0",
         "@types/webpack-bundle-analyzer": "^4.4.1",
-        "@types/webpack-merge": "^5.0.0",
-        "@types/webpackbar": "^4.0.2",
-        "@types/yargs": "^17.0.2",
-        "@typescript-eslint/eslint-plugin": "^4.30.0",
-        "@typescript-eslint/parser": "^4.30.0",
+        "@types/webpackbar": "^4.0.3",
+        "@types/yargs": "^17.0.8",
+        "@typescript-eslint/eslint-plugin": "^5.10.2",
+        "@typescript-eslint/parser": "^5.10.2",
+        "@vscode/test-electron": "2.1.1",
         "clean-webpack-plugin": "^4.0.0",
         "cross-env": "^7.0.3",
-        "eslint": "^7.32.0",
-        "eslint-config-airbnb-base": "^14.2.1",
+        "eslint": "^8.8.0",
+        "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-prettier": "^8.3.0",
-        "eslint-import-resolver-typescript": "^2.4.0",
-        "eslint-plugin-import": "2.24.2",
+        "eslint-import-resolver-typescript": "^2.5.0",
+        "eslint-plugin-import": "2.25.4",
         "eslint-plugin-prettier": "^4.0.0",
-        "glob": "^7.1.7",
-        "husky": "7.0.2",
-        "lint-staged": "^11.1.2",
-        "mocha": "^9.1.1",
-        "prettier": "^2.3.2",
+        "glob": "^7.2.0",
+        "husky": "7.0.4",
+        "lint-staged": "^12.3.3",
+        "mocha": "^9.2.0",
+        "prettier": "^2.5.1",
         "speed-measure-webpack-plugin": "^1.5.0",
-        "terser-webpack-plugin": "^5.2.3",
-        "ts-loader": "^9.2.5",
-        "ts-node": "^10.2.1",
-        "typescript": "^4.4.2",
-        "vscode-test": "^1.6.1",
-        "webpack": "^5.52.0",
-        "webpack-bundle-analyzer": "^4.4.2",
+        "terser-webpack-plugin": "^5.3.1",
+        "ts-loader": "^9.2.6",
+        "ts-node": "^10.4.0",
+        "typescript": "^4.5.5",
+        "webpack": "^5.68.0",
+        "webpack-bundle-analyzer": "^4.5.0",
         "webpack-merge": "^5.8.0",
-        "webpackbar": "^5.0.0-3",
-        "yargs": "^17.1.1"
+        "webpackbar": "^5.0.2",
+        "yargs": "^17.3.1"
     }
 }

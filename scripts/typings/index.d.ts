@@ -17,7 +17,7 @@ declare module 'speed-measure-webpack-plugin' {
     export = SpeedMeasurePlugin;
 }
 
-declare module '@nuxtjs/friendly-errors-webpack-plugin' {
+declare module '@nuxt/friendly-errors-webpack-plugin' {
     import { Plugin, Compiler } from 'webpack';
 
     declare class FriendlyErrorsWebpackPlugin extends Plugin {
