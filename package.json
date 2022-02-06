@@ -33,7 +33,7 @@
         "url": "https://github.com/tjx666/open-in-external-app"
     },
     "engines": {
-        "vscode": "^1.63.2"
+        "vscode": "^1.64.0"
     },
     "categories": [
         "Other"
@@ -75,7 +75,8 @@
         "build": "cross-env NODE_ENV=production ts-node --files -P ./scripts/tsconfig.json ./scripts",
         "build-analyze": "npm run build --analyze",
         "lint": "eslint -c .eslintrc.js --ext .ts ./{scripts,src,test}/**/*.ts",
-        "test": "npm run test-compile && node ./out/test/runTests.js"
+        "test": "npm run test-compile && node ./out/test/runTests.js",
+        "prepare": "husky install"
     },
     "activationEvents": [
         "onCommand:openInExternalApp.open",
@@ -189,14 +190,9 @@
             }
         }
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
     "lint-staged": {
         "*.{ts}": [
-            "eslint -c .eslintrc"
+            "eslint -c .eslintrc.js"
         ],
         "*.{ts,json,md}": [
             "prettier --write"

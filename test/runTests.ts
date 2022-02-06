@@ -9,7 +9,7 @@ import { resolve } from 'path';
 
     try {
         await runTests({
-            version: 'stable',
+            version: 'insiders',
             extensionDevelopmentPath,
             extensionTestsPath,
             launchArgs: [testWorkspace],

@@ -15,6 +15,10 @@
         "**/test-workspace/**": true,
         "**/.vscode-test/**": true
     },
+    "files.exclude": {
+        ".git": true,
+        ".husky": true
+    },
     "stylelint.enable": false,
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
