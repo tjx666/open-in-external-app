@@ -6,6 +6,8 @@ typings/
 configs/
 scripts/
 src/
+images
+!images/logo.png
 
 # test and output
 .vscode-test/

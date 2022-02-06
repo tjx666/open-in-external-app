@@ -1,3 +1,9 @@
+## [0.4.1] - 2022-02-06
+
+### Changed
+
+- remove useless husky config in extension dist
+
 ## [0.4.0] - 2022-02-06
 
 ### Changed
