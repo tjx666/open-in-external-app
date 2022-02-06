@@ -25,7 +25,7 @@ export function validateConfiguration(configuration: ExtensionConfigItem[]): joi
     return configScheme.validate(configuration);
 }
 
-export default function getExtensionConfig(): ExtensionConfigItem[] | null {
+export default function getExtensionConfig(): ExtensionConfigItem[] {
     const configuration: ExtensionConfigItem[] | undefined = vscode.workspace
         .getConfiguration()
         .get('openInExternalApp.openMapper');
@@ -35,11 +35,11 @@ export default function getExtensionConfig(): ExtensionConfigItem[] | null {
         if (result.error) {
             vscode.window.showErrorMessage(`Your configuration format isn't correct`);
             vscode.window.showErrorMessage(result.error.message);
-            return null;
+            return [];
         }
 
         return configuration;
     }
 
-    return null;
+    return [];
 }

@@ -17,6 +17,7 @@ coverage/
 build/
 
 # configs
+.husky
 .gitignore
 .vscodeignore
 tsconfig.json

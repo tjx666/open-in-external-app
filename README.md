@@ -39,10 +39,12 @@ Example configuration:
                 // title will be shown in the drop list if there are several apps
                 {
                     "title": "chrome",
+                    // On MacOS, openCommand should be 'Google Chrome.app'
                     "openCommand": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
                 },
                 {
                     "title": "firefox",
+                    // On MacOS, openCommand should be 'Firefox Developer Edition.app'
                     "openCommand": "C:\\Program Files\\Firefox Developer Edition\\firefox.exe",
                     // open in firefox under private mode
                     "args": ["-private-window"]
@@ -79,7 +81,7 @@ This package has one limit that can't open a file which is also made by electron
 
 ### 2. VSCode extension API: `vscode.env.openExternal(target: Uri)`
 
-This API has one limit that can't open file path which includes `Non-ascii` characters, but support open file in application which is made by electron. This API can only pass one argument `target`, so `openCommand` and `args` configuration item is not work.
+This API supports open file in application which is made by electron, but has one limit that can't open file path which includes `Non-ascii` characters. This API can only pass one argument `target`, `openCommand` and `args` configuration is also not work.
 
 If you want to open file in application which is made by electron, you can choose one of two ways:
 
@@ -105,13 +107,12 @@ If you want to open file in application which is made by electron, you can choos
                 "isElectronApp": true,
                 // following config item is not work
                 // "openCommand": "/path/to/typora.exe",
-                // "args": ["--slient"]
+                // "args": ["--xxx"]
             },
             {
                 "title": "idea",
-                "extensionName": "md",
                 "openCommand": "/path/to/idea.exe",
-                "args": ["--slient"],
+                "args": ["--xxx"],
             }
         ]
     }
