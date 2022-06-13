@@ -92,7 +92,8 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
     // default strategy
     // use vscode builtin API when filePath combines with ascii characters
     if (isAsciiString(filePath)) {
-        vscode.env.openExternal(Uri.file(filePath));
+        // @ts-expect-error
+        vscode.env.openExternal(Uri.file(filePath).toString());
     }
     // otherwise use [open](https://github.com/sindresorhus/open) which support arguments
     else {

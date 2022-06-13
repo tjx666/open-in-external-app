@@ -36,6 +36,7 @@ module.exports = {
         'import/extensions': OFF,
         'import/no-unresolved': [WARN, { ignore: ['vscode'] }],
 
+        '@typescript-eslint/ban-ts-comment': OFF,
         '@typescript-eslint/explicit-function-return-type': OFF,
         '@typescript-eslint/no-explicit-any': OFF,
         '@typescript-eslint/no-non-null-assertion': OFF,
