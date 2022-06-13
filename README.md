@@ -81,7 +81,7 @@ This package has one limit that can't open a file which is also made by electron
 
 ### 2. VSCode extension API: `vscode.env.openExternal(target: Uri)`
 
-This API supports open file in application which is made by electron, but has one limit that can't open file path which includes `Non-ascii` characters. This API can only pass one argument `target`, `openCommand` and `args` configuration is also not work.
+This API supports open file in application which is made by electron, ~~but has one limit that can't open file path which includes `Non-ascii` characters.~~ This API can only pass one argument `target`, `openCommand` and `args` configuration is also not work.
 
 If you want to open file in application which is made by electron, you can choose one of two ways:
 

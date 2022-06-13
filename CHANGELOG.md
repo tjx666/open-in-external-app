@@ -1,3 +1,13 @@
+## [0.5.0] - 2022-06-14
+
+### Added
+
+- try fix #5
+
+### Changed
+
+- hide context menu of this extension on webview editor title
+
 ## [0.4.1] - 2022-02-06
 
 ### Changed
