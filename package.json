@@ -96,7 +96,7 @@
         "menus": {
             "explorer/context": [
                 {
-                    "when": "!explorerResourceIsFolder",
+                    "when": "!explorerResourceIsFolder && isFileSystemResource",
                     "command": "openInExternalApp.open",
                     "alt": "openInExternalApp.openMultiple",
                     "group": "navigation@10"
@@ -104,6 +104,7 @@
             ],
             "editor/title/context": [
                 {
+                    "when": "isFileSystemResource",
                     "command": "openInExternalApp.open",
                     "alt": "openInExternalApp.openMultiple",
                     "group": "navigation@10"
