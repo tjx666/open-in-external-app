@@ -1,5 +1,6 @@
 import { extname } from 'path';
 import vscode, { Uri } from 'vscode';
+import { wslToWindowsSync } from 'wsl-path';
 
 import getExtensionConfig from './config';
 import { open, isAsciiString } from './utils';
@@ -24,8 +25,14 @@ function getMatchedConfigItem(extensionName: string): ExtensionConfigItem | unde
 
 export default async function openInExternalApp(uri: Uri | undefined, isMultiple = false): Promise<void> {
     // if run command with command plate, uri is undefined, fallback to activeTextEditor
-    const filePath = uri?.fsPath ?? vscode.window.activeTextEditor?.document.uri.fsPath;
-    if (!filePath) return;
+    const fsPath = uri?.fsPath ?? vscode.window.activeTextEditor?.document.uri.fsPath;
+    if (!fsPath) return;
+    const filePath =
+        vscode.env.remoteName === 'wsl'
+            ? wslToWindowsSync(fsPath, {
+                  wslCommand: 'wsl.exe',
+              })
+            : fsPath;
 
     const ext = extname(filePath);
     const extensionName = ext === '' || ext === '.' ? null : ext.slice(1);
@@ -91,7 +98,7 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
 
     // default strategy
     // use vscode builtin API when filePath combines with ascii characters
-    if (isAsciiString(filePath)) {
+    if (isAsciiString(filePath) && vscode.env.remoteName !== 'wsl') {
         // @ts-expect-error
         vscode.env.openExternal(Uri.file(filePath).toString());
     }
