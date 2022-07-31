@@ -201,7 +201,8 @@
     },
     "dependencies": {
         "joi": "^17.6.0",
-        "open": "8.4.0"
+        "open": "8.4.0",
+        "wsl-path": "^3.0.0"
     },
     "devDependencies": {
         "@nuxt/friendly-errors-webpack-plugin": "^2.5.2",
