@@ -1,3 +1,9 @@
+## [0.6.1] - 2022-10-11
+
+### Fixed
+
+- Key bindings not working for binary files(#36)
+
 ## [0.6.0] - 2022-08-08
 
 ### Fixed
