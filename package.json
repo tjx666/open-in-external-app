@@ -33,7 +33,7 @@
         "url": "https://github.com/tjx666/open-in-external-app"
     },
     "engines": {
-        "vscode": "^1.69.1"
+        "vscode": "^1.72.0"
     },
     "categories": [
         "Other"
@@ -200,29 +200,29 @@
         ]
     },
     "dependencies": {
-        "joi": "17.6.0",
+        "joi": "17.6.2",
         "open": "8.4.0",
         "wsl-path": "3.0.0"
     },
     "devDependencies": {
         "@nuxt/friendly-errors-webpack-plugin": "2.5.2",
-        "@types/glob": "7.2.0",
-        "@types/mocha": "9.1.1",
+        "@types/glob": "8.0.0",
+        "@types/mocha": "10.0.0",
         "@types/node": "16.11.47",
-        "@types/vscode": "1.69.1",
+        "@types/vscode": "1.72.0",
         "@types/webpack": "5.28.0",
-        "@types/webpack-bundle-analyzer": "4.4.1",
+        "@types/webpack-bundle-analyzer": "4.6.0",
         "@types/webpackbar": "4.0.3",
-        "@types/yargs": "17.0.11",
-        "@typescript-eslint/eslint-plugin": "5.32.0",
-        "@typescript-eslint/parser": "5.32.0",
+        "@types/yargs": "17.0.13",
+        "@typescript-eslint/eslint-plugin": "5.40.0",
+        "@typescript-eslint/parser": "5.40.0",
         "@vscode/test-electron": "2.1.5",
         "clean-webpack-plugin": "4.0.0",
         "cross-env": "7.0.3",
-        "eslint": "8.21.0",
+        "eslint": "8.25.0",
         "eslint-config-airbnb-base": "15.0.0",
         "eslint-config-prettier": "8.5.0",
-        "eslint-import-resolver-typescript": "3.4.0",
+        "eslint-import-resolver-typescript": "3.5.1",
         "eslint-plugin-import": "2.26.0",
         "eslint-plugin-prettier": "4.2.1",
         "glob": "8.0.3",
@@ -231,14 +231,14 @@
         "mocha": "10.0.0",
         "prettier": "2.7.1",
         "speed-measure-webpack-plugin": "1.5.0",
-        "terser-webpack-plugin": "5.3.3",
-        "ts-loader": "9.3.1",
+        "terser-webpack-plugin": "5.3.6",
+        "ts-loader": "9.4.1",
         "ts-node": "10.9.1",
-        "typescript": "4.7.4",
+        "typescript": "4.8.4",
         "webpack": "5.74.0",
-        "webpack-bundle-analyzer": "4.5.0",
+        "webpack-bundle-analyzer": "4.6.1",
         "webpack-merge": "5.8.0",
         "webpackbar": "5.0.2",
-        "yargs": "17.5.1"
+        "yargs": "17.6.0"
     }
 }
