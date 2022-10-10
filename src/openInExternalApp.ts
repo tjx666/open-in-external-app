@@ -3,7 +3,7 @@ import vscode, { Uri } from 'vscode';
 import { wslToWindowsSync } from 'wsl-path';
 
 import getExtensionConfig from './config';
-import { open, isAsciiString } from './utils';
+import { open, isAsciiString, getSelectedResources } from './utils';
 
 function getMatchedConfigItem(extensionName: string): ExtensionConfigItem | undefined {
     const configuration: ExtensionConfigItem[] = getExtensionConfig();
@@ -25,8 +25,10 @@ function getMatchedConfigItem(extensionName: string): ExtensionConfigItem | unde
 
 export default async function openInExternalApp(uri: Uri | undefined, isMultiple = false): Promise<void> {
     // if run command with command plate, uri is undefined, fallback to activeTextEditor
-    const fsPath = uri?.fsPath ?? vscode.window.activeTextEditor?.document.uri.fsPath;
-    if (!fsPath) return;
+    uri ??= vscode.window.activeTextEditor?.document.uri ?? (await getSelectedResources());
+    if (!uri) return;
+
+    const { fsPath } = uri;
     const filePath =
         vscode.env.remoteName === 'wsl'
             ? wslToWindowsSync(fsPath, {
