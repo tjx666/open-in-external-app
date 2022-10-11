@@ -2,9 +2,10 @@ import { constants as FS_CONSTANTS } from 'fs';
 import fs from 'fs/promises';
 import _open from 'open';
 import vscode, { Uri } from 'vscode';
+import parseVariables from './parseVariables';
 
 // FIXME: support none-ascii character path
-export function open(filePath: string, appConfig?: string | ExternalAppConfig): void {
+export async function open(filePath: string, appConfig?: string | ExternalAppConfig) {
     if (typeof appConfig === 'string') {
         _open(filePath, {
             app: {
@@ -15,10 +16,11 @@ export function open(filePath: string, appConfig?: string | ExternalAppConfig): 
         if (appConfig.isElectronApp) {
             vscode.env.openExternal(Uri.file(filePath));
         } else if (appConfig.openCommand) {
+            const args = await Promise.all((appConfig.args ?? []).map((arg) => parseVariables(arg)));
             _open(filePath, {
                 app: {
                     name: appConfig.openCommand,
-                    arguments: appConfig.args ?? [],
+                    arguments: args,
                 },
             });
         }
@@ -38,7 +40,7 @@ export function pathExists(path: string) {
         .catch(() => false);
 }
 
-export async function getSelectedResources() {
+export async function getActiveFile() {
     const originalClipboard = await vscode.env.clipboard.readText();
 
     await vscode.commands.executeCommand('copyFilePath');

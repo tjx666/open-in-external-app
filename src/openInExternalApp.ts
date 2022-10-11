@@ -3,7 +3,7 @@ import vscode, { Uri } from 'vscode';
 import { wslToWindowsSync } from 'wsl-path';
 
 import getExtensionConfig from './config';
-import { open, isAsciiString, getSelectedResources } from './utils';
+import { open, getActiveFile } from './utils';
 
 function getMatchedConfigItem(extensionName: string): ExtensionConfigItem | undefined {
     const configuration: ExtensionConfigItem[] = getExtensionConfig();
@@ -25,7 +25,7 @@ function getMatchedConfigItem(extensionName: string): ExtensionConfigItem | unde
 
 export default async function openInExternalApp(uri: Uri | undefined, isMultiple = false): Promise<void> {
     // if run command with command plate, uri is undefined, fallback to activeTextEditor
-    uri ??= vscode.window.activeTextEditor?.document.uri ?? (await getSelectedResources());
+    uri ??= vscode.window.activeTextEditor?.document.uri ?? (await getActiveFile());
     if (!uri) return;
 
     const { fsPath } = uri;
@@ -46,13 +46,13 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
     if (matchedConfigItem) {
         const candidateApps = matchedConfigItem.apps;
         if (typeof candidateApps === 'string') {
-            open(filePath, candidateApps);
+            await open(filePath, candidateApps);
             return;
         }
 
         if (Array.isArray(candidateApps) && candidateApps.length >= 1) {
             if (candidateApps.length === 1) {
-                open(filePath, candidateApps[0]);
+                await open(filePath, candidateApps[0]);
                 return;
             }
 
@@ -81,8 +81,8 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
                     placeHolder: 'select the applications to open the file...',
                 });
                 if (selectedTitles) {
-                    selectedTitles.forEach((title) => {
-                        open(filePath, candidateApps.find((app) => app.title === title)!);
+                    selectedTitles.forEach(async (title) => {
+                        await open(filePath, candidateApps.find((app) => app.title === title)!);
                     });
                 }
             } else {
@@ -91,7 +91,7 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
                 });
 
                 if (selectedTitle) {
-                    open(filePath, candidateApps.find((app) => app.title === selectedTitle)!);
+                    await open(filePath, candidateApps.find((app) => app.title === selectedTitle)!);
                 }
             }
             return;
@@ -100,12 +100,13 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
 
     // default strategy
     // use vscode builtin API when filePath combines with ascii characters
-    if (isAsciiString(filePath) && vscode.env.remoteName !== 'wsl') {
+    // https://github.com/microsoft/vscode/issues/85930#issuecomment-821882174
+    if (vscode.env.remoteName !== 'wsl') {
         // @ts-expect-error
         vscode.env.openExternal(Uri.file(filePath).toString());
     }
     // otherwise use [open](https://github.com/sindresorhus/open) which support arguments
     else {
-        open(filePath);
+        await open(filePath);
     }
 }

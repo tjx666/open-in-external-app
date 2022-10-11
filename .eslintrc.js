@@ -42,6 +42,7 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': OFF,
 
         'func-names': OFF,
+        'lines-between-class-members': OFF,
         'no-bitwise': OFF,
         'no-console': OFF,
         'no-param-reassign': OFF,
