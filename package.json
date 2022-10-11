@@ -1,7 +1,7 @@
 {
     "name": "open-in-external-app",
     "displayName": "Open in External App",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "description": "Open file with external application in VSCode",
     "publisher": "YuTengjing",
     "author": {
@@ -200,7 +200,7 @@
         ]
     },
     "dependencies": {
-        "joi": "17.6.2",
+        "joi": "17.6.3",
         "open": "8.4.0",
         "wsl-path": "3.0.0"
     },
