@@ -167,6 +167,10 @@
                                                     "type": "string",
                                                     "description": "command you can access from shell or absolute path of executable program"
                                                 },
+                                                "shellCommand": {
+                                                    "type": "string",
+                                                    "description": "using shell command with file placeholder to deal with file"
+                                                },
                                                 "args": {
                                                     "type": "array",
                                                     "description": "arguments passed to openCommand",

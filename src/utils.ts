@@ -1,23 +1,31 @@
+import { exec as _exec } from 'child_process';
 import { constants as FS_CONSTANTS } from 'fs';
 import fs from 'fs/promises';
 import _open from 'open';
+import { promisify } from 'util';
 import vscode, { Uri } from 'vscode';
+
 import parseVariables from './parseVariables';
+
+export const exec = promisify(_exec);
 
 // FIXME: support none-ascii character path
 export async function open(filePath: string, appConfig?: string | ExternalAppConfig) {
     if (typeof appConfig === 'string') {
-        _open(filePath, {
+        await _open(filePath, {
             app: {
                 name: appConfig,
             },
         });
     } else if (appConfig !== null && typeof appConfig === 'object') {
         if (appConfig.isElectronApp) {
-            vscode.env.openExternal(Uri.file(filePath));
+            await vscode.env.openExternal(Uri.file(filePath));
+        } else if (appConfig.shellCommand) {
+            const parsedCommand = (await parseVariables([appConfig.shellCommand!], Uri.file(filePath)))[0];
+            await exec(parsedCommand);
         } else if (appConfig.openCommand) {
-            const args = await Promise.all((appConfig.args ?? []).map((arg) => parseVariables(arg)));
-            _open(filePath, {
+            const args = await parseVariables(appConfig.args ?? [], Uri.file(filePath));
+            await _open(filePath, {
                 app: {
                     name: appConfig.openCommand,
                     arguments: args,
@@ -25,7 +33,7 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
             });
         }
     } else {
-        _open(filePath);
+        await _open(filePath);
     }
 }
 

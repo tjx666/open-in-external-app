@@ -8,6 +8,7 @@ interface ExternalAppConfig {
     openCommand?: string;
     args?: string[];
     isElectronApp?: boolean;
+    shellCommand?: string;
 }
 
 interface ExtensionConfigItem {

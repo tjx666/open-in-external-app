@@ -2,11 +2,11 @@
 import { homedir } from 'os';
 import path from 'path';
 import process from 'process';
-import vscode from 'vscode';
+import vscode, { Uri } from 'vscode';
 
 import { getActiveFile } from './utils';
 
-export default async function parseVariables(pathStr: string) {
+export default async function parseVariables(strList: string[], activeFile?: Uri) {
     const replacement: Map<string | RegExp, string | ((substring: string, ...args: any[]) => string) | undefined> =
         new Map([
             ['${userHome}', homedir()],
@@ -21,7 +21,7 @@ export default async function parseVariables(pathStr: string) {
     }
 
     const { activeTextEditor } = vscode.window;
-    const activeFile = activeTextEditor?.document?.uri ?? (await getActiveFile());
+    activeFile ??= activeTextEditor?.document?.uri ?? (await getActiveFile());
     const absoluteFilePath = activeFile?.fsPath;
     replacement.set('${file}', absoluteFilePath);
 
@@ -44,7 +44,7 @@ export default async function parseVariables(pathStr: string) {
         replacement.set('${fileBasename}', parsedPath.base);
         replacement.set('${fileBasenameNoExtension}', parsedPath.name);
         replacement.set('${fileExtname}', parsedPath.ext);
-        replacement.set('${fileDirname}', parsedPath.dir.slice(parsedPath.dir.lastIndexOf(path.sep) + 1));
+        replacement.set('${fileDirname}', parsedPath.dir);
     }
 
     if (activeTextEditor) {
@@ -62,16 +62,20 @@ export default async function parseVariables(pathStr: string) {
         vscode.workspace.getConfiguration().get(captures[1], captures[0]),
     );
 
-    for (const [search, replacer] of replacement.entries()) {
-        const typeofReplacer = typeof replacer;
-        if (typeofReplacer === 'undefined') {
-            break;
-        } else if (typeofReplacer === 'string') {
-            pathStr = pathStr.replaceAll(search, replacer as string);
-        } else if (typeofReplacer === 'function') {
-            pathStr = pathStr.replaceAll(search as RegExp, replacer as any);
+    // eslint-disable-next-line prefer-const
+    for (let [index, str] of strList.entries()) {
+        for (const [search, replacer] of replacement.entries()) {
+            const typeofReplacer = typeof replacer;
+            if (typeofReplacer === 'undefined') {
+                break;
+            } else if (typeofReplacer === 'string') {
+                str = str.replaceAll(search, replacer as string);
+            } else if (typeofReplacer === 'function') {
+                str = str.replaceAll(search as RegExp, replacer as any);
+            }
         }
+        strList[index] = str;
     }
 
-    return pathStr;
+    return strList;
 }

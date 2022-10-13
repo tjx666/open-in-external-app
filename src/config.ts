@@ -15,6 +15,7 @@ export function validateConfiguration(configuration: ExtensionConfigItem[]): joi
                             openCommand: joi.string(),
                             args: joi.array().items(joi.string().required()),
                             isElectronApp: joi.boolean(),
+                            shellCommand: joi.string(),
                         }),
                     ),
                 )

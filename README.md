@@ -60,6 +60,16 @@ Example configuration:
         {
             "extensionName": "psd",
             "apps": "/path/to/photoshop.exe"
+        },
+        // like code-runner, you can custom the shell command to open with file
+        {
+            "extensionName": "ts",
+            "apps": [
+                {
+                    "title": "run ts file",
+                    "shellCommand": "ts-node ${file}"
+                }
+            ]
         }
     ]
 }
