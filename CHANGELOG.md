@@ -1,3 +1,9 @@
+## [0.6.3] - 2022-10-14
+
+### Added
+
+- feat: new shellCommand setting support custom shell command for file
+
 ## [0.6.2] - 2022-10-12
 
 ### Added

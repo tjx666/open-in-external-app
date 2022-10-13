@@ -62,6 +62,7 @@ Example configuration:
             "apps": "/path/to/photoshop.exe"
         },
         // like code-runner, you can custom the shell command to open with file
+        // you can use the variables placeholder documented at https://code.visualstudio.com/docs/editor/variables-reference#_predefined-variables
         {
             "extensionName": "ts",
             "apps": [
