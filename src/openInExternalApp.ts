@@ -1,5 +1,6 @@
 import { extname } from 'path';
 import vscode, { Uri } from 'vscode';
+import { localize } from 'vscode-nls-i18n';
 import { wslToWindowsSync } from 'wsl-path';
 
 import getExtensionConfig from './config';
@@ -68,9 +69,7 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
                 traversedTitles.add(title);
             }
             if (isRepeat) {
-                vscode.window.showErrorMessage(
-                    `You can't set two application using the same title, please correct your configuration first!`,
-                );
+                vscode.window.showErrorMessage(localize('msg.error.sameTitleMultipleApp'));
                 return;
             }
 
@@ -78,7 +77,7 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
             if (isMultiple) {
                 const selectedTitles = await vscode.window.showQuickPick(pickerItems, {
                     canPickMany: true,
-                    placeHolder: 'select the applications to open the file...',
+                    placeHolder: localize('msg.quickPick.selectApps.placeholder'),
                 });
                 if (selectedTitles) {
                     selectedTitles.forEach(async (title) => {
@@ -87,7 +86,7 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
                 }
             } else {
                 const selectedTitle = await vscode.window.showQuickPick(pickerItems, {
-                    placeHolder: 'select the application to open the file...',
+                    placeHolder: localize('msg.quickPick.selectApp.placeholder'),
                 });
 
                 if (selectedTitle) {

@@ -65,7 +65,8 @@
         "chrome",
         "firefox",
         "browser",
-        "client"
+        "client",
+        "code runner"
     ],
     "main": "./out/extension.js",
     "scripts": {
@@ -86,11 +87,11 @@
         "commands": [
             {
                 "command": "openInExternalApp.open",
-                "title": "Open in External App"
+                "title": "%cmd.open%"
             },
             {
                 "command": "openInExternalApp.openMultiple",
-                "title": "Open in Multiple External Apps"
+                "title": "%cmd.openMultiple%"
             }
         ],
         "menus": {
@@ -112,13 +113,13 @@
             ]
         },
         "configuration": {
-            "title": "Open in External App",
+            "title": "%cmd.open%",
             "type": "Object",
             "default": {},
             "properties": {
                 "openInExternalApp.openMapper": {
                     "type": "array",
-                    "description": "mapper between the file extensionName and application to open it",
+                    "description": "%cfg.openInExternalApp.openMapper%",
                     "default": [],
                     "items": {
                         "type": "object",
@@ -131,11 +132,11 @@
                                 "anyOf": [
                                     {
                                         "type": "string",
-                                        "description": "matched extension name"
+                                        "description": "%cfg.openInExternalApp.openMapper.item.extensionName.string%"
                                     },
                                     {
                                         "type": "array",
-                                        "description": "matched extension name array",
+                                        "description": "%cfg.openInExternalApp.openMapper.item.extensionName.array%",
                                         "items": {
                                             "type": "string"
                                         }
@@ -143,17 +144,17 @@
                                 ]
                             },
                             "apps": {
-                                "description": "external applications to open the file which extension name is specified in extensionName field",
+                                "description": "%cfg.openInExternalApp.openMapper.item.apps%",
                                 "anyOf": [
                                     {
                                         "type": "string",
-                                        "description": "command you can access from shell or absolute path of executable program"
+                                        "description": "%cfg.openInExternalApp.openMapper.item.apps.string%"
                                     },
                                     {
                                         "type": "array",
                                         "items": {
                                             "type": "object",
-                                            "description": "app info",
+                                            "description": "%cfg.openInExternalApp.openMapper.item.apps.array%",
                                             "default": [],
                                             "required": [
                                                 "title"
@@ -161,19 +162,19 @@
                                             "properties": {
                                                 "title": {
                                                     "type": "string",
-                                                    "description": "title will be shown in the drop list if there are several apps"
+                                                    "description": "%cfg.openInExternalApp.openMapper.item.apps.item.title%"
                                                 },
                                                 "openCommand": {
                                                     "type": "string",
-                                                    "description": "command you can access from shell or absolute path of executable program"
+                                                    "description": "%cfg.openInExternalApp.openMapper.item.apps.string%"
                                                 },
                                                 "shellCommand": {
                                                     "type": "string",
-                                                    "description": "using shell command with file placeholder to deal with file"
+                                                    "description": "%cfg.openInExternalApp.openMapper.item.apps.item.shellCommand%"
                                                 },
                                                 "args": {
                                                     "type": "array",
-                                                    "description": "arguments passed to openCommand",
+                                                    "description": "%cfg.openInExternalApp.openMapper.item.apps.item.args%",
                                                     "default": [],
                                                     "items": {
                                                         "type": "string"
@@ -181,7 +182,7 @@
                                                 },
                                                 "isElectronApp": {
                                                     "type": "boolean",
-                                                    "description": "set to true when you config an electron app",
+                                                    "description": "%cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp%",
                                                     "default": false
                                                 }
                                             }
@@ -206,6 +207,7 @@
     "dependencies": {
         "joi": "17.6.3",
         "open": "8.4.0",
+        "vscode-nls-i18n": "0.2.4",
         "wsl-path": "3.0.0"
     },
     "devDependencies": {

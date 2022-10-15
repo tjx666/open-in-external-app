@@ -1,0 +1,20 @@
+{
+    "cmd.open": "Open in External App",
+    "cmd.openMultiple": "Open in Multiple External Apps",
+
+    "msg.error.configFormat": "Your extension configuration format isn't correct!",
+    "msg.error.sameTitleMultipleApp": "Not allowed to set two applications using the same title, please correct your configuration first!",
+    "msg.quickPick.selectApp.placeholder": "Select application to open the file...",
+    "msg.quickPick.selectApps.placeholder": "Select multiple applications to open the file...",
+
+    "cfg.openInExternalApp.openMapper": "Mapper between the file extensionName and application to open it",
+    "cfg.openInExternalApp.openMapper.item.extensionName.string": "File extension name，for example: md",
+    "cfg.openInExternalApp.openMapper.item.extensionName.array": "Pass string array to match multiple extension names",
+    "cfg.openInExternalApp.openMapper.item.apps": "External applications to open the file",
+    "cfg.openInExternalApp.openMapper.item.apps.string": "Command you can access from shell or absolute path of executable program",
+    "cfg.openInExternalApp.openMapper.item.apps.array": "External applications info",
+    "cfg.openInExternalApp.openMapper.item.apps.item.title": "Title which will be shown in the drop list if there are several apps to open the file",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellCommand": "Using shell command with file placeholder to deal with file",
+    "cfg.openInExternalApp.openMapper.item.apps.item.args": "Arguments passed to openCommand",
+    "cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp": "Set to true when you config an electron app"
+}

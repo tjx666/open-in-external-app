@@ -1,5 +1,6 @@
 import vscode from 'vscode';
 import joi from 'joi';
+import { localize } from 'vscode-nls-i18n';
 
 export function validateConfiguration(configuration: ExtensionConfigItem[]): joi.ValidationResult {
     const configScheme = joi.array().items(
@@ -34,7 +35,7 @@ export default function getExtensionConfig(): ExtensionConfigItem[] {
     if (configuration) {
         const result = validateConfiguration(configuration);
         if (result.error) {
-            vscode.window.showErrorMessage(`Your configuration format isn't correct`);
+            vscode.window.showErrorMessage(localize('msg.error.configFormat'));
             vscode.window.showErrorMessage(result.error.message);
             return [];
         }
