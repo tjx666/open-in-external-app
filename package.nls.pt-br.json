@@ -1,0 +1,20 @@
+{
+    "cmd.open": "Abrir em aplicativo externo",
+    "cmd.openMultiple": "Abrir em múltiplos aplicativos externos",
+
+    "msg.error.configFormat": "O formato de configuração de extensão não está correto!",
+    "msg.error.sameTitleMultipleApp": "Não é permitido definir duas aplicações usando o mesmo título, por favor, corrija sua configuração primeiro!",
+    "msg.quickPick.selectApp.placeholder": "Selecione uma aplicação para abrir o arquivo...",
+    "msg.quickPick.selectApps.placeholder": "Selecione várias aplicações para abrir o arquivo...",
+
+    "cfg.openInExternalApp.openMapper": "Mapeador entre a extensão do arquivoNome e a aplicação para abri-lo.",
+    "cfg.openInExternalApp.openMapper.item.extensionName.string": "Extensão do arquivo name, por exemplo: md",
+    "cfg.openInExternalApp.openMapper.item.extensionName.array": "Passar um array de strings para combinar vários nomes de extensão.",
+    "cfg.openInExternalApp.openMapper.item.apps": "Aplicações externas para abrir o arquivo.",
+    "cfg.openInExternalApp.openMapper.item.apps.string": "Comando que você pode acessar a partir do shell ou do caminho absoluto do programa executável.",
+    "cfg.openInExternalApp.openMapper.item.apps.array": "Informações sobre as aplicações externas.",
+    "cfg.openInExternalApp.openMapper.item.apps.item.title": "Título que será exibido na lista suspensa, se houver vários aplicativos para abrir o arquivo.",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellCommand": "Usar o shell de comando com um placeholder para lidar com arquivo.",
+    "cfg.openInExternalApp.openMapper.item.apps.item.args": "Argumentos passados para 'openCommand'.",
+    "cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp": "Defina como verdadeiro (true) quanto o apicativo for baseado em Electron."
+}
