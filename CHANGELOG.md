@@ -1,3 +1,9 @@
+## [0.7.0] - 2022-10-17
+
+### Added
+
+- Brazilian Portuguese nls support
+
 ## [0.7.0] - 2022-10-16
 
 ### Added
