@@ -67,7 +67,7 @@ export default async function parseVariables(strList: string[], activeFile?: Uri
         for (const [search, replacer] of replacement.entries()) {
             const typeofReplacer = typeof replacer;
             if (typeofReplacer === 'undefined') {
-                break;
+                continue;
             } else if (typeofReplacer === 'string') {
                 str = str.replaceAll(search, replacer as string);
             } else if (typeofReplacer === 'function') {

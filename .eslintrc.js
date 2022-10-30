@@ -45,10 +45,11 @@ module.exports = {
         'lines-between-class-members': OFF,
         'no-bitwise': OFF,
         'no-console': OFF,
+        'no-continue': OFF,
         'no-param-reassign': OFF,
         'no-plusplus': OFF,
         'no-unused-expressions': OFF,
-        'no-restricted-syntax': OFF
+        'no-restricted-syntax': OFF,
     },
     overrides: [
         {

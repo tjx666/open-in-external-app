@@ -1,11 +1,4 @@
-// https://gist.github.com/tjx666/daa6317cf80ab5f467c50b2693527875
 {
-    "recommendations": [
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "yutengjing.view-github-repository",
-        "yutengjing.open-in-external-app",
-        "yutengjing.vscode-fe-helper"
-    ],
+    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"],
     "unwantedRecommendations": ["hookyqr.beautify", "ms-vscode.vscode-typescript-tslint-plugin", "dbaeumer.jshint"]
 }
