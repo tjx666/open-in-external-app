@@ -1,3 +1,9 @@
+## [0.8.2] - 2022-10-31
+
+### Fixed
+
+- fix: can't parse fileDirname out of current folder
+
 ## [0.8.1] - 2022-10-17
 
 ### Changed
