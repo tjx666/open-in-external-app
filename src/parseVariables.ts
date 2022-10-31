@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import { homedir } from 'os';
+import { homedir, type } from 'os';
 import path from 'path';
 import process from 'process';
 import vscode, { Uri } from 'vscode';
@@ -62,13 +62,12 @@ export default async function parseVariables(strList: string[], activeFile?: Uri
         vscode.workspace.getConfiguration().get(captures[1], captures[0]),
     );
 
+    const replacementEntries = [...replacement.entries()].filter(([_, r]) => typeof r !== 'undefined');
     // eslint-disable-next-line prefer-const
     for (let [index, str] of strList.entries()) {
-        for (const [search, replacer] of replacement.entries()) {
+        for (const [search, replacer] of replacementEntries) {
             const typeofReplacer = typeof replacer;
-            if (typeofReplacer === 'undefined') {
-                continue;
-            } else if (typeofReplacer === 'string') {
+            if (typeofReplacer === 'string') {
                 str = str.replaceAll(search, replacer as string);
             } else if (typeofReplacer === 'function') {
                 str = str.replaceAll(search as RegExp, replacer as any);

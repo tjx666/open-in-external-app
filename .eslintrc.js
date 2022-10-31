@@ -40,6 +40,7 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': OFF,
         '@typescript-eslint/no-explicit-any': OFF,
         '@typescript-eslint/no-non-null-assertion': OFF,
+        '@typescript-eslint/no-unused-vars': [WARN, { argsIgnorePattern: '^_' }],
 
         'func-names': OFF,
         'lines-between-class-members': OFF,
