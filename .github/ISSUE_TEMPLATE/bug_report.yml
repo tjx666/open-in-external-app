@@ -1,5 +1,5 @@
 name: Bug report
-description: Create a report to help openInExternalApp improve
+description: Create a report to help this extension improve
 labels: ['bug']
 body:
     - type: textarea
@@ -9,10 +9,10 @@ body:
       validations:
           required: true
     - type: input
-      id: openInExternalApp
+      id: extensionVersion
       attributes:
-          label: OpenInExternalApp Version
-          description: What version of OpenInExternalApp are you using?
+          label: Extension Version
+          description: What version of this extension are you using?
           placeholder: 0.8.2
       validations:
           required: true
@@ -20,18 +20,22 @@ body:
       id: vscode
       attributes:
           label: VS Code Version
-          description: What version of VS Code are you using? Copy from Help -> About
+          description: |
+              What version of VS Code are you using? Copy from:
+              On windows: Help -> About
+              On mac: Code -> About Visual Studio Code
           placeholder: |
-              Version: 1.70.0-insider (user setup)
-              Commit: 1cd90cceddf3c413673963ab6f154d2ff294b17c
-              Date: 2022-07-15T05:16:39.110Z
-              Electron: 18.3.5
-              Chromium: 100.0.4896.160
-              Node.js: 16.13.2
-              V8: 10.0.139.17-electron.0
-              OS: Windows_NT x64 10.0.22622
+              Version: 1.73.0 (Universal)
+              Commit: 8fa188b2b301d36553cbc9ce1b0a146ccb93351f
+              Date: 2022-11-01T15:38:50.881Z
+              Electron: 19.0.17
+              Chromium: 102.0.5005.167
+              Node.js: 16.14.2
+              V8: 10.2.154.15-electron.0
+              OS: Darwin x64 22.1.0
+              Sandboxed: No
       validations:
-          required: false
+          required: true
     - type: textarea
       id: settings
       attributes:
@@ -49,7 +53,7 @@ body:
                                   "openCommand": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
                               }
                           ]
-                      },
+                      }
               }
               ```
       validations:
