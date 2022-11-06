@@ -38,6 +38,7 @@ body:
           label: Extension Settings
           description: How do you config the extension?
           placeholder: |
+              ```jsonc
               {
                   "openInExternalApp.openMapper": [
                       {
@@ -50,6 +51,7 @@ body:
                           ]
                       },
               }
+              ```
       validations:
           required: true
     - type: textarea
