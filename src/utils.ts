@@ -1,31 +1,46 @@
 import { exec as _exec } from 'child_process';
 import { constants as FS_CONSTANTS } from 'fs';
 import fs from 'fs/promises';
-import _open from 'open';
+import _open, { Options as OpenOptions } from 'open';
 import { promisify } from 'util';
 import vscode, { Uri } from 'vscode';
+import { logger } from './logger';
 
 import parseVariables from './parseVariables';
 
 export const exec = promisify(_exec);
 
+function openByPkg(filePath: string, options?: OpenOptions) {
+    logger.log('Open file by open pkg, options:\n' + JSON.stringify(options, null, 4));
+    return _open(filePath, options);
+}
+
 // FIXME: support none-ascii character path
 export async function open(filePath: string, appConfig?: string | ExternalAppConfig) {
+    logger.log(`Opened file is: "${filePath}"`);
+
     if (typeof appConfig === 'string') {
-        await _open(filePath, {
+        await openByPkg(filePath, {
             app: {
                 name: appConfig,
             },
         });
     } else if (appConfig !== null && typeof appConfig === 'object') {
         if (appConfig.isElectronApp) {
+            logger.log('Open file by vscode builtin api');
             await vscode.env.openExternal(Uri.file(filePath));
         } else if (appConfig.shellCommand) {
             const parsedCommand = (await parseVariables([appConfig.shellCommand!], Uri.file(filePath)))[0];
-            await exec(parsedCommand);
+            logger.log(`Open file by shell command: "${parsedCommand}"`);
+            try {
+                await exec(parsedCommand);
+            } catch (error: any) {
+                vscode.window.showErrorMessage(`Open file by shell command failed, execute: "${parsedCommand}"`);
+                logger.log(error);
+            }
         } else if (appConfig.openCommand) {
             const args = await parseVariables(appConfig.args ?? [], Uri.file(filePath));
-            await _open(filePath, {
+            await openByPkg(filePath, {
                 app: {
                     name: appConfig.openCommand,
                     arguments: args,
@@ -33,7 +48,7 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
             });
         }
     } else {
-        await _open(filePath);
+        await openByPkg(filePath);
     }
 }
 

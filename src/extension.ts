@@ -2,6 +2,7 @@ import vscode from 'vscode';
 import { init } from 'vscode-nls-i18n';
 
 import commands from './commands';
+import { logger } from './logger';
 
 export function activate(context: vscode.ExtensionContext): void {
     init(context.extensionPath);
@@ -11,5 +12,5 @@ export function activate(context: vscode.ExtensionContext): void {
 }
 
 export function deactivate(): void {
-    // ...recycle resource
+    logger.dispose();
 }
