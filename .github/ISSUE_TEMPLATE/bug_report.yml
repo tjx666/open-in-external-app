@@ -1,0 +1,60 @@
+name: Bug report
+description: Create a report to help openInExternalApp improve
+labels: ['bug']
+body:
+    - type: textarea
+      attributes:
+          label: Description
+          description: Please provide a concise description of what you're experiencing, what you expected to happen, and any steps to reproduce the behavior.
+      validations:
+          required: true
+    - type: input
+      id: openInExternalApp
+      attributes:
+          label: OpenInExternalApp Version
+          description: What version of OpenInExternalApp are you using?
+          placeholder: 0.8.2
+      validations:
+          required: true
+    - type: textarea
+      id: vscode
+      attributes:
+          label: VS Code Version
+          description: What version of VS Code are you using? Copy from Help -> About
+          placeholder: |
+              Version: 1.70.0-insider (user setup)
+              Commit: 1cd90cceddf3c413673963ab6f154d2ff294b17c
+              Date: 2022-07-15T05:16:39.110Z
+              Electron: 18.3.5
+              Chromium: 100.0.4896.160
+              Node.js: 16.13.2
+              V8: 10.0.139.17-electron.0
+              OS: Windows_NT x64 10.0.22622
+      validations:
+          required: false
+    - type: textarea
+      id: settings
+      attributes:
+          label: Extension Settings
+          description: How do you config the extension?
+          placeholder: |
+              {
+                  "openInExternalApp.openMapper": [
+                      {
+                          "extensionName": "html",
+                          "apps": [
+                              {
+                                  "title": "chrome",
+                                  "openCommand": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+                              }
+                          ]
+                      },
+              }
+      validations:
+          required: true
+    - type: textarea
+      attributes:
+          label: Logs, Screenshots, Screen Recording etc
+          description: You can open the output panel and select "Open in External App" channel to check extension logs
+      validations:
+          required: false

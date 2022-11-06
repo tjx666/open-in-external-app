@@ -53,8 +53,7 @@ Example configuration:
         },
         {
             "extensionName": "tsx",
-            // apps can be Object array or just is openCommand
-            // the code is command you can access from shell
+            // apps can be Object array or just the command you can access from shell
             "apps": "code"
         },
         {
