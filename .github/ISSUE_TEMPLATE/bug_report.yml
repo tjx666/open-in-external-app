@@ -6,6 +6,9 @@ body:
       attributes:
           label: Description
           description: Please provide a concise description of what you're experiencing, what you expected to happen, and any steps to reproduce the behavior.
+          placeholder: !
+              Which file did you want to open?
+              Did you use extension in any special environment? For example, ssh-remote, wsl, browser
       validations:
           required: true
     - type: input
@@ -21,10 +24,11 @@ body:
       attributes:
           label: VS Code Version
           description: |
-              What version of VS Code are you using? Copy from:
+              What version of VS Code are you using? Copy from Menu:
               On windows: Help -> About
               On mac: Code -> About Visual Studio Code
           placeholder: |
+              ```
               Version: 1.73.0 (Universal)
               Commit: 8fa188b2b301d36553cbc9ce1b0a146ccb93351f
               Date: 2022-11-01T15:38:50.881Z
@@ -34,6 +38,7 @@ body:
               V8: 10.2.154.15-electron.0
               OS: Darwin x64 22.1.0
               Sandboxed: No
+              ```
       validations:
           required: true
     - type: textarea
@@ -60,7 +65,7 @@ body:
           required: true
     - type: textarea
       attributes:
-          label: Logs, Screenshots, Screen Recording etc
-          description: You can open the output panel and select "Open in External App" channel to check extension logs
+          label: Logs, Notifications, Screenshots, Screen Recording etc
+          description: Open the output panel by(Ctrl/Cmd + Shift + U) and select "Open in External App" channel to copy extension logs. Better with the chromium devtools logs.
       validations:
-          required: false
+          required: true
