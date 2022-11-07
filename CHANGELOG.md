@@ -1,3 +1,9 @@
+## [0.8.4] - 2022-11-07
+
+### Added
+
+- add more logging to help debug bugs
+
 ## [0.8.3] - 2022-11-07
 
 ### Added
