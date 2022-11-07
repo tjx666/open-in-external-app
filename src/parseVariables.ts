@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import { homedir, type } from 'os';
+import { homedir } from 'os';
 import path from 'path';
 import process from 'process';
 import vscode, { Uri } from 'vscode';

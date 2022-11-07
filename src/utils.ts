@@ -4,8 +4,8 @@ import fs from 'fs/promises';
 import _open, { Options as OpenOptions } from 'open';
 import { promisify } from 'util';
 import vscode, { Uri } from 'vscode';
-import { logger } from './logger';
 
+import { logger } from './logger';
 import parseVariables from './parseVariables';
 
 export const exec = promisify(_exec);
@@ -15,7 +15,13 @@ function openByPkg(filePath: string, options?: OpenOptions) {
     return _open(filePath, options);
 }
 
-// FIXME: support none-ascii character path
+async function openByBuiltinApi(filePath: string) {
+    logger.log('Open file by vscode builtin api');
+    // https://github.com/microsoft/vscode/issues/85930#issuecomment-821882174
+    // @ts-ignore
+    return vscode.env.openExternal(Uri.file(filePath).toString());
+}
+
 export async function open(filePath: string, appConfig?: string | ExternalAppConfig) {
     logger.log(`Opened file is: "${filePath}"`);
 
@@ -27,8 +33,7 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
         });
     } else if (appConfig !== null && typeof appConfig === 'object') {
         if (appConfig.isElectronApp) {
-            logger.log('Open file by vscode builtin api');
-            await vscode.env.openExternal(Uri.file(filePath));
+            await openByBuiltinApi(filePath);
         } else if (appConfig.shellCommand) {
             const parsedCommand = (await parseVariables([appConfig.shellCommand!], Uri.file(filePath)))[0];
             logger.log(`Open file by shell command: "${parsedCommand}"`);
@@ -47,13 +52,11 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
                 },
             });
         }
-    } else {
+    } else if (vscode.env.remoteName === 'wsl') {
         await openByPkg(filePath);
+    } else {
+        await openByBuiltinApi(filePath);
     }
-}
-
-export function isAsciiString(str: string): boolean {
-    return [...str].every((char) => char.codePointAt(0)! <= 255);
 }
 
 export function pathExists(path: string) {

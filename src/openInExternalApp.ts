@@ -1,10 +1,11 @@
 import { extname } from 'path';
 import vscode, { Uri } from 'vscode';
 import { localize } from 'vscode-nls-i18n';
-import { wslToWindowsSync } from 'wsl-path';
+import { windowsToWsl } from 'wsl-path';
 
 import getExtensionConfig from './config';
-import { open, getActiveFile } from './utils';
+import { logger } from './logger';
+import { getActiveFile, open } from './utils';
 
 function getMatchedConfigItem(extensionName: string): ExtensionConfigItem | undefined {
     const configuration: ExtensionConfigItem[] = getExtensionConfig();
@@ -32,19 +33,21 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
     const { fsPath } = uri;
     const filePath =
         vscode.env.remoteName === 'wsl'
-            ? wslToWindowsSync(fsPath, {
+            ? await windowsToWsl(fsPath, {
                   wslCommand: 'wsl.exe',
               })
             : fsPath;
 
     const ext = extname(filePath);
     const extensionName = ext === '' || ext === '.' ? null : ext.slice(1);
+    logger.log(`parsed extension name: ${extensionName}`);
 
     // when there is configuration map to it's extension, use use [open](https://github.com/sindresorhus/open)
     // except for configured appConfig.isElectronApp option
     let matchedConfigItem: ExtensionConfigItem | undefined;
     if (extensionName) matchedConfigItem = getMatchedConfigItem(extensionName);
     if (matchedConfigItem) {
+        logger.log('matchedConfigItem:\n' + JSON.stringify(matchedConfigItem, null, 4));
         const candidateApps = matchedConfigItem.apps;
         if (typeof candidateApps === 'string') {
             await open(filePath, candidateApps);
@@ -97,15 +100,5 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
         }
     }
 
-    // default strategy
-    // use vscode builtin API when filePath combines with ascii characters
-    // https://github.com/microsoft/vscode/issues/85930#issuecomment-821882174
-    if (vscode.env.remoteName !== 'wsl') {
-        // @ts-expect-error
-        vscode.env.openExternal(Uri.file(filePath).toString());
-    }
-    // otherwise use [open](https://github.com/sindresorhus/open) which support arguments
-    else {
-        await open(filePath);
-    }
+    await open(filePath);
 }
