@@ -8,6 +8,7 @@
     "msg.quickPick.selectApps.placeholder": "Select multiple applications to open the file...",
 
     "cfg.openInExternalApp.openMapper": "Mapper between the file extensionName and application to open it",
+    "cfg.openInExternalApp.openMapper.item.id": "Combine with shortcut arg(configItemId) to custom shortcut for specific config item",
     "cfg.openInExternalApp.openMapper.item.extensionName.string": "File extension name，for example: md",
     "cfg.openInExternalApp.openMapper.item.extensionName.array": "Pass string array to match multiple extension names",
     "cfg.openInExternalApp.openMapper.item.apps": "External applications to open the file",

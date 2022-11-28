@@ -27,51 +27,55 @@ Via custom configuration, you can make extensions more powerful. For example, to
 
 Example configuration:
 
-```javascript
+```jsonc
 {
-    "openInExternalApp.openMapper": [
+  "openInExternalApp.openMapper": [
+    {
+      // represent file extension name
+      "extensionName": "html",
+      // the external applications to open the file which extension name is html
+      "apps": [
+        // openCommand can be shell command or the complete executable application path
+        // title will be shown in the drop list if there are several apps
         {
-            // represent file extension name
-            "extensionName": "html",
-            // the external applications to open the file which extension name is html
-            "apps": [
-                // openCommand can be shell command or the complete executable application path
-                // title will be shown in the drop list if there are several apps
-                {
-                    "title": "chrome",
-                    // On MacOS, openCommand should be 'Google Chrome.app'
-                    "openCommand": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-                },
-                {
-                    "title": "firefox",
-                    // On MacOS, openCommand should be 'Firefox Developer Edition.app'
-                    "openCommand": "C:\\Program Files\\Firefox Developer Edition\\firefox.exe",
-                    // open in firefox under private mode
-                    "args": ["-private-window"]
-                }
-            ]
+          "title": "chrome",
+          // On MacOS, openCommand should be 'Google Chrome.app'
+          "openCommand": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
         },
         {
-            "extensionName": "tsx",
-            // apps can be Object array or just the command you can access from shell
-            "apps": "code"
-        },
-        {
-            "extensionName": "psd",
-            "apps": "/path/to/photoshop.exe"
-        },
-        // like code-runner, you can custom the shell command to open with file
-        // you can use the variables placeholder documented at https://code.visualstudio.com/docs/editor/variables-reference#_predefined-variables
-        {
-            "extensionName": "ts",
-            "apps": [
-                {
-                    "title": "run ts file",
-                    "shellCommand": "ts-node ${file}"
-                }
-            ]
+          "title": "firefox",
+          // On MacOS, openCommand should be 'Firefox Developer Edition.app'
+          "openCommand": "C:\\Program Files\\Firefox Developer Edition\\firefox.exe",
+          // open in firefox under private mode
+          "args": ["-private-window"]
         }
-    ]
+      ]
+    },
+    {
+      "extensionName": "tsx",
+      // apps can be Object array or just the command you can access from shell
+      "apps": "code"
+    },
+    {
+      "extensionName": "psd",
+      "apps": "/path/to/photoshop.exe"
+    },
+    // like code-runner, you can custom the shell command to open with file
+    {
+      "extensionName": "ts",
+      "apps": [
+        {
+          "title": "run ts file",
+          "shellCommand": "ts-node ${file}"
+        }
+      ]
+    },
+    {
+      // shared config, details here: https://github.com/tjx666/open-in-external-app/issues/45
+      "extensionName": "__ALL__",
+      "apps": "MacVim"
+    }
+  ]
 }
 ```
 
@@ -127,6 +131,65 @@ If you want to open file in application which is made by electron, you can choos
         ]
     }
    ```
+
+## ❓ FAQ
+
+### Can I use variables in args and shellCommand?
+
+Yes. you can use the variables placeholder documented at [predefined-variables](https://code.visualstudio.com/docs/editor/variables-reference#_predefined-variables). In addition to that, you can use:
+
+- ${cursorLineNumber}
+- ${cursorColumnNumber}
+
+```jsonc
+{
+  "extensionName": "ts",
+  "apps": [
+    {
+      "extensionName": "*",
+      "apps": [
+        {
+          "title": "Explorer",
+          // shell command combined with placeholder
+          "shellCommand": "Explorer.exe /root,${fileDirname}"
+        }
+      ]
+    },
+    {
+      "title": "run ts file",
+      "shellCommand": "ts-node ${file}"
+    }
+  ]
+}
+```
+
+### assign keyboard shortcut for specific config item
+
+`keybindings.json`:
+
+```jsonc
+{
+    "key": "cmd+k cmd+o",
+    "command": "openInExternalApp.open",
+    "args": {
+        // same with following id
+        "configItemId": "xxx"
+    }
+},
+```
+
+`settings.json`:
+
+```jsonc
+"openInExternalApp.openMapper": [
+    {
+        // extensionName is ignored when set configItemId arg in shortcut
+        "extensionName": "",
+        "id": "xxx",
+        "apps": ""
+    }
+],
+```
 
 ## 🧡 Backers
 

@@ -8,6 +8,7 @@
     "msg.quickPick.selectApps.placeholder": "选择打开文件的多个应用...",
 
     "cfg.openInExternalApp.openMapper": "文件扩展名和用于打开它的外部应用之间的映射关系",
+    "cfg.openInExternalApp.openMapper.item.id": "结合快捷键参数 configItemId 可以为特定的设置项设置快捷键",
     "cfg.openInExternalApp.openMapper.item.extensionName.string": "文件扩展名，例如：md",
     "cfg.openInExternalApp.openMapper.item.extensionName.array": "传字符串数组可以匹配多个扩展名",
     "cfg.openInExternalApp.openMapper.item.apps": "用于打开文件的外部应用",

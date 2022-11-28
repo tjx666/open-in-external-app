@@ -124,10 +124,13 @@
                     "items": {
                         "type": "object",
                         "required": [
-                            "extensionName",
                             "apps"
                         ],
                         "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "%cfg.openInExternalApp.openMapper.item.id%"
+                            },
                             "extensionName": {
                                 "anyOf": [
                                     {
