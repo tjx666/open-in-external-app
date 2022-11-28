@@ -49,6 +49,11 @@ export default async function parseVariables(strList: string[], activeFile?: Uri
 
     if (activeTextEditor) {
         replacement.set('${lineNumber}', String(activeTextEditor.selection.start.line + 1));
+
+        const cursorPosition = activeTextEditor.selection.active;
+        replacement.set('${cursorLineNumber}', String(cursorPosition.line + 1));
+        replacement.set('${cursorColumnNumber}', String(cursorPosition.character + 1));
+
         replacement.set(
             '${selectedText}',
             activeTextEditor.document.getText(
