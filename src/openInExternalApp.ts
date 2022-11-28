@@ -9,13 +9,20 @@ import { getActiveFile, open } from './utils';
 
 function getMatchedConfigItem(
     configuration: ExtensionConfigItem[],
-    extensionName: string,
+    extensionName?: string,
+    configItemId?: string,
 ): ExtensionConfigItem | undefined {
-    let matchedConfigItem = configuration.find((item) =>
-        Array.isArray(item.extensionName)
-            ? item.extensionName.some((name) => name === extensionName)
-            : item.extensionName === extensionName,
-    );
+    let matchedConfigItem: ExtensionConfigItem | undefined;
+
+    if (extensionName === undefined) {
+        matchedConfigItem = configuration.find((item) => item.id === configItemId);
+    } else {
+        matchedConfigItem = configuration.find((item) =>
+            Array.isArray(item.extensionName)
+                ? item.extensionName.some((name) => name === extensionName)
+                : item.extensionName === extensionName,
+        );
+    }
 
     if (!matchedConfigItem) {
         const fallbackConfigItem = configuration?.find((item) => item.extensionName === '*');
@@ -83,7 +90,11 @@ async function openWithConfigItem(filePath: string, matchedConfigItem: Extension
     }
 }
 
-export default async function openInExternalApp(uri: Uri | undefined, isMultiple = false): Promise<void> {
+export default async function openInExternalApp(
+    uri: Uri | undefined,
+    configItemId?: string,
+    isMultiple = false,
+): Promise<void> {
     // if run command with command plate, uri is undefined, fallback to activeTextEditor
     uri ??= vscode.window.activeTextEditor?.document.uri ?? (await getActiveFile());
     if (!uri) return;
@@ -96,15 +107,18 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
               })
             : fsPath;
 
-    const ext = extname(filePath);
-    const extensionName = ext === '' || ext === '.' ? null : ext.slice(1);
-    logger.log(`parsed extension name: ${extensionName}`);
-
     // when there is configuration map to it's extension, use use [open](https://github.com/sindresorhus/open)
     // except for configured appConfig.isElectronApp option
     let matchedConfigItem: ExtensionConfigItem | undefined;
     const configuration = getExtensionConfig();
-    if (extensionName) matchedConfigItem = getMatchedConfigItem(configuration, extensionName);
+    if (configItemId === undefined) {
+        const ext = extname(filePath);
+        const extensionName = ext === '' || ext === '.' ? null : ext.slice(1);
+        logger.log(`parsed extension name: ${extensionName}`);
+        if (extensionName) matchedConfigItem = getMatchedConfigItem(configuration, extensionName);
+    } else {
+        matchedConfigItem = getMatchedConfigItem(configuration, undefined, configItemId);
+    }
     if (matchedConfigItem) {
         logger.log('matched configItem:\n' + JSON.stringify(matchedConfigItem, null, 4));
         await openWithConfigItem(filePath, matchedConfigItem, isMultiple);

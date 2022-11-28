@@ -1,15 +1,11 @@
-import vscode from 'vscode';
 import openInExternalApp from '../openInExternalApp';
-
-type Uri = vscode.Uri;
-
-async function handler(uri: Uri | undefined): Promise<void> {
-    openInExternalApp(uri, true);
-}
+import { parseArgs } from './open';
 
 const command: CommandModule = {
     identifier: 'openMultiple',
-    handler,
+    async handler(...args: any[]): Promise<void> {
+        return openInExternalApp(...parseArgs(args), true);
+    },
 };
 
 export default command;

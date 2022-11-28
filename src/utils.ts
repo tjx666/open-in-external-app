@@ -1,12 +1,16 @@
 import { exec as _exec } from 'child_process';
 import { constants as FS_CONSTANTS } from 'fs';
 import fs from 'fs/promises';
-import _open, { Options as OpenOptions } from 'open';
 import { promisify } from 'util';
+import _open, { Options as OpenOptions } from 'open';
 import vscode, { Uri } from 'vscode';
 
 import { logger } from './logger';
 import parseVariables from './parseVariables';
+
+export function isObject(value: any) {
+    return value !== null && typeof value === 'object';
+}
 
 export const exec = promisify(_exec);
 

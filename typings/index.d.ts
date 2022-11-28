@@ -12,6 +12,7 @@ interface ExternalAppConfig {
 }
 
 interface ExtensionConfigItem {
+    id: string;
     extensionName: string | string[];
     apps: ExternalAppConfig[] | string;
 }

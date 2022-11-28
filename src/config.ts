@@ -1,10 +1,11 @@
-import vscode from 'vscode';
 import joi from 'joi';
+import vscode from 'vscode';
 import { localize } from 'vscode-nls-i18n';
 
 export function validateConfiguration(configuration: ExtensionConfigItem[]): joi.ValidationResult {
     const configScheme = joi.array().items(
         joi.object({
+            id: joi.string(),
             extensionName: joi.alternatives().try(joi.string(), joi.array().items(joi.string())).required(),
             apps: joi
                 .alternatives()
