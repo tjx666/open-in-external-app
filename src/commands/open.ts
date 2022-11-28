@@ -1,11 +1,12 @@
 import vscode from 'vscode';
 
+import { logger } from '../logger';
 import openInExternalApp from '../openInExternalApp';
 import { isObject } from '../utils';
 
 type Uri = vscode.Uri;
 
-export function parseArgs(args: any[]): [Uri | undefined, string | undefined] {
+export function parseArgs(args: any[]) {
     let uri: Uri | undefined;
     let configItemId: string | undefined;
 
@@ -18,8 +19,9 @@ export function parseArgs(args: any[]): [Uri | undefined, string | undefined] {
             }
         }
     }
-
-    return [uri, configItemId];
+    const result = [uri, configItemId] as const;
+    logger.log('parsed args: ' + JSON.stringify(result, undefined, 4));
+    return result;
 }
 
 const command: CommandModule = {

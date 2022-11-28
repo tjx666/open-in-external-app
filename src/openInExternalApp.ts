@@ -15,8 +15,10 @@ function getMatchedConfigItem(
     let matchedConfigItem: ExtensionConfigItem | undefined;
 
     if (extensionName === undefined) {
+        logger.log('find config by configItemId');
         matchedConfigItem = configuration.find((item) => item.id === configItemId);
     } else {
+        logger.log('find config by extensionName');
         matchedConfigItem = configuration.find((item) =>
             Array.isArray(item.extensionName)
                 ? item.extensionName.some((name) => name === extensionName)
@@ -39,6 +41,8 @@ function getSharedConfigItem(configuration: ExtensionConfigItem[]): ExtensionCon
 }
 
 async function openWithConfigItem(filePath: string, matchedConfigItem: ExtensionConfigItem, isMultiple: boolean) {
+    logger.log('open with configItem:\n' + JSON.stringify(matchedConfigItem, undefined, 4));
+
     const candidateApps = matchedConfigItem.apps;
     if (typeof candidateApps === 'string') {
         await open(filePath, candidateApps);
@@ -120,7 +124,7 @@ export default async function openInExternalApp(
         matchedConfigItem = getMatchedConfigItem(configuration, undefined, configItemId);
     }
     if (matchedConfigItem) {
-        logger.log('matched configItem:\n' + JSON.stringify(matchedConfigItem, null, 4));
+        logger.log('found matched config');
         await openWithConfigItem(filePath, matchedConfigItem, isMultiple);
     } else {
         await open(filePath);
@@ -128,7 +132,7 @@ export default async function openInExternalApp(
 
     const sharedConfigItem = getSharedConfigItem(configuration);
     if (sharedConfigItem) {
-        logger.log('open file with shared configItem:\n' + JSON.stringify(sharedConfigItem, null, 4));
+        logger.log('found shared config');
         await openWithConfigItem(filePath, sharedConfigItem, false);
     }
 }

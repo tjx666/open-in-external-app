@@ -4,6 +4,7 @@ import path from 'path';
 import process from 'process';
 import vscode, { Uri } from 'vscode';
 
+import { logger } from './logger';
 import { getActiveFile } from './utils';
 
 export default async function parseVariables(strList: string[], activeFile?: Uri) {
@@ -67,9 +68,8 @@ export default async function parseVariables(strList: string[], activeFile?: Uri
         vscode.workspace.getConfiguration().get(captures[1], captures[0]),
     );
 
-    const replacementEntries = [...replacement.entries()].filter(([_, r]) => typeof r !== 'undefined');
-    // eslint-disable-next-line prefer-const
-    for (let [index, str] of strList.entries()) {
+    const replacementEntries = [...replacement.entries()].filter(([_, r]) => r !== undefined);
+    const replace = (str: string) => {
         for (const [search, replacer] of replacementEntries) {
             const typeofReplacer = typeof replacer;
             if (typeofReplacer === 'string') {
@@ -78,8 +78,38 @@ export default async function parseVariables(strList: string[], activeFile?: Uri
                 str = str.replaceAll(search as RegExp, replacer as any);
             }
         }
+        return str;
+    };
+    // eslint-disable-next-line prefer-const
+    for (let [index, str] of strList.entries()) {
+        str = replace(str);
         strList[index] = str;
     }
+
+    const variables = [
+        'userHome',
+        'workspaceFolder',
+        'workspaceFolderBasename',
+        'file',
+        'fileWorkspaceFolder',
+        'relativeFile',
+        'relativeFileDirname',
+        'fileBasename',
+        'fileBasenameNoExtension',
+        'fileDirname',
+        'fileExtname',
+        'cwd',
+        'lineNumber',
+        'selectedText',
+        'execPath',
+        'defaultBuildTask',
+        'pathSeparator',
+        'cursorLineNumber',
+        'cursorColumnNumber',
+    ]
+        .map((variable) => '\t' + variable + ': ${' + variable + '}')
+        .join('\n');
+    logger.log('variables:\n' + replace(variables));
 
     return strList;
 }

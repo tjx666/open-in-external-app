@@ -15,19 +15,19 @@ export function isObject(value: any) {
 export const exec = promisify(_exec);
 
 function openByPkg(filePath: string, options?: OpenOptions) {
-    logger.log('Open file by open pkg, options:\n' + JSON.stringify(options, null, 4));
+    logger.log('open file by open pkg, options:\n' + JSON.stringify(options, undefined, 4));
     return _open(filePath, options);
 }
 
 async function openByBuiltinApi(filePath: string) {
-    logger.log('Open file by vscode builtin api');
+    logger.log('open file by vscode builtin api');
     // https://github.com/microsoft/vscode/issues/85930#issuecomment-821882174
     // @ts-ignore
     return vscode.env.openExternal(Uri.file(filePath).toString());
 }
 
 export async function open(filePath: string, appConfig?: string | ExternalAppConfig) {
-    logger.log(`Opened file is: "${filePath}"`);
+    logger.log(`opened file is: "${filePath}"`);
 
     if (typeof appConfig === 'string') {
         await openByPkg(filePath, {
@@ -40,11 +40,11 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
             await openByBuiltinApi(filePath);
         } else if (appConfig.shellCommand) {
             const parsedCommand = (await parseVariables([appConfig.shellCommand!], Uri.file(filePath)))[0];
-            logger.log(`Open file by shell command: "${parsedCommand}"`);
+            logger.log(`open file by shell command: "${parsedCommand}"`);
             try {
                 await exec(parsedCommand);
             } catch (error: any) {
-                vscode.window.showErrorMessage(`Open file by shell command failed, execute: "${parsedCommand}"`);
+                vscode.window.showErrorMessage(`open file by shell command failed, execute: "${parsedCommand}"`);
                 logger.log(error);
             }
         } else if (appConfig.openCommand) {
