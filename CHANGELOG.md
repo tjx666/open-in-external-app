@@ -1,3 +1,11 @@
+## [0.9.0] - 2022-11-29
+
+### Added
+
+- new variables cursorLineNumber, cursorColumnNumber
+- support shared config #45
+- support set shortcut for specific config item #44
+
 ## [0.8.4] - 2022-11-07
 
 ### Added
