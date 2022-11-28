@@ -7,8 +7,10 @@ import getExtensionConfig from './config';
 import { logger } from './logger';
 import { getActiveFile, open } from './utils';
 
-function getMatchedConfigItem(extensionName: string): ExtensionConfigItem | undefined {
-    const configuration: ExtensionConfigItem[] = getExtensionConfig();
+function getMatchedConfigItem(
+    configuration: ExtensionConfigItem[],
+    extensionName: string,
+): ExtensionConfigItem | undefined {
     let matchedConfigItem = configuration.find((item) =>
         Array.isArray(item.extensionName)
             ? item.extensionName.some((name) => name === extensionName)
@@ -16,13 +18,69 @@ function getMatchedConfigItem(extensionName: string): ExtensionConfigItem | unde
     );
 
     if (!matchedConfigItem) {
-        const allFilesOpenWithConfig = configuration?.find((item) => item.extensionName === '*');
-        if (allFilesOpenWithConfig) {
-            matchedConfigItem = allFilesOpenWithConfig;
+        const fallbackConfigItem = configuration?.find((item) => item.extensionName === '*');
+        if (fallbackConfigItem) {
+            matchedConfigItem = fallbackConfigItem;
         }
     }
 
     return matchedConfigItem;
+}
+
+function getSharedConfigItem(configuration: ExtensionConfigItem[]): ExtensionConfigItem | undefined {
+    return configuration.find((item) => item.extensionName === '__ALL__');
+}
+
+async function openWithConfigItem(filePath: string, matchedConfigItem: ExtensionConfigItem, isMultiple: boolean) {
+    const candidateApps = matchedConfigItem.apps;
+    if (typeof candidateApps === 'string') {
+        await open(filePath, candidateApps);
+        return;
+    }
+
+    if (Array.isArray(candidateApps) && candidateApps.length >= 1) {
+        if (candidateApps.length === 1) {
+            await open(filePath, candidateApps[0]);
+            return;
+        }
+
+        // check repeat in candidateApps
+        let isRepeat = false;
+        const traversedTitles = new Set();
+        for (let i = 0, len = candidateApps.length; i < len; i++) {
+            const { title } = candidateApps[i];
+            if (traversedTitles.has(title)) {
+                isRepeat = true;
+                break;
+            }
+            traversedTitles.add(title);
+        }
+        if (isRepeat) {
+            vscode.window.showErrorMessage(localize('msg.error.sameTitleMultipleApp'));
+            return;
+        }
+
+        const pickerItems = candidateApps.map((app) => app.title);
+        if (isMultiple) {
+            const selectedTitles = await vscode.window.showQuickPick(pickerItems, {
+                canPickMany: true,
+                placeHolder: localize('msg.quickPick.selectApps.placeholder'),
+            });
+            if (selectedTitles) {
+                selectedTitles.forEach(async (title) => {
+                    await open(filePath, candidateApps.find((app) => app.title === title)!);
+                });
+            }
+        } else {
+            const selectedTitle = await vscode.window.showQuickPick(pickerItems, {
+                placeHolder: localize('msg.quickPick.selectApp.placeholder'),
+            });
+
+            if (selectedTitle) {
+                await open(filePath, candidateApps.find((app) => app.title === selectedTitle)!);
+            }
+        }
+    }
 }
 
 export default async function openInExternalApp(uri: Uri | undefined, isMultiple = false): Promise<void> {
@@ -45,60 +103,18 @@ export default async function openInExternalApp(uri: Uri | undefined, isMultiple
     // when there is configuration map to it's extension, use use [open](https://github.com/sindresorhus/open)
     // except for configured appConfig.isElectronApp option
     let matchedConfigItem: ExtensionConfigItem | undefined;
-    if (extensionName) matchedConfigItem = getMatchedConfigItem(extensionName);
+    const configuration = getExtensionConfig();
+    if (extensionName) matchedConfigItem = getMatchedConfigItem(configuration, extensionName);
     if (matchedConfigItem) {
-        logger.log('matchedConfigItem:\n' + JSON.stringify(matchedConfigItem, null, 4));
-        const candidateApps = matchedConfigItem.apps;
-        if (typeof candidateApps === 'string') {
-            await open(filePath, candidateApps);
-            return;
-        }
-
-        if (Array.isArray(candidateApps) && candidateApps.length >= 1) {
-            if (candidateApps.length === 1) {
-                await open(filePath, candidateApps[0]);
-                return;
-            }
-
-            // check repeat in candidateApps
-            let isRepeat = false;
-            const traversedTitles = new Set();
-            for (let i = 0, len = candidateApps.length; i < len; i++) {
-                const { title } = candidateApps[i];
-                if (traversedTitles.has(title)) {
-                    isRepeat = true;
-                    break;
-                }
-                traversedTitles.add(title);
-            }
-            if (isRepeat) {
-                vscode.window.showErrorMessage(localize('msg.error.sameTitleMultipleApp'));
-                return;
-            }
-
-            const pickerItems = candidateApps.map((app) => app.title);
-            if (isMultiple) {
-                const selectedTitles = await vscode.window.showQuickPick(pickerItems, {
-                    canPickMany: true,
-                    placeHolder: localize('msg.quickPick.selectApps.placeholder'),
-                });
-                if (selectedTitles) {
-                    selectedTitles.forEach(async (title) => {
-                        await open(filePath, candidateApps.find((app) => app.title === title)!);
-                    });
-                }
-            } else {
-                const selectedTitle = await vscode.window.showQuickPick(pickerItems, {
-                    placeHolder: localize('msg.quickPick.selectApp.placeholder'),
-                });
-
-                if (selectedTitle) {
-                    await open(filePath, candidateApps.find((app) => app.title === selectedTitle)!);
-                }
-            }
-            return;
-        }
+        logger.log('matched configItem:\n' + JSON.stringify(matchedConfigItem, null, 4));
+        await openWithConfigItem(filePath, matchedConfigItem, isMultiple);
+    } else {
+        await open(filePath);
     }
 
-    await open(filePath);
+    const sharedConfigItem = getSharedConfigItem(configuration);
+    if (sharedConfigItem) {
+        logger.log('open file with shared configItem:\n' + JSON.stringify(sharedConfigItem, null, 4));
+        await openWithConfigItem(filePath, sharedConfigItem, false);
+    }
 }
