@@ -1,6 +1,7 @@
 node_modules/
 
 # develop
+.github/
 .vscode/
 typings/
 configs/
@@ -30,3 +31,4 @@ tsconfig.test.json
 .eslintignore
 .prettierrc
 yarn.lock
+pnpm-lock.yaml

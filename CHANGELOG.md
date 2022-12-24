@@ -1,3 +1,9 @@
+## [0.9.1] - 2022-12-25
+
+### Fixed
+
+- <https://github.com/tjx666/open-in-external-app/issues/46#issuecomment-1363591395>
+
 ## [0.9.0] - 2022-11-29
 
 ### Added
