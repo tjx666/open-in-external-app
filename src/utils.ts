@@ -21,9 +21,8 @@ function openByPkg(filePath: string, options?: OpenOptions) {
 
 async function openByBuiltinApi(filePath: string) {
     logger.log('open file by vscode builtin api');
-    // https://github.com/microsoft/vscode/issues/85930#issuecomment-821882174
-    // @ts-ignore
-    return vscode.env.openExternal(Uri.file(filePath).toString());
+    // https://github.com/microsoft/vscode/issues/88273
+    return vscode.env.openExternal(Uri.file(filePath));
 }
 
 export async function open(filePath: string, appConfig?: string | ExternalAppConfig) {

@@ -200,7 +200,7 @@
         }
     },
     "lint-staged": {
-        "*.{ts}": [
+        "*.ts": [
             "eslint -c .eslintrc.js"
         ],
         "*.{ts,json,md}": [
