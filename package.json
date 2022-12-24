@@ -77,7 +77,9 @@
         "build-analyze": "npm run build --analyze",
         "lint": "eslint -c .eslintrc.js --ext .ts ./{scripts,src,test}/**/*.ts",
         "test": "npm run test-compile && node ./out/test/runTests.js",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "package": "vsce package --no-dependencies",
+        "publish": "vsce publish --no-dependencies"
     },
     "activationEvents": [
         "onCommand:openInExternalApp.open",
