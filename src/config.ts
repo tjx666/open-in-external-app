@@ -6,7 +6,10 @@ export function validateConfiguration(configuration: ExtensionConfigItem[]): joi
     const configScheme = joi.array().items(
         joi.object({
             id: joi.string(),
-            extensionName: joi.alternatives().try(joi.string(), joi.array().items(joi.string())).required(),
+            extensionName: joi
+                .alternatives()
+                .try(joi.string(), joi.array().items(joi.string()))
+                .required(),
             apps: joi
                 .alternatives()
                 .try(

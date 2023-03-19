@@ -1,4 +1,5 @@
-import assert from 'assert';
+import assert from 'node:assert';
+
 import { validateConfiguration } from '../src/config';
 
 describe('#config', () => {

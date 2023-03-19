@@ -1,5 +1,8 @@
 {
     "compilerOptions": {
+        "composite": true,
+        "sourceMap": true,
+
         /* Basic Options */
         "target": "ES2022",
         "module": "commonjs",
@@ -8,8 +11,6 @@
         "strict": true,
 
         /* Additional Checks */
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
 

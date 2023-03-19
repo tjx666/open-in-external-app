@@ -1,4 +1,4 @@
-import vscode from 'vscode';
+import type vscode from 'vscode';
 
 import { logger } from '../logger';
 import openInExternalApp from '../openInExternalApp';
@@ -20,7 +20,7 @@ export function parseArgs(args: any[]) {
         }
     }
     const result = [uri, configItemId] as const;
-    logger.log('parsed args: ' + JSON.stringify(result, undefined, 4));
+    logger.log(`parsed args: ${JSON.stringify(result, undefined, 4)}`);
     return result;
 }
 

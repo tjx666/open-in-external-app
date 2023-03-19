@@ -1,8 +1,10 @@
-import { exec as _exec } from 'child_process';
-import { constants as FS_CONSTANTS } from 'fs';
-import fs from 'fs/promises';
-import { promisify } from 'util';
-import _open, { Options as OpenOptions } from 'open';
+import { exec as _exec } from 'node:child_process';
+import { constants as FS_CONSTANTS } from 'node:fs';
+import fs from 'node:fs/promises';
+import { promisify } from 'node:util';
+
+import type { Options as OpenOptions } from 'open';
+import _open from 'open';
 import vscode, { Uri } from 'vscode';
 
 import { logger } from './logger';
@@ -15,7 +17,7 @@ export function isObject(value: any) {
 export const exec = promisify(_exec);
 
 function openByPkg(filePath: string, options?: OpenOptions) {
-    logger.log('open file by open pkg, options:\n' + JSON.stringify(options, undefined, 4));
+    logger.log(`open file by open pkg, options:\n${JSON.stringify(options, undefined, 4)}`);
     return _open(filePath, options);
 }
 
@@ -38,12 +40,16 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
         if (appConfig.isElectronApp) {
             await openByBuiltinApi(filePath);
         } else if (appConfig.shellCommand) {
-            const parsedCommand = (await parseVariables([appConfig.shellCommand!], Uri.file(filePath)))[0];
+            const parsedCommand = (
+                await parseVariables([appConfig.shellCommand!], Uri.file(filePath))
+            )[0];
             logger.log(`open file by shell command: "${parsedCommand}"`);
             try {
                 await exec(parsedCommand);
             } catch (error: any) {
-                vscode.window.showErrorMessage(`open file by shell command failed, execute: "${parsedCommand}"`);
+                vscode.window.showErrorMessage(
+                    `open file by shell command failed, execute: "${parsedCommand}"`,
+                );
                 logger.log(error);
             }
         } else if (appConfig.openCommand) {

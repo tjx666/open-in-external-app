@@ -1,29 +1,44 @@
+// A launch configuration that compiles the extension and then opens it inside a new window
+// Use IntelliSense to learn about possible attributes.
+// Hover to view descriptions of existing attributes.
+// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 {
-    "version": "0.1.0",
+    "version": "0.2.0",
     "configurations": [
         {
-            "name": "dev",
+            "name": "Run Extension",
             "type": "extensionHost",
             "request": "launch",
-            "runtimeExecutable": "${execPath}",
-            "args": ["--disable-extensions", "--extensionDevelopmentPath=${workspaceRoot}"],
-            "sourceMaps": true,
-            "outFiles": ["${workspaceRoot}/out/**/*.js"],
-            "preLaunchTask": "npm: compile"
-        },
-        {
-            "name": "test",
-            "type": "extensionHost",
-            "request": "launch",
-            "runtimeExecutable": "${execPath}",
             "args": [
                 "--disable-extensions",
-                "--extensionDevelopmentPath=${workspaceRoot}",
-                "--extensionTestsPath=${workspaceFolder}/out/test/index"
+                "--extensionDevelopmentPath=${workspaceFolder}",
+                "${workspaceFolder}/test-workspace"
+            ],
+            "outFiles": ["${workspaceFolder}/out/**/*.js"],
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**",
+                "**/resources/app/out/vs/**",
+                "**/.vscode-insiders/extensions/",
+                "**/.vscode/extensions/"
             ],
             "sourceMaps": true,
-            "outFiles": ["${workspaceRoot}/out/test/**/*.js"],
-            "preLaunchTask": "npm: test-compile"
+            "env": {
+                "VSCODE_DEBUG_MODE": "true"
+            },
+            "preLaunchTask": "${defaultBuildTask}"
+        },
+        {
+            "name": "Extension Tests",
+            "type": "extensionHost",
+            "request": "launch",
+            "args": [
+                "--disable-extensions",
+                "--extensionDevelopmentPath=${workspaceFolder}",
+                "--extensionTestsPath=${workspaceFolder}/out/test/suite/index"
+            ],
+            "outFiles": ["${workspaceFolder}/out/test/**/*.js"],
+            "preLaunchTask": "${defaultBuildTask}"
         }
     ]
 }

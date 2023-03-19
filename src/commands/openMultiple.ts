@@ -1,5 +1,5 @@
-import openInExternalApp from '../openInExternalApp';
 import { parseArgs } from './open';
+import openInExternalApp from '../openInExternalApp';
 
 const command: CommandModule = {
     identifier: 'openMultiple',

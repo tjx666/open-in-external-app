@@ -1,5 +1,6 @@
+import { resolve } from 'node:path';
+
 import { runTests } from '@vscode/test-electron';
-import { resolve } from 'path';
 
 (async function go() {
     const projectPath = resolve(__dirname, '../../');
@@ -7,16 +8,10 @@ import { resolve } from 'path';
     const extensionTestsPath = resolve(projectPath, './out/test');
     const testWorkspace = resolve(projectPath, './test-workspace');
 
-    try {
-        await runTests({
-            version: 'insiders',
-            extensionDevelopmentPath,
-            extensionTestsPath,
-            launchArgs: [testWorkspace],
-        });
-    } catch (error) {
-        console.error(error);
-        console.error('Failed to run tests');
-        process.exit(1);
-    }
+    await runTests({
+        version: 'stable',
+        extensionDevelopmentPath,
+        extensionTestsPath,
+        launchArgs: [testWorkspace],
+    });
 })();

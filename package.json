@@ -33,7 +33,7 @@
         "url": "https://github.com/tjx666/open-in-external-app"
     },
     "engines": {
-        "vscode": "^1.74.0"
+        "vscode": "^1.76.0"
     },
     "categories": [
         "Other"
@@ -70,21 +70,21 @@
     ],
     "main": "./out/extension.js",
     "scripts": {
-        "vscode:prepublish": "npm run build",
-        "compile": "cross-env NODE_ENV=development ts-node --files -P ./scripts/tsconfig.json ./scripts",
-        "test-compile": "tsc -p ./tsconfig.test.json",
-        "build": "cross-env NODE_ENV=production ts-node --files -P ./scripts/tsconfig.json ./scripts",
-        "build-analyze": "npm run build --analyze",
-        "lint": "eslint -c .eslintrc.js --ext .ts ./{scripts,src,test}/**/*.ts",
-        "test": "npm run test-compile && node ./out/test/runTests.js",
-        "prepare": "husky install",
+        "vscode:prepublish": "pnpm esbuild:base --minify",
+        "preinstall": "npx only-allow pnpm",
+        "postinstall": "stale-dep -u",
+        "clean": "rimraf -rf ./out",
+        "esbuild:base": "stale-dep && esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+        "esbuild:watch": "pnpm esbuild:base --sourcemap --watch",
+        "esbuild:analyze": "pnpm esbuild:base --minify --metafile=meta.json && esbuild-visualizer --metadata ./meta.json --open",
+        "compile:test": "pnpm clean && tsc -b ./test/tsconfig.json",
+        "lint": "eslint src --ext ts",
+        "test": "stale-dep && pnpm compile:test && node ./out/test/runTests.js",
         "package": "vsce package --no-dependencies",
-        "publish": "vsce publish --no-dependencies"
+        "release": "bumpp -c \"release: v%s\" package.json",
+        "publish:vs-marketplace": "vsce publish --no-dependencies",
+        "publish:open-vsx": "ovsx publish --no-dependencies"
     },
-    "activationEvents": [
-        "onCommand:openInExternalApp.open",
-        "onCommand:openInExternalApp.openMultiple"
-    ],
     "contributes": {
         "commands": [
             {
@@ -201,55 +201,48 @@
             }
         }
     },
+    "eslintConfig": {
+        "extends": "@yutengjing/eslint-config-typescript",
+        "ignorePatterns": [
+            "test-workspace"
+        ]
+    },
+    "prettier": "@yutengjing/prettier-config",
     "lint-staged": {
         "*.ts": [
-            "eslint -c .eslintrc.js"
+            "eslint"
         ],
         "*.{ts,json,md}": [
             "prettier --write"
         ]
     },
     "dependencies": {
-        "joi": "17.7.0",
-        "open": "8.4.0",
+        "joi": "17.8.4",
+        "open": "8.4.2",
         "vscode-nls-i18n": "0.2.4",
-        "wsl-path": "3.0.2"
+        "wsl-path": "4.0.0"
     },
     "devDependencies": {
-        "@nuxt/friendly-errors-webpack-plugin": "2.5.2",
-        "@types/glob": "8.0.0",
-        "@types/mocha": "10.0.1",
-        "@types/node": "18.11.17",
-        "@types/vscode": "1.74.0",
-        "@types/webpack": "5.28.0",
-        "@types/webpack-bundle-analyzer": "4.6.0",
-        "@types/webpackbar": "4.0.3",
-        "@types/yargs": "17.0.17",
-        "@typescript-eslint/eslint-plugin": "5.47.0",
-        "@typescript-eslint/parser": "5.47.0",
-        "@vscode/test-electron": "2.2.1",
-        "clean-webpack-plugin": "4.0.0",
-        "cross-env": "7.0.3",
-        "eslint": "8.30.0",
-        "eslint-config-airbnb-base": "15.0.0",
-        "eslint-config-prettier": "8.5.0",
-        "eslint-import-resolver-typescript": "3.5.2",
-        "eslint-plugin-import": "2.26.0",
-        "eslint-plugin-prettier": "4.2.1",
-        "glob": "8.0.3",
-        "husky": "8.0.2",
-        "lint-staged": "13.1.0",
-        "mocha": "10.2.0",
-        "prettier": "2.8.1",
-        "speed-measure-webpack-plugin": "1.5.0",
-        "terser-webpack-plugin": "5.3.6",
-        "ts-loader": "9.4.2",
-        "ts-node": "10.9.1",
-        "typescript": "4.9.4",
-        "webpack": "5.75.0",
-        "webpack-bundle-analyzer": "4.7.0",
-        "webpack-merge": "5.8.0",
-        "webpackbar": "5.0.2",
-        "yargs": "17.6.2"
+        "@types/glob": "^8.1.0",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "^18.15.3",
+        "@types/vscode": "^1.76.0",
+        "@vscode/test-electron": "^2.3.0",
+        "@vscode/vsce": "^2.18.0",
+        "@yutengjing/eslint-config-typescript": "^0.2.8",
+        "@yutengjing/prettier-config": "^0.0.1",
+        "bumpp": "^9.0.0",
+        "esbuild": "^0.17.12",
+        "esbuild-visualizer": "^0.4.0",
+        "eslint": "^8.36.0",
+        "glob": "^9.3.0",
+        "lint-staged": "^13.2.0",
+        "mocha": "^10.2.0",
+        "ovsx": "^0.8.0",
+        "prettier": "^2.8.4",
+        "rimraf": "^4.4.0",
+        "simple-git-hooks": "^2.8.1",
+        "stale-dep": "^0.6.0",
+        "typescript": "^5.0.2"
     }
 }

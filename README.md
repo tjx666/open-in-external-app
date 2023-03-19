@@ -181,14 +181,16 @@ Yes. you can use the variables placeholder documented at [predefined-variables](
 `settings.json`:
 
 ```jsonc
-"openInExternalApp.openMapper": [
+{
+  "openInExternalApp.openMapper": [
     {
-        // extensionName is ignored when set configItemId arg in shortcut
-        "extensionName": "",
-        "id": "xxx",
-        "apps": ""
+      // extensionName is ignored when set configItemId arg in shortcut
+      "extensionName": "",
+      "id": "xxx",
+      "apps": ""
     }
-],
+  ]
+}
 ```
 
 ## 🧡 Backers

@@ -1,5 +1,7 @@
-import { extname } from 'path';
-import vscode, { Uri } from 'vscode';
+import { extname } from 'node:path';
+
+import type { Uri } from 'vscode';
+import vscode from 'vscode';
 import { localize } from 'vscode-nls-i18n';
 import { windowsToWsl } from 'wsl-path';
 
@@ -21,7 +23,7 @@ function getMatchedConfigItem(
         logger.log('find config by extensionName');
         matchedConfigItem = configuration.find((item) =>
             Array.isArray(item.extensionName)
-                ? item.extensionName.some((name) => name === extensionName)
+                ? item.extensionName.includes(extensionName)
                 : item.extensionName === extensionName,
         );
     }
@@ -36,12 +38,18 @@ function getMatchedConfigItem(
     return matchedConfigItem;
 }
 
-function getSharedConfigItem(configuration: ExtensionConfigItem[]): ExtensionConfigItem | undefined {
+function getSharedConfigItem(
+    configuration: ExtensionConfigItem[],
+): ExtensionConfigItem | undefined {
     return configuration.find((item) => item.extensionName === '__ALL__');
 }
 
-async function openWithConfigItem(filePath: string, matchedConfigItem: ExtensionConfigItem, isMultiple: boolean) {
-    logger.log('open with configItem:\n' + JSON.stringify(matchedConfigItem, undefined, 4));
+async function openWithConfigItem(
+    filePath: string,
+    matchedConfigItem: ExtensionConfigItem,
+    isMultiple: boolean,
+) {
+    logger.log(`open with configItem:\n${JSON.stringify(matchedConfigItem, undefined, 4)}`);
 
     const candidateApps = matchedConfigItem.apps;
     if (typeof candidateApps === 'string') {
@@ -49,7 +57,7 @@ async function openWithConfigItem(filePath: string, matchedConfigItem: Extension
         return;
     }
 
-    if (Array.isArray(candidateApps) && candidateApps.length >= 1) {
+    if (Array.isArray(candidateApps) && candidateApps.length > 0) {
         if (candidateApps.length === 1) {
             await open(filePath, candidateApps[0]);
             return;

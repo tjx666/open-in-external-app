@@ -1,18 +1,22 @@
 /* eslint-disable no-template-curly-in-string */
-import { homedir } from 'os';
-import path from 'path';
-import process from 'process';
-import vscode, { Uri } from 'vscode';
+import { homedir } from 'node:os';
+import path from 'node:path';
+import process from 'node:process';
+
+import type { Uri } from 'vscode';
+import vscode from 'vscode';
 
 import { logger } from './logger';
 import { getActiveFile } from './utils';
 
 export default async function parseVariables(strList: string[], activeFile?: Uri) {
-    const replacement: Map<string | RegExp, string | ((substring: string, ...args: any[]) => string) | undefined> =
-        new Map([
-            ['${userHome}', homedir()],
-            ['${pathSeparator}', path.sep],
-        ]);
+    const replacement: Map<
+        string | RegExp,
+        string | ((substring: string, ...args: any[]) => string) | undefined
+    > = new Map([
+        ['${userHome}', homedir()],
+        ['${pathSeparator}', path.sep],
+    ]);
 
     const { workspaceFolders } = vscode.workspace;
     if (workspaceFolders?.length) {
@@ -26,18 +30,25 @@ export default async function parseVariables(strList: string[], activeFile?: Uri
     const absoluteFilePath = activeFile?.fsPath;
     replacement.set('${file}', absoluteFilePath);
 
-    const activeWorkspace = activeFile ? vscode.workspace.getWorkspaceFolder(activeFile) : undefined;
+    const activeWorkspace = activeFile
+        ? vscode.workspace.getWorkspaceFolder(activeFile)
+        : undefined;
     replacement.set('${fileWorkspaceFolder}', activeWorkspace?.uri.fsPath);
     replacement.set('${cwd}', activeWorkspace?.uri.fsPath);
 
     let relativeFilePath: string | undefined;
     if (absoluteFilePath && activeWorkspace) {
-        relativeFilePath = absoluteFilePath.replace(activeWorkspace.uri.fsPath, '').slice(path.sep.length);
+        relativeFilePath = absoluteFilePath
+            .replace(activeWorkspace.uri.fsPath, '')
+            .slice(path.sep.length);
         replacement.set('${relativeFile}', relativeFilePath);
     }
 
     if (relativeFilePath) {
-        replacement.set('${relativeFileDirname}', relativeFilePath.slice(0, relativeFilePath.lastIndexOf(path.sep)));
+        replacement.set(
+            '${relativeFileDirname}',
+            relativeFilePath.slice(0, relativeFilePath.lastIndexOf(path.sep)),
+        );
     }
 
     if (absoluteFilePath) {
@@ -63,8 +74,8 @@ export default async function parseVariables(strList: string[], activeFile?: Uri
         );
     }
 
-    replacement.set(/\${env:(.*?)}/g, (...captures) => process.env[captures[1]] ?? captures[0]);
-    replacement.set(/\${config:(.*?)}/g, (...captures) =>
+    replacement.set(/\$\{env:(.*?)\}/g, (...captures) => process.env[captures[1]] ?? captures[0]);
+    replacement.set(/\$\{config:(.*?)\}/g, (...captures) =>
         vscode.workspace.getConfiguration().get(captures[1], captures[0]),
     );
 
@@ -80,7 +91,7 @@ export default async function parseVariables(strList: string[], activeFile?: Uri
         }
         return str;
     };
-    // eslint-disable-next-line prefer-const
+
     for (let [index, str] of strList.entries()) {
         str = replace(str);
         strList[index] = str;
@@ -107,9 +118,9 @@ export default async function parseVariables(strList: string[], activeFile?: Uri
         'cursorLineNumber',
         'cursorColumnNumber',
     ]
-        .map((variable) => '\t' + variable + ': ${' + variable + '}')
+        .map((variable) => `\t${variable}: \${${variable}}`)
         .join('\n');
-    logger.log('variables:\n' + replace(variables));
+    logger.log(`variables:\n${replace(variables)}`);
 
     return strList;
 }
