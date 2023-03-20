@@ -1,34 +1,28 @@
-node_modules/
+# source
+src
+*.ts
 
-# develop
-.github/
-.vscode/
-typings/
-configs/
-scripts/
-src/
-images
-!images/logo.png
+# output
+out
+!out/extension.js
+*.map
+*.vsix
 
-# test and output
-.vscode-test/
-test/
-out/test/
-test-workspace/
-.nyc_output/
-coverage/
-build/
+# test
+test
+test-workspace
+.vscode-test
 
 # configs
-.husky
+.github
+.vscode
+tsconfig.*
+.eslintrc*
+.prettier*
 .gitignore
-.vscodeignore
-tsconfig.json
-tsconfig.test.json
-.nvmrc
-.editorconfig
-.eslintrc.js
-.eslintignore
-.prettierrc
-yarn.lock
 pnpm-lock.yaml
+
+# esbuild-visualizer
+meta.json
+stats.html
+

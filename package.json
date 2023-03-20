@@ -216,6 +216,9 @@
             "prettier --write"
         ]
     },
+    "simple-git-hooks": {
+        "pre-commit": "npx lint-staged"
+    },
     "dependencies": {
         "joi": "17.8.4",
         "open": "8.4.2",
