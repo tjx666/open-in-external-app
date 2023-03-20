@@ -74,7 +74,7 @@
         "preinstall": "npx only-allow pnpm",
         "postinstall": "stale-dep -u",
         "clean": "rimraf -rf ./out",
-        "esbuild:base": "stale-dep && esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+        "esbuild:base": "stale-dep && esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --target=ESNext",
         "esbuild:watch": "pnpm esbuild:base --sourcemap --watch",
         "esbuild:analyze": "pnpm esbuild:base --minify --metafile=meta.json && esbuild-visualizer --metadata ./meta.json --open",
         "compile:test": "pnpm clean && tsc -b ./test/tsconfig.json",

@@ -1,3 +1,9 @@
+## [0.9.7] - 2023-03-20
+
+### Changed
+
+- adjust esbuild target to ESNext
+
 ## [0.9.6] - 2023-03-20
 
 ### Changed
