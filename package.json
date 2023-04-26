@@ -221,7 +221,7 @@
     },
     "dependencies": {
         "joi": "17.9.2",
-        "open": "9.1.0",
+        "open": "8.4.2",
         "vscode-nls-i18n": "0.2.4",
         "wsl-path": "4.0.0"
     },
