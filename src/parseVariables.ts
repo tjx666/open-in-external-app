@@ -120,7 +120,7 @@ export default async function parseVariables(strList: string[], activeFile?: Uri
     ]
         .map((variable) => `\t${variable}: \${${variable}}`)
         .join('\n');
-    logger.log(`variables:\n${replace(variables)}`);
+    logger.info(`variables:\n${replace(variables)}`);
 
     return strList;
 }

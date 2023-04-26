@@ -17,10 +17,10 @@ function getMatchedConfigItem(
     let matchedConfigItem: ExtensionConfigItem | undefined;
 
     if (extensionName === undefined) {
-        logger.log('find config by configItemId');
+        logger.info('find config by configItemId');
         matchedConfigItem = configuration.find((item) => item.id === configItemId);
     } else {
-        logger.log('find config by extensionName');
+        logger.info('find config by extensionName');
         matchedConfigItem = configuration.find((item) =>
             Array.isArray(item.extensionName)
                 ? item.extensionName.includes(extensionName)
@@ -49,7 +49,7 @@ async function openWithConfigItem(
     matchedConfigItem: ExtensionConfigItem,
     isMultiple: boolean,
 ) {
-    logger.log(`open with configItem:\n${JSON.stringify(matchedConfigItem, undefined, 4)}`);
+    logger.info(`open with configItem:\n${JSON.stringify(matchedConfigItem, undefined, 4)}`);
 
     const candidateApps = matchedConfigItem.apps;
     if (typeof candidateApps === 'string') {
@@ -126,13 +126,13 @@ export default async function openInExternalApp(
     if (configItemId === undefined) {
         const ext = extname(filePath);
         const extensionName = ext === '' || ext === '.' ? null : ext.slice(1);
-        logger.log(`parsed extension name: ${extensionName}`);
+        logger.info(`parsed extension name: ${extensionName}`);
         if (extensionName) matchedConfigItem = getMatchedConfigItem(configuration, extensionName);
     } else {
         matchedConfigItem = getMatchedConfigItem(configuration, undefined, configItemId);
     }
     if (matchedConfigItem) {
-        logger.log('found matched config');
+        logger.info('found matched config');
         await openWithConfigItem(filePath, matchedConfigItem, isMultiple);
     } else {
         await open(filePath);
@@ -140,7 +140,7 @@ export default async function openInExternalApp(
 
     const sharedConfigItem = getSharedConfigItem(configuration);
     if (sharedConfigItem) {
-        logger.log('found shared config');
+        logger.info('found shared config');
         await openWithConfigItem(filePath, sharedConfigItem, false);
     }
 }
