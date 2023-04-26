@@ -6,41 +6,33 @@ import { localize } from 'vscode-nls-i18n';
 import { windowsToWsl } from 'wsl-path';
 
 import getExtensionConfig from './config';
-import { logger } from './logger';
-import { getActiveFile, open } from './utils';
+import { logger } from './utils/logger';
+import { open } from './utils/open';
+import { getActiveFileUri } from './utils/uri';
 
-function getMatchedConfigItem(
-    configuration: ExtensionConfigItem[],
-    extensionName?: string,
-    configItemId?: string,
-): ExtensionConfigItem | undefined {
-    let matchedConfigItem: ExtensionConfigItem | undefined;
-
-    if (extensionName === undefined) {
-        logger.info('find config by configItemId');
-        matchedConfigItem = configuration.find((item) => item.id === configItemId);
-    } else {
-        logger.info('find config by extensionName');
-        matchedConfigItem = configuration.find((item) =>
-            Array.isArray(item.extensionName)
-                ? item.extensionName.includes(extensionName)
-                : item.extensionName === extensionName,
-        );
-    }
-
-    if (!matchedConfigItem) {
-        const fallbackConfigItem = configuration?.find((item) => item.extensionName === '*');
-        if (fallbackConfigItem) {
-            matchedConfigItem = fallbackConfigItem;
-        }
-    }
-
-    return matchedConfigItem;
+function getFallbackConfigItem(configuration: ExtensionConfigItem[]) {
+    return configuration?.find((item) => item.extensionName === '*');
 }
 
-function getSharedConfigItem(
-    configuration: ExtensionConfigItem[],
-): ExtensionConfigItem | undefined {
+function getConfigItemByExtName(configuration: ExtensionConfigItem[], extensionName: string) {
+    logger.info('find config by extensionName');
+    const matchedConfigItem = configuration.find((item) =>
+        Array.isArray(item.extensionName)
+            ? item.extensionName.includes(extensionName)
+            : item.extensionName === extensionName,
+    );
+    return matchedConfigItem ?? getFallbackConfigItem(configuration);
+}
+
+function getConfigItemById(configuration: ExtensionConfigItem[], configItemId: string) {
+    logger.info('find config by configItemId');
+    return (
+        configuration.find((item) => item.id === configItemId) ??
+        getFallbackConfigItem(configuration)
+    );
+}
+
+function getSharedConfigItem(configuration: ExtensionConfigItem[]) {
     return configuration.find((item) => item.extensionName === '__ALL__');
 }
 
@@ -108,7 +100,7 @@ export default async function openInExternalApp(
     isMultiple = false,
 ): Promise<void> {
     // if run command with command plate, uri is undefined, fallback to activeTextEditor
-    uri ??= vscode.window.activeTextEditor?.document.uri ?? (await getActiveFile());
+    uri ??= vscode.window.activeTextEditor?.document.uri ?? (await getActiveFileUri());
     if (!uri) return;
 
     const { fsPath } = uri;
@@ -119,7 +111,7 @@ export default async function openInExternalApp(
               })
             : fsPath;
 
-    // when there is configuration map to it's extension, use use [open](https://github.com/sindresorhus/open)
+    // when there is configuration map to it's extension, use [open](https://github.com/sindresorhus/open)
     // except for configured appConfig.isElectronApp option
     let matchedConfigItem: ExtensionConfigItem | undefined;
     const configuration = getExtensionConfig();
@@ -127,14 +119,18 @@ export default async function openInExternalApp(
         const ext = extname(filePath);
         const extensionName = ext === '' || ext === '.' ? null : ext.slice(1);
         logger.info(`parsed extension name: ${extensionName}`);
-        if (extensionName) matchedConfigItem = getMatchedConfigItem(configuration, extensionName);
+        if (extensionName) {
+            matchedConfigItem = getConfigItemByExtName(configuration, extensionName);
+        }
     } else {
-        matchedConfigItem = getMatchedConfigItem(configuration, undefined, configItemId);
+        matchedConfigItem = getConfigItemById(configuration, configItemId);
     }
+
     if (matchedConfigItem) {
         logger.info('found matched config');
         await openWithConfigItem(filePath, matchedConfigItem, isMultiple);
     } else {
+        logger.info('no matched config');
         await open(filePath);
     }
 

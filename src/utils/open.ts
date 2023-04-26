@@ -1,6 +1,4 @@
 import { exec as _exec } from 'node:child_process';
-import { constants as FS_CONSTANTS } from 'node:fs';
-import fs from 'node:fs/promises';
 import { promisify } from 'node:util';
 
 import type { Options as OpenOptions } from 'open';
@@ -8,7 +6,7 @@ import { openApp } from 'open';
 import vscode, { Uri } from 'vscode';
 
 import { logger } from './logger';
-import parseVariables from './parseVariables';
+import { parseVariables } from './variable';
 
 export function isObject(value: any) {
     return value !== null && typeof value === 'object';
@@ -66,22 +64,4 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
     } else {
         await openByBuiltinApi(filePath);
     }
-}
-
-export function pathExists(path: string) {
-    return fs
-        .access(path, FS_CONSTANTS.F_OK)
-        .then(() => true)
-        .catch(() => false);
-}
-
-export async function getActiveFile() {
-    const originalClipboard = await vscode.env.clipboard.readText();
-
-    await vscode.commands.executeCommand('copyFilePath');
-    const activeFilePath = await vscode.env.clipboard.readText();
-
-    await vscode.env.clipboard.writeText(originalClipboard);
-
-    return (await pathExists(activeFilePath)) ? Uri.file(activeFilePath) : undefined;
 }

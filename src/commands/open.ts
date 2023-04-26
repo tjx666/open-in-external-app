@@ -1,8 +1,8 @@
 import type vscode from 'vscode';
 
-import { logger } from '../logger';
 import openInExternalApp from '../openInExternalApp';
-import { isObject } from '../utils';
+import { logger } from '../utils/logger';
+import { isObject } from '../utils/open';
 
 type Uri = vscode.Uri;
 

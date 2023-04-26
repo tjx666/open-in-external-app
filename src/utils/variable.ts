@@ -7,9 +7,9 @@ import type { Uri } from 'vscode';
 import vscode from 'vscode';
 
 import { logger } from './logger';
-import { getActiveFile } from './utils';
+import { getActiveFileUri } from './uri';
 
-export default async function parseVariables(strList: string[], activeFile?: Uri) {
+export async function parseVariables(strList: string[], activeFile?: Uri) {
     const replacement: Map<
         string | RegExp,
         string | ((substring: string, ...args: any[]) => string) | undefined
@@ -26,7 +26,7 @@ export default async function parseVariables(strList: string[], activeFile?: Uri
     }
 
     const { activeTextEditor } = vscode.window;
-    activeFile ??= activeTextEditor?.document?.uri ?? (await getActiveFile());
+    activeFile ??= activeTextEditor?.document?.uri ?? (await getActiveFileUri());
     const absoluteFilePath = activeFile?.fsPath;
     replacement.set('${file}', absoluteFilePath);
 
