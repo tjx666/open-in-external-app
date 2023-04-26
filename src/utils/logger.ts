@@ -15,6 +15,9 @@ class Logger {
     }
 
     private _output(message: string, active: boolean, level: string): void {
+        const enableLog = vscode.workspace.getConfiguration().get('openInExternalApp.enableLog');
+        if (!enableLog) return;
+
         if (this.channel === undefined) {
             this._initChannel();
         }

@@ -119,6 +119,10 @@
             "type": "Object",
             "default": {},
             "properties": {
+                "openInExternalApp.enableLog": {
+                    "type": "boolean",
+                    "default": true
+                },
                 "openInExternalApp.openMapper": {
                     "type": "array",
                     "description": "%cfg.openInExternalApp.openMapper%",

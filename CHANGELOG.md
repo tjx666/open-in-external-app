@@ -1,3 +1,14 @@
+## [0.9.8] - 2023-04-27
+
+### Added
+
+- new setting `openInExternalApp.enableLog` to toggle log
+
+### Changed
+
+- update deps
+- code optimize
+
 ## [0.9.7] - 2023-03-20
 
 ### Changed
