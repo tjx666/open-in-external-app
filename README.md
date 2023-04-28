@@ -193,6 +193,20 @@ Yes. you can use the variables placeholder documented at [predefined-variables](
 }
 ```
 
+## My extensions
+
+- [Open in External App](https://github.com/tjx666/open-in-external-app)
+- [Package Manager Enhancer](https://github.com/tjx666/package-manager-enhancer)
+- [Neo File Utils](https://github.com/tjx666/vscode-neo-file-utils)
+- [Reload Can Solve Any Problems](https://github.com/tjx666/reload-can-solve-any-problems)
+- [VSCode FE Helper](https://github.com/tjx666/vscode-fe-helper)
+- [VSCode archive](https://github.com/tjx666/vscode-archive)
+- [Better Colorizer](https://github.com/tjx666/better-colorizer/tree/main)
+- [Modify File Warning](https://github.com/tjx666/modify-file-warning)
+- [Power Edit](https://github.com/tjx666/power-edit)
+
+Check all here: [publishers/YuTengjing](https://marketplace.visualstudio.com/publishers/YuTengjing)
+
 ## 🧡 Backers
 
 Thanks to `JiangShiqi` for designing the extension's logo.
