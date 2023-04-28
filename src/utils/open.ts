@@ -2,7 +2,7 @@ import { exec as _exec } from 'node:child_process';
 import { promisify } from 'node:util';
 
 import type { Options as OpenOptions } from 'open';
-import { openApp } from 'open';
+import _open from 'open';
 import vscode, { Uri } from 'vscode';
 
 import { logger } from './logger';
@@ -16,7 +16,7 @@ export const exec = promisify(_exec);
 
 function openByPkg(filePath: string, options?: OpenOptions) {
     logger.info(`open file by open pkg, options:\n${JSON.stringify(options, undefined, 4)}`);
-    return openApp(filePath, options);
+    return _open(filePath, options);
 }
 
 async function openByBuiltinApi(filePath: string) {
