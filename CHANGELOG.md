@@ -1,3 +1,9 @@
+## v0.9.12 (2023-08-05)
+
+No significant changes
+
+[View changes on GitHub](https://github.com/tjx666/open-in-external-app/compare/v0.9.11...v0.9.12 '2023-08-05')
+
 ## v0.9.11 (2023-08-05)
 
 ### 🐞 Bug Fixes
