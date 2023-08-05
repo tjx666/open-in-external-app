@@ -1,3 +1,15 @@
+## v0.9.11 (2023-08-05)
+
+### 🐞 Bug Fixes
+
+- Doesn't work in wsl #58 ([#58](https://github.com/tjx666/open-in-external-app/issues/58))
+
+### ❤️ Contributors
+
+- YuTengjing ([@tjx666](http://github.com/tjx666))
+
+[View changes on GitHub](https://github.com/tjx666/open-in-external-app/compare/v0.9.10...v0.9.11 '2023-08-05')
+
 ## [0.9.10] - 2023-04-28
 
 ### Fixed
