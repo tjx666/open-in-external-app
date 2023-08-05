@@ -9,9 +9,9 @@ import { runTests } from '@vscode/test-electron';
     const testWorkspace = resolve(projectPath, './test-workspace');
 
     await runTests({
-        version: 'stable',
+        version: 'insiders',
         extensionDevelopmentPath,
         extensionTestsPath,
-        launchArgs: [testWorkspace],
+        launchArgs: ['--disable-extensions', testWorkspace],
     });
 })();

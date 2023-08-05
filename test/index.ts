@@ -3,21 +3,23 @@ import path from 'node:path';
 import { glob } from 'glob';
 import Mocha from 'mocha';
 
-export async function run(
-    testsRoot: string,
-    callback: (error: any, failures?: number) => void,
-): Promise<void> {
+/**
+ * !: must be synchronized
+ */
+export function run(testsRoot: string, cb: (error: any, failures?: number) => void): void {
     const mocha = new Mocha({ color: true });
 
-    try {
-        const files = await glob('**/**.test.js', { cwd: testsRoot });
-        for (const f of files) {
-            mocha.addFile(path.resolve(testsRoot, f));
-        }
-        mocha.run((failures) => {
-            callback(null, failures);
-        });
-    } catch (error) {
-        callback(error);
-    }
+    glob('**/**.test.js', { cwd: testsRoot })
+        .then((files) => {
+            for (const f of files) mocha.addFile(path.resolve(testsRoot, f));
+
+            try {
+                mocha.run((failures) => {
+                    cb(null, failures);
+                });
+            } catch (error) {
+                cb(error);
+            }
+        })
+        .catch((error) => cb(error));
 }

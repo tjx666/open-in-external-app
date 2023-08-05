@@ -1,0 +1,138 @@
+name: CI
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    outputs:
+      GIT_TAG: ${{ steps.set-tag.outputs.GIT_TAG }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --no-optional
+
+      - name: Get the date on Ubuntu/MacOS
+        id: date_unix
+        if: runner.os != 'Windows'
+        run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+
+      - name: Get the date on Windows
+        id: date_windows
+        if: runner.os == 'Windows'
+        run: echo "DATE=$(Get-Date -Format 'yyyyMMdd')" >> $GITHUB_OUTPUT
+
+      - name: Cache .vscode-test
+        uses: actions/cache@v3
+        env:
+          # we use date as part of key because the vscode insiders updated daily
+          CACHE_PREFIX: ${{ runner.os }}-vscode-test-${{ steps.date_unix.outputs.DATE || steps.date_windows.outputs.DATE }}
+        with:
+          path: .vscode-test
+          key: ${{ env.CACHE_PREFIX }}-${{ hashFiles('test/runTests.ts') }}
+          restore-keys: ${{ env.CACHE_PREFIX }}
+
+      - run: xvfb-run -a pnpm test
+        if: runner.os == 'Linux'
+      - run: pnpm test
+        if: runner.os != 'Linux'
+
+      - name: Set GIT_TAG
+        id: set-tag
+        if: runner.os == 'Linux'
+        run: |
+          git fetch --tags origin
+          GIT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -n "$GIT_TAG" ] && [ "$(git rev-list -n 1 $GIT_TAG 2>/dev/null || echo "")" = "$(git rev-parse HEAD)" ]; then
+            echo "GIT_TAG=${GIT_TAG}" >> $GITHUB_OUTPUT
+          else
+            echo "GIT_TAG=''" >> $GITHUB_OUTPUT
+          fi
+
+  publish:
+    needs: test
+    if: startsWith(needs.test.outputs.GIT_TAG, 'v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --no-optional
+
+      - name: Publish to Visual Studio Marketplace
+        run: pnpm run publish:vs-marketplace
+        env:
+          VSCE_PAT: ${{ secrets.VS_MARKETPLACE_TOKEN }}
+
+      - name: Publish to Open VSX Registry
+        run: pnpm run publish:open-vsx -p ${{ secrets.OPEN_VSX_TOKEN }}
+
+      - name: Github Release
+        run: npx changelogithub
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

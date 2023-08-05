@@ -6,7 +6,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run Extension",
+            "name": "Dev",
             "type": "extensionHost",
             "request": "launch",
             "args": [
@@ -29,16 +29,26 @@
             "preLaunchTask": "${defaultBuildTask}"
         },
         {
-            "name": "Extension Tests",
+            "name": "Test",
             "type": "extensionHost",
             "request": "launch",
-            "args": [
-                "--disable-extensions",
-                "--extensionDevelopmentPath=${workspaceFolder}",
-                "--extensionTestsPath=${workspaceFolder}/out/test/suite/index"
-            ],
             "outFiles": ["${workspaceFolder}/out/test/**/*.js"],
-            "preLaunchTask": "${defaultBuildTask}"
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**",
+                "**/resources/app/out/vs/**",
+                "**/.vscode-insiders/extensions/",
+                "**/.vscode/extensions/"
+            ],
+            "sourceMaps": true,
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}",
+                "--extensionTestsPath=${workspaceFolder}/out/test/"
+            ],
+            "env": {
+                "VSCODE_DEBUG_MODE": "true"
+            },
+            "preLaunchTask": "compile:test"
         }
     ]
 }

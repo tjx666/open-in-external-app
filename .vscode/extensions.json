@@ -1,4 +1,11 @@
 {
-    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"],
-    "unwantedRecommendations": ["hookyqr.beautify", "ms-vscode.vscode-typescript-tslint-plugin", "dbaeumer.jshint"]
+    // See http://go.microsoft.com/fwlink/?LinkId=827846
+    // for the documentation about the extensions.json format
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "connor4312.esbuild-problem-matchers",
+        "github.vscode-github-actions",
+        "YuTengjing.vscode-archive"
+    ]
 }
