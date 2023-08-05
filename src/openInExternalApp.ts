@@ -3,7 +3,7 @@ import { extname } from 'node:path';
 import type { Uri } from 'vscode';
 import vscode from 'vscode';
 import { localize } from 'vscode-nls-i18n';
-import { windowsToWsl } from 'wsl-path';
+import { windowsToWslSync } from 'wsl-path';
 
 import getExtensionConfig from './config';
 import { logger } from './utils/logger';
@@ -106,7 +106,7 @@ export default async function openInExternalApp(
     const { fsPath } = uri;
     const filePath =
         vscode.env.remoteName === 'wsl'
-            ? await windowsToWsl(fsPath, {
+            ? windowsToWslSync(fsPath, {
                   wslCommand: 'wsl.exe',
               })
             : fsPath;
