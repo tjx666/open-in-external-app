@@ -1,0 +1,21 @@
+{
+    "cmd.open": "在應用程式中開啟",
+    "cmd.openMultiple": "在多個應用程式中開啟",
+
+    "msg.error.configFormat": "擴充設定檔格式錯誤！",
+    "msg.error.sameTitleMultipleApp": "不允許多個應用程式使用同一個標題，請先修改設定！",
+    "msg.quickPick.selectApp.placeholder": "選擇要開啟檔案的應用程式...",
+    "msg.quickPick.selectApps.placeholder": "選擇要開啟檔案的多個應用程式...",
+
+    "cfg.openInExternalApp.openMapper": "副檔名和用於開啟的應用程式之對應關係",
+    "cfg.openInExternalApp.openMapper.item.id": "結合快捷鍵識別碼 configItemId 可以為特定的選項設定快捷鍵",
+    "cfg.openInExternalApp.openMapper.item.extensionName.string": "副檔名，例如：md",
+    "cfg.openInExternalApp.openMapper.item.extensionName.array": "輸入字串陣列可以對應多個副檔名",
+    "cfg.openInExternalApp.openMapper.item.apps": "用於開啟檔案的應用程式",
+    "cfg.openInExternalApp.openMapper.item.apps.string": "在 shell 中可以存取的命令或可執行檔的絕對路徑",
+    "cfg.openInExternalApp.openMapper.item.apps.array": "應用程式資訊",
+    "cfg.openInExternalApp.openMapper.item.apps.item.title": "使用多個應用程式開啟檔案時跳出的下拉式選單中的標題",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellCommand": "使用 shell 命令和檔案修飾符號以處理檔案",
+    "cfg.openInExternalApp.openMapper.item.apps.item.args": "輸入給開啟命令的參數",
+    "cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp": "當選擇 electron 應用程式時請設定為 true"
+}
