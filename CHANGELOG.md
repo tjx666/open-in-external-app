@@ -1,3 +1,15 @@
+## v0.10.0 (2023-08-10)
+
+### 🐞 Bug Fixes
+
+- Wsl file path #58 ([#58](https://github.com/tjx666/open-in-external-app/issues/58))
+
+### ❤️ Contributors
+
+- King-of-Infinite-Space
+
+[View changes on GitHub](https://github.com/tjx666/open-in-external-app/compare/v0.9.12...v0.10.0 '2023-08-10')
+
 ## v0.9.12 (2023-08-05)
 
 No significant changes
