@@ -1,0 +1,21 @@
+{
+    "cmd.open": "Открыть во внешнем приложении...",
+    "cmd.openMultiple": "Открыть в группе внешних приложений...",
+
+    "msg.error.configFormat": "Не верный формат конфигурации расширения!",
+    "msg.error.sameTitleMultipleApp": "Недопустимо задавать два приложения, используя один и тот же title, пожалуйста, исправьте конфигурацию!",
+    "msg.quickPick.selectApp.placeholder": "Выберете приложение, чтобы открыть файл...",
+    "msg.quickPick.selectApps.placeholder": "Выберете группу приложений, чтобы открыть файл...",
+
+    "cfg.openInExternalApp.openMapper": "Сопоставление расширений файлов с приложениями, в которых те будут открываться",
+    "cfg.openInExternalApp.openMapper.item.id": "Установите значение из конфигурации горячей клавиши arg(configItemId) для быстрого вызова этой конфигурации",
+    "cfg.openInExternalApp.openMapper.item.extensionName.string": "Расширение файла, например: md",
+    "cfg.openInExternalApp.openMapper.item.extensionName.array": "Массив строк позволяет задать несколько расширений одновременно",
+    "cfg.openInExternalApp.openMapper.item.apps": "Внешнее приложение для открытия файла",
+    "cfg.openInExternalApp.openMapper.item.apps.string": "Доступная из оболочки команда или абсолютный путь к исполняемому файлу",
+    "cfg.openInExternalApp.openMapper.item.apps.array": "Описание внешнего приложения",
+    "cfg.openInExternalApp.openMapper.item.apps.item.title": "Заголовок, который отобразиться в выпадающем списке, если для этого типа файлов задано несколько приложений",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellCommand": "Используйте команду оболочки с переменной file",
+    "cfg.openInExternalApp.openMapper.item.apps.item.args": "Параметры командной строки для openCommand",
+    "cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp": "Установите в true, если это приложение electron"
+}
