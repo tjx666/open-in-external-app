@@ -16,6 +16,7 @@ export async function parseVariables(strList: string[], activeFile?: Uri) {
     > = new Map([
         ['${userHome}', homedir()],
         ['${pathSeparator}', path.sep],
+        ['${/}', path.sep],
     ]);
 
     const { workspaceFolders } = vscode.workspace;
