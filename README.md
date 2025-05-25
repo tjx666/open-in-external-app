@@ -163,6 +163,65 @@ Yes. you can use the variables placeholder documented at [predefined-variables](
 }
 ```
 
+### Can I add environment variables to the shellCommand?
+
+Yes, you can use shellEnv to set additional environment variables:
+
+```jsonc
+{
+  "extensionName": "ts",
+  "apps": [
+    {
+      "extensionName": "*",
+      "apps": [
+        {
+          "title": "run ts file",
+          "shellCommand": "ts-node ${file}",
+          "shellEnv":
+            {
+              "TOKEN": "tyekjjbqbptcxeycgmwqfepus"
+            },
+        }
+      ]
+    }
+  ]
+}
+```
+
+Or you can set separate environment variables for Windows, Linux and macOS:
+
+```jsonc
+{
+  "extensionName": "ts",
+  "apps": [
+    {
+      "extensionName": "*",
+      "apps": [
+        {
+          "title": "run ts file",
+          "shellCommand": "ts-node ${file}",
+          "shellEnv":
+            {
+              "windows":
+                {
+                  "PLATFORM": "Windows"
+                },
+              "linux":
+                {
+                  "PLATFORM": "GNU/Linux"
+                },
+              "osx":
+                {
+                  "PLATFORM": "macOS"
+                },
+            },
+        }
+      ]
+    }
+  ]
+}
+```
+
 ### assign keyboard shortcut for specific config item
 
 `keybindings.json`:

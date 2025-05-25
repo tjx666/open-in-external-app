@@ -194,6 +194,54 @@
                                                     "type": "boolean",
                                                     "description": "%cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp%",
                                                     "default": false
+                                                },
+                                                "shellEnv": {
+                                                    "anyOf": [
+                                                        {
+                                                            "type": "object",
+                                                            "description": "%cfg.openInExternalApp.openMapper.item.apps.item.shellEnv%",
+                                                            "default": {},
+                                                            "additionalProperties": {
+                                                                "type": "string",
+                                                                "description": "%cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.string%"
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "object",
+                                                            "description": "%cfg.openInExternalApp.openMapper.item.apps.item.shellEnv%",
+                                                            "default": {},
+                                                            "additionalProperties": false,
+                                                            "properties": {
+                                                                "windows": {
+                                                                    "type": "object",
+                                                                    "description": "%cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.windows%",
+                                                                    "default": {},
+                                                                    "additionalProperties": {
+                                                                        "type": "string",
+                                                                        "description": "%cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.string%"
+                                                                    }
+                                                                },
+                                                                "linux": {
+                                                                    "type": "object",
+                                                                    "description": "%cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.linux%",
+                                                                    "default": {},
+                                                                    "additionalProperties": {
+                                                                        "type": "string",
+                                                                        "description": "%cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.string%"
+                                                                    }
+                                                                },
+                                                                "osx": {
+                                                                    "type": "object",
+                                                                    "description": "%cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.osx%",
+                                                                    "default": {},
+                                                                    "additionalProperties": {
+                                                                        "type": "string",
+                                                                        "description": "%cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.string%"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             }
                                         }

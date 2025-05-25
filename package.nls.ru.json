@@ -17,5 +17,10 @@
     "cfg.openInExternalApp.openMapper.item.apps.item.title": "Заголовок, который отобразиться в выпадающем списке, если для этого типа файлов задано несколько приложений",
     "cfg.openInExternalApp.openMapper.item.apps.item.shellCommand": "Используйте команду оболочки с переменной file",
     "cfg.openInExternalApp.openMapper.item.apps.item.args": "Параметры командной строки для openCommand",
-    "cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp": "Установите в true, если это приложение electron"
+    "cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp": "Установите в true, если это приложение electron",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv": "Дополнительные переменные окружения для shellCommand",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.string": "Переменная окружения",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.windows": "Дополнительные переменные окружения для shellCommand, для Windows",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.linux": "Дополнительные переменные окружения для shellCommand, для Linux",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.osx": "Дополнительные переменные окружения для shellCommand, для macOS"
 }

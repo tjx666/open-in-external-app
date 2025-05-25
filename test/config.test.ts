@@ -13,6 +13,44 @@ describe('#config', () => {
             assert.notStrictEqual(validateConfiguration(configuration).error, null);
         });
 
+        it(`should error as env variable have to be a string`, () => {
+            const configuration: any = [
+                {
+                    extensionName: 'dat',
+                    apps: [
+                        {
+                            title: 'invalid env block',
+                            shellCommand: 'abc',
+                            shellEnv: {
+                                badvar: 404,
+                            },
+                        },
+                    ],
+                },
+            ];
+            assert.notStrictEqual(validateConfiguration(configuration).error, null);
+        });
+
+        it(`should error as 'msdos' is unsupported platform`, () => {
+            const configuration: any = [
+                {
+                    extensionName: 'dat',
+                    apps: [
+                        {
+                            title: 'invalid env block',
+                            shellCommand: 'abc',
+                            shellEnv: {
+                                msdos: {
+                                    dosvar: 'never',
+                                },
+                            },
+                        },
+                    ],
+                },
+            ];
+            assert.notStrictEqual(validateConfiguration(configuration).error, null);
+        });
+
         it(`should pass validation`, () => {
             const configuration: any = [
                 {
@@ -38,6 +76,34 @@ describe('#config', () => {
                         {
                             title: 'Typora',
                             isElectronApp: true,
+                        },
+                    ],
+                },
+                {
+                    extensionName: 'dat',
+                    apps: [
+                        {
+                            title: 'single env block',
+                            shellCommand: 'abc',
+                            shellEnv: {
+                                var1: "123",
+                                var2: "xyz",
+                            },
+                        },
+                        {
+                            title: 'multiplatform env block',
+                            shellCommand: 'abc',
+                            shellEnv: {
+                                windows: {
+                                    winvar: 'Windows Platform',
+                                },
+                                osx: {
+                                    macvar: 'macOS Platform',
+                                },
+                                linux: {
+                                    linvar: 'Linux Platform',
+                                },
+                            },
                         },
                     ],
                 },

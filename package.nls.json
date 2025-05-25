@@ -17,5 +17,10 @@
     "cfg.openInExternalApp.openMapper.item.apps.item.title": "Title which will be shown in the drop list if there are several apps to open the file",
     "cfg.openInExternalApp.openMapper.item.apps.item.shellCommand": "Using shell command with file placeholder to deal with file",
     "cfg.openInExternalApp.openMapper.item.apps.item.args": "Arguments passed to openCommand",
-    "cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp": "Set to true when you config an electron app"
+    "cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp": "Set to true when you config an electron app",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv": "Additional shellCommand environment variables",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.string": "Environment variable",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.windows": "Additional shellCommand environment variables for Windows",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.linux": "Additional shellCommand environment variables for Linux",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.osx": "Additional shellCommand environment variables for macOS"
 }

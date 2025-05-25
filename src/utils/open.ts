@@ -1,3 +1,4 @@
+import type { ExecOptions } from 'node:child_process';
 import { exec as _exec } from 'node:child_process';
 import { promisify } from 'node:util';
 
@@ -6,6 +7,7 @@ import _open from 'open';
 import vscode, { Uri } from 'vscode';
 
 import { logger } from './logger';
+import { getShellEnv, mergeEnvironments, isWindows, isMacintosh, isLinux } from './platform';
 import { parseVariables } from './variable';
 
 export function isObject(value: any) {
@@ -43,7 +45,26 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
             )[0];
             logger.info(`open file by shell command: "${parsedCommand}"`);
             try {
-                await exec(parsedCommand);
+                if (appConfig.shellEnv) {
+                    const shellEnv = getShellEnv();
+
+                    let additionalEnv: NodeJS.ProcessEnv
+                    if (isWindows && typeof appConfig.shellEnv.windows === 'object') {
+                        additionalEnv = appConfig.shellEnv.windows;
+                    } else if (isMacintosh && typeof appConfig.shellEnv.osx === 'object') {
+                        additionalEnv = appConfig.shellEnv.osx;
+                    } else if (isLinux && typeof appConfig.shellEnv.linux === 'object') {
+                        additionalEnv = appConfig.shellEnv.linux;
+                    } else {
+                        additionalEnv = appConfig.shellEnv as NodeJS.ProcessEnv;
+                    }
+
+                    await mergeEnvironments(shellEnv, additionalEnv, Uri.file(filePath))
+                    const options: ExecOptions = { env: shellEnv };
+                    await exec(parsedCommand, options);
+                } else {
+                    await exec(parsedCommand);
+                }
             } catch (error: any) {
                 vscode.window.showErrorMessage(
                     `open file by shell command failed, execute: "${parsedCommand}"`,
