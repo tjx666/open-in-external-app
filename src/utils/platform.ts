@@ -34,7 +34,7 @@ export async function mergeEnvironments(parent: NodeJS.ProcessEnv, other: NodeJS
     if (isWindows) {
         // In Windows, environment variables are not case sensitive, so
         // this must be taken into account when overwriting.
-		Object.entries(other).forEach(
+		await Promise.all(Object.entries(other).map(
             async ([key, value]) => {
                 if (value !== undefined) {
                     let otherKey = key;
@@ -48,15 +48,15 @@ export async function mergeEnvironments(parent: NodeJS.ProcessEnv, other: NodeJS
                     await _mergeEnvironmentValue(parent, otherKey, value, activeFile);
                 }
             }
-        );
+        ));
     } else {
-		Object.entries(other).forEach(
+		await Promise.all(Object.entries(other).map(
             async ([key, value]) => {
                 if (value !== undefined) {
                     await _mergeEnvironmentValue(parent, key, value, activeFile);
                 }
             }
-        );
+        ));
     }
 }
 
