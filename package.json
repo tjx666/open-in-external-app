@@ -4,6 +4,7 @@
     "version": "0.10.0",
     "description": "Open file with external application in VSCode",
     "publisher": "YuTengjing",
+    "packageManager": "pnpm@8.15.9",
     "author": {
         "name": "YuTengjing",
         "url": "https://github.com/tjx666",
@@ -281,7 +282,7 @@
         "@types/mocha": "^10.0.1",
         "@types/node": "^18.17.2",
         "@types/vscode": "^1.80.0",
-        "@vscode/test-electron": "^2.3.4",
+        "@vscode/test-electron": "^2.5.2",
         "@vscode/vsce": "^2.20.1",
         "@yutengjing/eslint-config-typescript": "^0.4.2",
         "@yutengjing/prettier-config": "^0.0.1",
