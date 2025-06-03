@@ -1,3 +1,21 @@
+## v0.11.0 (2025-06-03)
+
+### 🚀 Features
+
+- Add short pathSeparator alias ([7fcb7af](https://github.com/tjx666/open-in-external-app/commit/7fcb7af))
+- Add Russian localization ([84cc5c1](https://github.com/tjx666/open-in-external-app/commit/84cc5c1))
+- Add environment variables to shell command ([014f333](https://github.com/tjx666/open-in-external-app/commit/014f333))
+
+### 🐞 Bug Fixes
+
+- Make async loop awaited ([080e99a](https://github.com/tjx666/open-in-external-app/commit/080e99a))
+
+### ❤️ Contributors
+
+- Dmitriy Pomerantsev ([@pda0](http://github.com/pda0))
+
+[View changes on GitHub](https://github.com/tjx666/open-in-external-app/compare/v0.10.0...v0.11.0 '2025-06-03')
+
 ## v0.10.0 (2023-08-10)
 
 ### 🐞 Bug Fixes

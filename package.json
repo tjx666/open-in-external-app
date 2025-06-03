@@ -1,7 +1,7 @@
 {
     "name": "open-in-external-app",
     "displayName": "Open in External App",
-    "version": "0.10.0",
+    "version": "0.11.0",
     "description": "Open file with external application in VSCode",
     "publisher": "YuTengjing",
     "packageManager": "pnpm@8.15.9",
