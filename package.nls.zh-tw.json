@@ -17,5 +17,11 @@
     "cfg.openInExternalApp.openMapper.item.apps.item.title": "使用多個應用程式開啟檔案時跳出的下拉式選單中的標題",
     "cfg.openInExternalApp.openMapper.item.apps.item.shellCommand": "使用 shell 命令和檔案修飾符號以處理檔案",
     "cfg.openInExternalApp.openMapper.item.apps.item.args": "輸入給開啟命令的參數",
-    "cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp": "當選擇 electron 應用程式時請設定為 true"
+    "cfg.openInExternalApp.openMapper.item.apps.item.isElectronApp": "當選擇 electron 應用程式時請設定為 true",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv": "shellCommand 的額外環境變數",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.string": "環境變數",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.windows": "Windows 平台的 shellCommand 額外環境變數",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.linux": "Linux 平台的 shellCommand 額外環境變數",
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.osx": "macOS 平台的 shellCommand 額外環境變數",
+    "cfg.openInExternalApp.openMapper.item.apps.item.wslConvertWindowsPath": "在 WSL remote 模式下是否將 WSL 路徑轉換為 Windows 路徑。預設為 true（轉換為 Windows 路徑，用於 Windows 應用程式）。設定為 false 可保持 WSL 原生路徑，用於 WSL 應用程式（如 evince）"
 }

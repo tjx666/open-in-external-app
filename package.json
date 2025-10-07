@@ -243,6 +243,11 @@
                                                             }
                                                         }
                                                     ]
+                                                },
+                                                "wslConvertWindowsPath": {
+                                                    "type": "boolean",
+                                                    "description": "%cfg.openInExternalApp.openMapper.item.apps.item.wslConvertWindowsPath%",
+                                                    "default": true
                                                 }
                                             }
                                         }

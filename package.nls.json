@@ -22,5 +22,6 @@
     "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.string": "Environment variable",
     "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.windows": "Additional shellCommand environment variables for Windows",
     "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.linux": "Additional shellCommand environment variables for Linux",
-    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.osx": "Additional shellCommand environment variables for macOS"
+    "cfg.openInExternalApp.openMapper.item.apps.item.shellEnv.osx": "Additional shellCommand environment variables for macOS",
+    "cfg.openInExternalApp.openMapper.item.apps.item.wslConvertWindowsPath": "Whether to convert WSL path to Windows path when running in WSL remote mode. Default is true (convert to Windows path for Windows applications). Set to false to keep WSL native path for WSL applications like evince"
 }

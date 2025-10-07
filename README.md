@@ -177,10 +177,9 @@ Yes, you can use shellEnv to set additional environment variables:
         {
           "title": "run ts file",
           "shellCommand": "ts-node ${file}",
-          "shellEnv":
-            {
-              "TOKEN": "tyekjjbqbptcxeycgmwqfepus"
-            },
+          "shellEnv": {
+            "TOKEN": "tyekjjbqbptcxeycgmwqfepus"
+          }
         }
       ]
     }
@@ -200,21 +199,17 @@ Or you can set separate environment variables for Windows, Linux and macOS:
         {
           "title": "run ts file",
           "shellCommand": "ts-node ${file}",
-          "shellEnv":
-            {
-              "windows":
-                {
-                  "PLATFORM": "Windows"
-                },
-              "linux":
-                {
-                  "PLATFORM": "GNU/Linux"
-                },
-              "osx":
-                {
-                  "PLATFORM": "macOS"
-                },
+          "shellEnv": {
+            "windows": {
+              "PLATFORM": "Windows"
             },
+            "linux": {
+              "PLATFORM": "GNU/Linux"
+            },
+            "osx": {
+              "PLATFORM": "macOS"
+            }
+          }
         }
       ]
     }
@@ -222,19 +217,63 @@ Or you can set separate environment variables for Windows, Linux and macOS:
 }
 ```
 
+### How to use in WSL (Windows Subsystem for Linux)?
+
+When using VSCode in WSL remote mode, file paths need to be converted between WSL and Windows formats depending on whether you're opening the file in a Windows application or a WSL application.
+
+**By default, the extension converts WSL paths to Windows paths** (e.g., `/home/user/file.pdf` → `C:\Users\user\file.pdf`) to support opening files in Windows applications from WSL.
+
+However, if you want to open files with **WSL applications** (like `evince`, `xdg-open`), you need to set `wslConvertWindowsPath: false` to keep the WSL native path:
+
+```jsonc
+{
+  "openInExternalApp.openMapper": [
+    // ✅ Open with Windows application (default behavior)
+    {
+      "extensionName": "lyx",
+      "apps": [
+        {
+          "title": "Lyx (Windows)",
+          "shellCommand": "lyx.exe ${file}"
+          // wslConvertWindowsPath defaults to true
+          // ${file} will be: C:\Users\username\file.lyx
+        }
+      ]
+    },
+    // ✅ Open with WSL application
+    {
+      "extensionName": "pdf",
+      "apps": [
+        {
+          "title": "Evince (WSL)",
+          "shellCommand": "evince ${file}",
+          "wslConvertWindowsPath": false
+          // ${file} will be: /home/username/file.pdf
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Related Issues:**
+
+- [#16](https://github.com/tjx666/open-in-external-app/issues/16) - Opening files in Windows applications from WSL
+- [#74](https://github.com/tjx666/open-in-external-app/issues/74) - Opening files in WSL applications from WSL
+
 ### assign keyboard shortcut for specific config item
 
 `keybindings.json`:
 
 ```jsonc
 {
-    "key": "cmd+k cmd+o",
-    "command": "openInExternalApp.open",
-    "args": {
-        // same with following id
-        "configItemId": "xxx"
-    }
-},
+  "key": "cmd+k cmd+o",
+  "command": "openInExternalApp.open",
+  "args": {
+    // same with following id
+    "configItemId": "xxx"
+  }
+}
 ```
 
 `settings.json`:

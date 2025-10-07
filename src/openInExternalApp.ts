@@ -3,7 +3,6 @@ import { extname } from 'node:path';
 import type { Uri } from 'vscode';
 import vscode from 'vscode';
 import { localize } from 'vscode-nls-i18n';
-import { wslToWindows } from 'wsl-path';
 
 import getExtensionConfig from './config';
 import { logger } from './utils/logger';
@@ -103,13 +102,7 @@ export default async function openInExternalApp(
     uri ??= vscode.window.activeTextEditor?.document.uri ?? (await getActiveFileUri());
     if (!uri) return;
 
-    const { fsPath } = uri;
-    const filePath =
-        vscode.env.remoteName === 'wsl'
-            ? await wslToWindows(fsPath, {
-                  wslCommand: 'wsl.exe',
-              })
-            : fsPath;
+    const { fsPath: filePath } = uri;
 
     // when there is configuration map to it's extension, use [open](https://github.com/sindresorhus/open)
     // except for configured appConfig.isElectronApp option

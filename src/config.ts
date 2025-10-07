@@ -21,32 +21,21 @@ export function validateConfiguration(configuration: ExtensionConfigItem[]): joi
                             args: joi.array().items(joi.string().required()),
                             isElectronApp: joi.boolean(),
                             shellCommand: joi.string(),
-                            shellEnv: joi
-                                .alternatives()
-                                .try(
-                                    joi.object()
-                                        .pattern(
-                                            joi.string(),
-                                            joi.string().required()
-                                        ),
-                                    joi.object({
-                                        windows: joi.object()
-                                            .pattern(
-                                                joi.string(),
-                                                joi.string().required()
-                                            ),
-                                        osx: joi.object()
-                                            .pattern(
-                                                joi.string(),
-                                                joi.string().required()
-                                            ),
-                                        linux: joi.object()
-                                            .pattern(
-                                                joi.string(),
-                                                joi.string().required()
-                                            )
-                                    })
-                                )
+                            shellEnv: joi.alternatives().try(
+                                joi.object().pattern(joi.string(), joi.string().required()),
+                                joi.object({
+                                    windows: joi
+                                        .object()
+                                        .pattern(joi.string(), joi.string().required()),
+                                    osx: joi
+                                        .object()
+                                        .pattern(joi.string(), joi.string().required()),
+                                    linux: joi
+                                        .object()
+                                        .pattern(joi.string(), joi.string().required()),
+                                }),
+                            ),
+                            wslConvertWindowsPath: joi.boolean(),
                         }),
                     ),
                 )
