@@ -122,15 +122,19 @@ export default async function openInExternalApp(
         matchedConfigItem = getConfigItemById(configuration, configItemId);
     }
 
+    const sharedConfigItem = getSharedConfigItem(configuration);
+
     if (matchedConfigItem) {
         logger.info('found matched config');
         await openWithConfigItem(filePath, matchedConfigItem, isMultiple);
-    } else {
-        logger.info('no matched config');
+    } else if (!sharedConfigItem) {
+        // Only use system default when there's no matched config and no shared config
+        logger.info('no matched config and no shared config');
         await open(filePath);
+    } else {
+        logger.info('no matched config, but found shared config');
     }
 
-    const sharedConfigItem = getSharedConfigItem(configuration);
     if (sharedConfigItem) {
         logger.info('found shared config');
         await openWithConfigItem(filePath, sharedConfigItem, false);
