@@ -1,3 +1,19 @@
+## v0.11.1 (2025-10-07)
+
+### 🚀 Features
+
+- Add wslConvertWindowsPath option for WSL path conversion control ([033549f](https://github.com/tjx666/open-in-external-app/commit/033549f))
+
+### 🐞 Bug Fixes
+
+- Support extensionName wildcard "\*" for files without extension ([7e3ce2d](https://github.com/tjx666/open-in-external-app/commit/7e3ce2d))
+
+### ❤️ Contributors
+
+- YuTengjing ([@tjx666](http://github.com/tjx666))
+
+[View changes on GitHub](https://github.com/tjx666/open-in-external-app/compare/v0.11.0...v0.11.1 '2025-10-07')
+
 ## v0.11.0 (2025-06-03)
 
 ### 🚀 Features
