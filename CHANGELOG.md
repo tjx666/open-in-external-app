@@ -1,3 +1,15 @@
+## v0.11.2 (2025-10-07)
+
+### 🐞 Bug Fixes
+
+- Prevent opening system default app when only shared config exists ([a01fb96](https://github.com/tjx666/open-in-external-app/commit/a01fb96))
+
+### ❤️ Contributors
+
+- YuTengjing ([@tjx666](http://github.com/tjx666))
+
+[View changes on GitHub](https://github.com/tjx666/open-in-external-app/compare/v0.11.1...v0.11.2 '2025-10-07')
+
 ## v0.11.1 (2025-10-07)
 
 ### 🚀 Features
