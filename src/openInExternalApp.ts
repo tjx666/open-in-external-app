@@ -114,6 +114,9 @@ export default async function openInExternalApp(
         logger.info(`parsed extension name: ${extensionName}`);
         if (extensionName) {
             matchedConfigItem = getConfigItemByExtName(configuration, extensionName);
+        } else {
+            // For files without extension, try to get fallback config (extensionName: "*")
+            matchedConfigItem = getFallbackConfigItem(configuration);
         }
     } else {
         matchedConfigItem = getConfigItemById(configuration, configItemId);
