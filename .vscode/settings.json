@@ -1,3 +1,4 @@
 {
-    "eslint.validate": ["typescript", "json", "jsonc", "markdown"]
+    "eslint.validate": ["typescript", "json", "jsonc", "markdown"],
+    "js/ts.tsdk.path": "./node_modules/typescript/lib"
 }
