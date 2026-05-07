@@ -9,14 +9,40 @@ import vscode from 'vscode';
 import { logger } from './logger';
 import { getActiveFileUri } from './uri';
 
-export async function parseVariables(strList: string[], activeFile?: Uri) {
+export interface ParseVariablesOptions {
+    /**
+     * Override the file path used for `${file}` and the derived
+     * `${fileBasename}`, `${fileBasenameNoExtension}`, `${fileExtname}`,
+     * `${fileDirname}` variables.
+     *
+     * Useful when a Windows-style path (e.g. produced by `wslToWindows`
+     * in WSL Remote mode) cannot be recovered through `vscode.Uri.fsPath`
+     * because the surrounding host process runs on Linux. See issue #83.
+     */
+    fsPathOverride?: string;
+    /**
+     * Parse the file path with `path.win32` semantics (`\` separator,
+     * drive letters, UNC). When unset, the current platform's defaults
+     * are used. Pair with `fsPathOverride` for WSL Remote → Windows path
+     * scenarios.
+     */
+    useWindowsPath?: boolean;
+}
+
+export async function parseVariables(
+    strList: string[],
+    activeFile?: Uri,
+    options?: ParseVariablesOptions,
+) {
+    const pathLib = options?.useWindowsPath ? path.win32 : path;
+
     const replacement: Map<
         string | RegExp,
         string | ((substring: string, ...args: any[]) => string) | undefined
     > = new Map([
         ['${userHome}', homedir()],
-        ['${pathSeparator}', path.sep],
-        ['${/}', path.sep],
+        ['${pathSeparator}', pathLib.sep],
+        ['${/}', pathLib.sep],
     ]);
 
     const { workspaceFolders } = vscode.workspace;
@@ -28,7 +54,7 @@ export async function parseVariables(strList: string[], activeFile?: Uri) {
 
     const { activeTextEditor } = vscode.window;
     activeFile ??= activeTextEditor?.document?.uri ?? (await getActiveFileUri());
-    const absoluteFilePath = activeFile?.fsPath;
+    const absoluteFilePath = options?.fsPathOverride ?? activeFile?.fsPath;
     replacement.set('${file}', absoluteFilePath);
 
     const activeWorkspace = activeFile
@@ -41,19 +67,19 @@ export async function parseVariables(strList: string[], activeFile?: Uri) {
     if (absoluteFilePath && activeWorkspace) {
         relativeFilePath = absoluteFilePath
             .replace(activeWorkspace.uri.fsPath, '')
-            .slice(path.sep.length);
+            .slice(pathLib.sep.length);
         replacement.set('${relativeFile}', relativeFilePath);
     }
 
     if (relativeFilePath) {
         replacement.set(
             '${relativeFileDirname}',
-            relativeFilePath.slice(0, relativeFilePath.lastIndexOf(path.sep)),
+            relativeFilePath.slice(0, relativeFilePath.lastIndexOf(pathLib.sep)),
         );
     }
 
     if (absoluteFilePath) {
-        const parsedPath = path.parse(absoluteFilePath);
+        const parsedPath = pathLib.parse(absoluteFilePath);
         replacement.set('${fileBasename}', parsedPath.base);
         replacement.set('${fileBasenameNoExtension}', parsedPath.name);
         replacement.set('${fileExtname}', parsedPath.ext);

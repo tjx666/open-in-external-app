@@ -9,7 +9,7 @@ import { wslToWindows } from 'wsl-path';
 
 import { logger } from './logger';
 import { getShellEnv, mergeEnvironments, isWindows, isMacintosh, isLinux } from './platform';
-import { parseVariables } from './variable';
+import { parseVariables, type ParseVariablesOptions } from './variable';
 
 export function isObject(value: any) {
     return value !== null && typeof value === 'object';
@@ -39,15 +39,23 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
 
     // Convert WSL path to Windows path if needed (only once at the beginning)
     // Default is true to support Windows applications in WSL (the most common use case)
-    let convertedPath = filePath;
-    if (vscode.env.remoteName === 'wsl') {
-        const shouldConvert =
-            typeof appConfig === 'object' ? appConfig.wslConvertWindowsPath !== false : true;
+    const isWslRemote = vscode.env.remoteName === 'wsl';
+    const shouldConvertWslPath =
+        isWslRemote &&
+        (typeof appConfig === 'object' ? appConfig.wslConvertWindowsPath !== false : true);
 
-        if (shouldConvert) {
-            convertedPath = await wslToWindows(filePath, { wslCommand: 'wsl.exe' });
-        }
+    let convertedPath = filePath;
+    if (shouldConvertWslPath) {
+        convertedPath = await wslToWindows(filePath, { wslCommand: 'wsl.exe' });
     }
+
+    // In WSL Remote mode, the host process runs on Linux but `convertedPath`
+    // is a Windows path. `vscode.Uri.file` cannot round-trip such paths on
+    // Linux (it inserts a stray `/` prefix), so file path variables must be
+    // parsed with win32 semantics and a direct fsPath override. See issue #83.
+    const parseOptions: ParseVariablesOptions | undefined = shouldConvertWslPath
+        ? { fsPathOverride: convertedPath, useWindowsPath: true }
+        : undefined;
 
     if (typeof appConfig === 'string') {
         await openByPkg(convertedPath, {
@@ -60,7 +68,11 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
             await openByBuiltinApi(convertedPath);
         } else if (appConfig.shellCommand) {
             const parsedCommand = (
-                await parseVariables([appConfig.shellCommand!], Uri.file(convertedPath))
+                await parseVariables(
+                    [appConfig.shellCommand!],
+                    Uri.file(convertedPath),
+                    parseOptions,
+                )
             )[0];
             logger.info(`open file by shell command: "${parsedCommand}"`);
             // On Windows, switch console codepage to UTF-8 (65001) so that
@@ -81,7 +93,12 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
                         additionalEnv = appConfig.shellEnv as NodeJS.ProcessEnv;
                     }
 
-                    await mergeEnvironments(shellEnv, additionalEnv, Uri.file(convertedPath));
+                    await mergeEnvironments(
+                        shellEnv,
+                        additionalEnv,
+                        Uri.file(convertedPath),
+                        parseOptions,
+                    );
                     const options: ExecOptions = { env: shellEnv };
                     await exec(execCommand, options);
                 } else {
@@ -94,7 +111,11 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
                 logger.info(error);
             }
         } else if (appConfig.openCommand) {
-            const args = await parseVariables(appConfig.args ?? [], Uri.file(convertedPath));
+            const args = await parseVariables(
+                appConfig.args ?? [],
+                Uri.file(convertedPath),
+                parseOptions,
+            );
             await openByPkg(convertedPath, {
                 app: {
                     name: appConfig.openCommand,
@@ -102,7 +123,7 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
                 },
             });
         }
-    } else if (vscode.env.remoteName === 'wsl') {
+    } else if (isWslRemote) {
         await openByPkg(convertedPath);
     } else {
         // On Windows, openByBuiltinApi internally falls back to open pkg for non-ASCII paths.
