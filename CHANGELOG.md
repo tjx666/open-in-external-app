@@ -1,3 +1,17 @@
+## v0.11.3 (2026-05-07)
+
+### 🐞 Bug Fixes
+
+- Workaround vscode.env.openExternal non-ASCII path issue on Windows ([9850bf6](https://github.com/tjx666/open-in-external-app/commit/9850bf6))
+- Keep WSL Remote file path variables Windows-style for shellCommand ([1657e0d](https://github.com/tjx666/open-in-external-app/commit/1657e0d))
+
+### ❤️ Contributors
+
+- YuTengjing ([@tjx666](http://github.com/tjx666))
+- Evgo2017 ([@evgo2017](http://github.com/evgo2017))
+
+[View changes on GitHub](https://github.com/tjx666/open-in-external-app/compare/v0.11.2...v0.11.3 '2026-05-07')
+
 ## v0.11.2 (2025-10-07)
 
 ### 🐞 Bug Fixes
