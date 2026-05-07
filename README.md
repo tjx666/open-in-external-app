@@ -57,6 +57,16 @@ Example configuration:
       "apps": "code"
     },
     {
+      // extensionName can also be an array to share one app config across multiple extensions
+      "extensionName": ["pvd", "vtu", "vtk"],
+      "apps": [
+        {
+          "title": "Paraview",
+          "openCommand": "paraview.exe"
+        }
+      ]
+    },
+    {
       "extensionName": "psd",
       "apps": "/path/to/photoshop.exe"
     },
@@ -133,6 +143,26 @@ If you want to open file in application which is made by electron, you can choos
    ```
 
 ## ❓ FAQ
+
+### Can I configure multiple file extensions to use the same app?
+
+Yes, set `extensionName` to a string array:
+
+```jsonc
+{
+  "openInExternalApp.openMapper": [
+    {
+      "extensionName": ["png", "jpg", "jpeg", "gif"],
+      "apps": [
+        {
+          "title": "Paint.NET",
+          "openCommand": "C:\\Program Files\\paint.net\\paintdotnet.exe"
+        }
+      ]
+    }
+  ]
+}
+```
 
 ### Can I use variables in args and shellCommand?
 
