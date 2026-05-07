@@ -23,15 +23,14 @@ function openByPkg(filePath: string, options?: OpenOptions) {
 }
 
 async function openByBuiltinApi(filePath: string) {
-    logger.info('open file by vscode builtin api');
-    // https://github.com/microsoft/vscode/issues/88273
     // On Windows, vscode.env.openExternal cannot handle non-ASCII characters (e.g. Chinese) in file paths.
     // Fallback to open pkg which uses ShellExecute and handles Unicode paths correctly.
-    // eslint-disable-next-line no-control-regex
-    if (isWindows && /[^\u0000-\u007F]/.test(filePath)) {
+    // https://github.com/microsoft/vscode/issues/88273
+    if (isWindows && /[\u0080-\uFFFF]/.test(filePath)) {
         logger.info('file path contains non-ASCII characters, fallback to open pkg on Windows');
         return openByPkg(filePath);
     }
+    logger.info('open file by vscode builtin api');
     return vscode.env.openExternal(Uri.file(filePath));
 }
 
@@ -63,10 +62,10 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
             const parsedCommand = (
                 await parseVariables([appConfig.shellCommand!], Uri.file(convertedPath))
             )[0];
+            logger.info(`open file by shell command: "${parsedCommand}"`);
             // On Windows, switch console codepage to UTF-8 (65001) so that
             // non-ASCII characters (e.g. Chinese) in file paths are handled correctly.
-            const finalCommand = isWindows ? `chcp 65001 > nul && ${parsedCommand}` : parsedCommand;
-            logger.info(`open file by shell command: "${finalCommand}"`);
+            const execCommand = isWindows ? `chcp 65001 > nul && ${parsedCommand}` : parsedCommand;
             try {
                 if (appConfig.shellEnv) {
                     const shellEnv = getShellEnv();
@@ -84,13 +83,13 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
 
                     await mergeEnvironments(shellEnv, additionalEnv, Uri.file(convertedPath));
                     const options: ExecOptions = { env: shellEnv };
-                    await exec(finalCommand, options);
+                    await exec(execCommand, options);
                 } else {
-                    await exec(finalCommand);
+                    await exec(execCommand);
                 }
             } catch (error: any) {
                 vscode.window.showErrorMessage(
-                    `open file by shell command failed, execute: "${finalCommand}"`,
+                    `open file by shell command failed, execute: "${parsedCommand}"`,
                 );
                 logger.info(error);
             }
@@ -105,11 +104,8 @@ export async function open(filePath: string, appConfig?: string | ExternalAppCon
         }
     } else if (vscode.env.remoteName === 'wsl') {
         await openByPkg(convertedPath);
-    } else if (isWindows) {
-        // On Windows, prefer open pkg over vscode builtin api to avoid
-        // non-ASCII (e.g. Chinese) file path issues with vscode.env.openExternal
-        await openByPkg(convertedPath);
     } else {
+        // On Windows, openByBuiltinApi internally falls back to open pkg for non-ASCII paths.
         await openByBuiltinApi(convertedPath);
     }
 }
